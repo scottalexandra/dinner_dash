@@ -20,7 +20,7 @@ describe 'An unauthenticated user' do
     end
   end
 
-  it 'can see the category items' do
+  xit 'can see the category items' do
     click_link_or_button 'Menu'
     click_link_or_button 'Breakfast'
     #write the test here
