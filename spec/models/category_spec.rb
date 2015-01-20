@@ -7,9 +7,10 @@ RSpec.describe Category, :type => :model do
     expect(category.items).to eq([])
   end
 
-  # it "has an item" do
-  #   category = Category.create(name: "NewCategory")
-  #   item = category.items.create(title: "NewTitle")
-  # end
-  #pending "add some examples to (or delete) #{__FILE__}"
+  it "has an item" do
+    category = Category.create(name: "NewCategory")
+    item = category.items.create(title: "NewTitle", description: "new description", price: 2000)
+    expect(category.items.first.title).to eq("NewTitle")
+  end
+
 end
