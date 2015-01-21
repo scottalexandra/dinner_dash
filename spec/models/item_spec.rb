@@ -52,8 +52,9 @@ RSpec.describe Item, :type => :model do
 
   it "shows the correct count with database cleaner" do
     Item.create(title: "next item",
-                       description: "desc",
-                       price: 2000)
+                description: "desc",
+                price: 2000)
+
     expect(Item.count).to eq(1)
   end
 end
