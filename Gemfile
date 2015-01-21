@@ -50,6 +50,7 @@ group :development, :test do
 
   gem 'launchy'
 
-  gem 'database_cleaner'
+  gem 'pry'
 
+  gem 'database_cleaner'
 end

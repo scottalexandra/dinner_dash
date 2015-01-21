@@ -50,6 +50,12 @@ RSpec.describe Item, :type => :model do
     expect(item).to_not be_valid
   end
 
+  it "can belong to an order" do
+    item = Item.new
+
+    expect(item.orders).to eq([])
+  end
+
   it "shows the correct count with database cleaner" do
     Item.create(title: "next item",
                 description: "desc",
