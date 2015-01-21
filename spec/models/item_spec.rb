@@ -37,16 +37,24 @@ RSpec.describe Item, :type => :model do
   end
 
   it "is not valid if price is not greater than zero" do
-    item = Item.create(title: "item", 
+    item = Item.create(title: "item",
                        description: "item description",
                        price: 0)
     expect(item).to_not be_valid
   end
 
   it "is not valid without an integer price" do
-    item = Item.create(title: "item",
+    item = Item.create(title: "another item",
                        description: "item description",
                        price: "werwsd")
     expect(item).to_not be_valid
+  end
+
+  it "shows the correct count with database cleaner" do
+    Item.create(title: "next item",
+                description: "desc",
+                price: 2000)
+
+    expect(Item.count).to eq(1)
   end
 end
