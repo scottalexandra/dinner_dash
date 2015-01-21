@@ -29,6 +29,8 @@ gem 'skylight'
 
 gem 'pg'
 
+gem 'foundation-rails'
+
 # Use Unicorn as the app server
 gem 'unicorn'
 # Use Capistrano for deployment
