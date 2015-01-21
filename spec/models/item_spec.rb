@@ -44,7 +44,7 @@ RSpec.describe Item, :type => :model do
   end
 
   it "is not valid without an integer price" do
-    item = Item.create(title: "item",
+    item = Item.create(title: "another item",
                        description: "item description",
                        price: "werwsd")
     expect(item).to_not be_valid
@@ -54,5 +54,13 @@ RSpec.describe Item, :type => :model do
     item = Item.new
 
     expect(item.orders).to eq([])
+  end
+
+  it "shows the correct count with database cleaner" do
+    Item.create(title: "next item",
+                description: "desc",
+                price: 2000)
+
+    expect(Item.count).to eq(1)
   end
 end
