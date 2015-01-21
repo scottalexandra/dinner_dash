@@ -2,9 +2,9 @@ require 'rails_helper'
 
 
 RSpec.describe User, :type => :model do
-  let!(:valid_user) { User.create(first_name: "Alice",
-                                  last_name: "Smith",
-                                  email: "kit@kit.com") }
+  let!(:valid_user) do
+    User.create(first_name: "Alice", last_name: "Smith", email: "kit@kit.com")
+  end
 
   it "is valid" do
     expect(valid_user).to be_valid
