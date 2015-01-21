@@ -1,6 +1,6 @@
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe Order, :type => :model do
+RSpec.describe Order, type: :model do
   it "can have items" do
     item1 = Item.create(title: "title",
                         description: "description",
@@ -32,7 +32,7 @@ RSpec.describe Order, :type => :model do
       item1 = Item.create(title: "title",
                           description: "description",
                           price: 20000)
-      order = Order.new()
+      order = Order.new
       order.items << item1
       expect(order).to_not be_valid
     end
