@@ -37,7 +37,7 @@ RSpec.describe Item, :type => :model do
   end
 
   it "is not valid if price is not greater than zero" do
-    item = Item.create(title: "item", 
+    item = Item.create(title: "item",
                        description: "item description",
                        price: 0)
     expect(item).to_not be_valid
@@ -48,5 +48,11 @@ RSpec.describe Item, :type => :model do
                        description: "item description",
                        price: "werwsd")
     expect(item).to_not be_valid
+  end
+
+  it "can belong to an order" do
+    item = Item.new
+
+    expect(item.orders).to eq([])
   end
 end
