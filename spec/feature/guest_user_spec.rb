@@ -1,6 +1,5 @@
 require "rails_helper"
 
-
 describe "An unauthenticated user" do
 
   let(:category1) { Category.create(name: "Breakfast") }
@@ -16,7 +15,7 @@ describe "An unauthenticated user" do
   end
 
   it "can browse all items" do
-    visit '/'
+    visit "/"
     click_link_or_button "Menu"
     expect(current_path).to eq("/categories")
     within("#menu") do
