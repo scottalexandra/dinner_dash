@@ -25,10 +25,4 @@ describe "An unauthenticated user" do
       expect(page).to have_content "Bacon and Eggs"
     end
   end
-
-  xit "can see the category items" do
-    click_link_or_button "Menu"
-    click_link_or_button "Breakfast"
-    #write the test here
-  end
 end
