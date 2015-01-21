@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe CategoryItem, :type => :model do
+RSpec.describe CategoryItem, type: :model do
 end
