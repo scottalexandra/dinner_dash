@@ -1,0 +1,12 @@
+<div class="categories">
+  <% @categories.each do |category| %>
+    <div id="category-<%= category.id %>">
+      <h3><%= category.name %></h3>
+      <ul>
+        <% category.items.each do |item| %>
+          <li><%= item.title %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+</div>
