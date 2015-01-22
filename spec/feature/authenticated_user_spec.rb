@@ -2,7 +2,17 @@ require "rails_helper"
 
 describe "an authenticated user" do
 
-  xit "cannot view another users private data" do
+  it "can view their own page" do
+    user = User.create(first_name: "Alice",
+                       last_name: "Smith",
+                       email: "rich.shea@gmail.com",
+                       password: "password")
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+    visit user_path(user)
+    expect(current_path).to eq(user_path(user))
+  end
+
+  it "cannot view another users private data" do
     user = User.create(first_name: "Alice",
                        last_name: "Smith",
                        email: "rich.shea@gmail.com",
