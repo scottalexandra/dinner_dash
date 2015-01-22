@@ -16,7 +16,7 @@ describe "An unauthenticated user" do
 
   it "can browse all items" do
     visit root_path
-    click_link_or_button "Menu"
+    click_link "Menu"
     expect(current_path).to eq(categories_path)
     within("#menu") do
       expect(page).to have_content category1.name
