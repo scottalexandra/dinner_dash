@@ -1,6 +1,15 @@
 require "rails_helper"
 
 RSpec.describe Order, type: :model do
+  it "is valid" do
+    item = Item.create(title: "title",
+                       description: "desc",
+                       price: 10)
+    order = Order.new(user_id: 1)
+    order.items << item
+    expect(order).to be_valid
+  end
+
   it "can have items" do
     item1 = Item.create(title: "title",
                         description: "description",
@@ -36,5 +45,20 @@ RSpec.describe Order, type: :model do
       order.items << item1
       expect(order).to_not be_valid
     end
+  end
+
+  it "belongs to a user" do
+    user = User.create(first_name: "Bryce",
+                       last_name: "Holcomb",
+                       email: "bryce@gmail.com",
+                       password: "password")
+    order = Order.new(user_id: user.id)
+    item = Item.create(title: "title",
+                       description: "desc",
+                       price: 20)
+    order.items << item
+    expect(order).to be_valid
+    order.save
+    expect(user.orders.first).to eq(order)
   end
 end

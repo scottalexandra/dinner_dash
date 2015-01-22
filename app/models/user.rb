@@ -11,4 +11,6 @@ class User < ActiveRecord::Base
             too_long: "%{count} is the alowed number of characters"
             },
             allow_blank: true
+
+  has_many :orders
 end
