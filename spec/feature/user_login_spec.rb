@@ -2,7 +2,7 @@ require "rails_helper"
 
 describe "a user" do
   it "can log in if registered" do
-    user = User.create(first_name: "Rich",
+    User.create(first_name: "Rich",
                        last_name: "Shea",
                        email: "rich.shea@gmail.com",
                        display_name: "Rich",

@@ -6,7 +6,7 @@ RSpec.describe User, :type => :model do
     User.create(first_name: "Alice",
                 last_name: "Smith",
                 email: "kit@kit.com",
-                password:"password")
+                password: "password")
   end
 
   it "is valid" do
