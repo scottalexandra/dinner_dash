@@ -52,4 +52,7 @@ group :development, :test do
 
   gem 'launchy'
 
+  gem 'pry'
+
+  gem 'database_cleaner'
 end
