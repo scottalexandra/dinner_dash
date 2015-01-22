@@ -7,8 +7,7 @@ describe "an authenticated user" do
                        last_name: "Smith",
                        email: "rich.shea@gmail.com",
                        password: "password")
-    allow_any_instance_of(ApplicationController)
-                                  .to receive(:current_user).and_return(user)
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
     visit user_path(user)
     expect(current_path).to eq(user_path(user))
   end
@@ -18,8 +17,7 @@ describe "an authenticated user" do
                        last_name: "Smith",
                        email: "rich.shea@gmail.com",
                        password: "password")
-    allow_any_instance_of(ApplicationController)
-                                   .to receive(:current_user).and_return(user)
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
     user2 = User.create(first_name: "Bob",
                         last_name: "Smith",
                         email: "abcdef@kit.com",
