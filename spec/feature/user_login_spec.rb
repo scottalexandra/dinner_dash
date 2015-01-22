@@ -1,7 +1,7 @@
 require "rails_helper"
 
 describe "a user" do
-  
+
   let!(:user) do
     User.create(first_name: "Rich",
                 last_name: "Shea",
