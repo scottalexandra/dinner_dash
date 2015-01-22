@@ -9,7 +9,7 @@ class SessionsController < ApplicationController
       flash[:notice] = "Successfully Logged In"
       redirect_to root_path
     else
-      flash[:error] = "Invalid Login"
+      flash[:error] = "Invalid Login Credentials"
       render :new
     end
   end
