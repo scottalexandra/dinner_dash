@@ -4,6 +4,5 @@ Rails.application.routes.draw do
   root "home#index"
   get "/login", to: "sessions#new"
   post "/login", to: "sessions#create"
-  resources :categories
-  resources :items
+  resources :categories, :items, :users
 end
