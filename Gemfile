@@ -30,6 +30,7 @@ gem 'pg'
 
 gem 'foundation-rails'
 
+# Specific to Heroku for compiling assets
 gem 'rails_12factor', group: :production
 
 # Use Unicorn as the app server
