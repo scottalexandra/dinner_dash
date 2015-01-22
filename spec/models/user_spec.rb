@@ -1,6 +1,5 @@
 require 'rails_helper'
 
-
 RSpec.describe User, :type => :model do
   let!(:valid_user) do
     User.create(first_name: "Alice",
@@ -55,5 +54,19 @@ RSpec.describe User, :type => :model do
   it "is not valid if user_name to short" do
     valid_user.display_name = "k"
     expect(valid_user).to_not be_valid
+  end
+
+  it "can have orders" do
+    expect(valid_user.orders).to eq([])
+  end
+
+  it "has an order" do
+    item = Item.create(title: "title",
+                       description: "desc",
+                       price: 10)
+    order = Order.new(user_id: valid_user.id)
+    order.items << item
+    order.save
+    expect(valid_user.orders.first).to eq(order)
   end
 end
