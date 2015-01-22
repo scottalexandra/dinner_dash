@@ -1,10 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe Item, :type => :model do
+  let!(:valid_item) do
+    Item.new(title: "title",
+             description: "desc",
+             price: 10)
+  end
 
   it "is valid" do
-    item = Item.new
-    expect(item).to_not be_valid
+    expect(valid_item).to be_valid
   end
 
   it "is not valid without title" do
@@ -54,6 +58,13 @@ RSpec.describe Item, :type => :model do
     item = Item.new
 
     expect(item.orders).to eq([])
+  end
+
+  it "has an order" do
+    order = Order.new(user_id: 1)
+    order.items << valid_item
+    order.save
+    expect(order.items.first).to eq(valid_item)
   end
 
   it "shows the correct count with database cleaner" do
