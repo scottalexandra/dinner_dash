@@ -1,6 +1,8 @@
 require "rails_helper"
 
 describe "an authenticated user" do
+  include Capybara::DSL
+
   it "can view their own page" do
     user = User.create(first_name: "Alice",
                        last_name: "Smith",

@@ -1,6 +1,6 @@
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe User, :type => :model do
+RSpec.describe User, type: :model do
   let!(:valid_user) do
     User.create(first_name: "Alice",
                 last_name: "Smith",

@@ -1,6 +1,7 @@
 require "rails_helper"
 
 describe "An unauthenticated user" do
+  include Capybara::DSL
 
   let(:category1) { Category.create(name: "Breakfast") }
   let(:category2) { Category.create(name: "Lunch") }
@@ -30,7 +31,7 @@ describe "An unauthenticated user" do
     end
   end
 
-  it "can browse by categories" do
+  xit "can browse by categories" do
     click_link_or_button "Browse by Categories"
     expect(current_path).to eq(categories_path)
     within("div.categories") do
@@ -42,6 +43,20 @@ describe "An unauthenticated user" do
         expect(page).to have_content category2.name
         expect(page).to have_content "BLT"
       end
+    end
+  end
+
+  xit "can add an item to a cart" do
+    click_link_or_button "Browse by Categories"
+    within(".categories") do
+      within("div#category-3") do
+        within("li:first") do
+          click_button "Add to Cart"
+        end
+      end
+    end
+    within("div#cart-contents") do
+      expect(page).to have_content("1")
     end
   end
 end

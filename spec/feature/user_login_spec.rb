@@ -1,6 +1,7 @@
 require "rails_helper"
 
 describe "a user" do
+  include Capybara::DSL
 
   let!(:user) do
     User.create(first_name: "Rich",

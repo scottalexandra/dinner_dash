@@ -7,6 +7,12 @@ class ApplicationController < ActionController::Base
     redirect_to not_found_path
   end
 
+  def set_cart
+    @cart = Cart.new(session[:cart])
+  end
+
+  before_action :set_cart
+
   private
 
   def current_user
