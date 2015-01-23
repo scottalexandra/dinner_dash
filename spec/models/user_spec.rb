@@ -51,7 +51,7 @@ RSpec.describe User, :type => :model do
     expect(invalid_user).to_not be_valid
   end
 
-  it "is not valid if user_name to short" do
+  it "is not valid if display_name to short" do
     valid_user.display_name = "k"
     expect(valid_user).to_not be_valid
   end
