@@ -1,6 +1,6 @@
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe Admin, :type => :model do
+RSpec.describe Admin, type: :model do
   it "is valid" do
     admin = Admin.new(first_name: "First",
                       last_name: "Last",
