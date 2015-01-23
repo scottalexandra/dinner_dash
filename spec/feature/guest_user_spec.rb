@@ -46,7 +46,7 @@ describe "An unauthenticated user" do
     end
   end
 
-  it "can add an item to a cart" do
+  xit "can add an item to a cart" do
     click_link_or_button "Browse by Categories"
     within(".categories") do
       within("div#category-3") do
