@@ -11,8 +11,10 @@ RSpec.describe Cart, type: :model do
     expect(cart.data).to eq({})
   end
 
-  xit "can have an item added" do
-
+  it "can have an item added" do
+    cart = Cart.new(nil)
+    cart.add_item("1")
+    expect(cart.data).to eq({"1" => 1})
   end
 end
 
