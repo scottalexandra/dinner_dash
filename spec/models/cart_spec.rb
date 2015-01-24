@@ -8,12 +8,12 @@ RSpec.describe Cart, type: :model do
 
   it "is displays 0 when no data is given" do
     cart = Cart.new(nil)
-    expect(cart.data).to eq({"" => 0})
+    expect(cart.data).to eq("" => 0)
   end
 
   it "can have an item added" do
     cart = Cart.new(nil)
     cart.add_item("1")
-    expect(cart.data).to eq({"" => 0, "1" => 1})
+    expect(cart.data).to eq("" => 0, "1" => 1)
   end
 end

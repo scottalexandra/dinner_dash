@@ -76,7 +76,6 @@ describe "An unauthenticated user" do
         end
       end
     end
-    save_and_open_page
     within("div#cart-contents") do
       expect(page).to have_content("2")
     end
