@@ -80,4 +80,25 @@ describe "An unauthenticated user" do
       expect(page).to have_content("2")
     end
   end
+
+  it "can remove an item from a cart" do
+    click_link_or_button "Browse by Categories"
+    within(".categories") do
+      within("div#category-7") do
+        within("li:first") do
+          click_button "Add to Cart"
+        end
+      end
+    end
+    within(".categories") do
+      within("div#category-7") do
+        within("li:first") do
+          click_button "Remove From Cart"
+        end
+      end
+    end
+    within("div#cart-contents") do
+      expect(page).to have_content("0")
+    end
+  end
 end

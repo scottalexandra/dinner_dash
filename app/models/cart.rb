@@ -13,4 +13,8 @@ class Cart
   def count(data)
     data.values.reduce(:+)
   end
+
+  def remove_item(item_id)
+    @data[item_id] -= 1
+  end
 end
