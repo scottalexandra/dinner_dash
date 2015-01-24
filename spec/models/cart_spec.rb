@@ -6,7 +6,7 @@ RSpec.describe Cart, type: :model do
     expect(cart.data).to eq("1" => 3)
   end
 
-  it "is an empty has when no data is given" do
+  it "is displays 0 when no data is given" do
     cart = Cart.new(nil)
     expect(cart.data).to eq({})
   end
@@ -15,5 +15,12 @@ RSpec.describe Cart, type: :model do
     cart = Cart.new(nil)
     cart.add_item("1")
     expect(cart.data).to eq("1" => 1)
+  end
+
+  it "can count items" do
+    cart = Cart.new(nil)
+    cart.add_item("1")
+    cart.add_item("1")
+    expect(cart.count(cart.data)).to eq(2)
   end
 end

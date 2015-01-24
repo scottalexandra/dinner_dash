@@ -9,4 +9,8 @@ class Cart
     @data[item_id] ||= 0
     @data[item_id] += 1
   end
+
+  def count(data)
+    data.values.reduce(0, :+)
+  end
 end
