@@ -1,11 +1,11 @@
 <h1>Categories index</h1>
 <div class="categories">
   <% @categories.each do |category| %>
-    <div id="category-<%= category.id %>">
+    <div id=<%= category.name %>
       <h3><%= category.name %></h3>
       <ul>
         <% category.items.each do |item| %>
-          <li><%= item.title %><%= button_to "Add to Cart", carts_path(item_id: item.id) %></li>
+          <li><%= item.title %><%= link_to "Add to Cart", carts_path(item_id: item.id), :method => :post %></li>
         <% end %>
       </ul>
     </div>

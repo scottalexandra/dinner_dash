@@ -31,28 +31,26 @@ describe "An unauthenticated user" do
     end
   end
 
-  xit "can browse by categories" do
+  it "can browse by categories" do
     click_link_or_button "Browse by Categories"
     expect(current_path).to eq(categories_path)
     within("div.categories") do
-      within("div#category-1") do
+      within("div#Breakfast") do
         expect(page).to have_content category1.name
         expect(page).to have_content "Bacon and Eggs"
       end
-      within("div#category-2") do
+      within("div#Lunch") do
         expect(page).to have_content category2.name
         expect(page).to have_content "BLT"
       end
     end
   end
 
-  it "can add an item to a cart" do
+  xit "can add an item to a cart" do
     click_link_or_button "Browse by Categories"
     within(".categories") do
-      within("div#category-3") do
-        within("li:first") do
-          click_button "Add to Cart"
-        end
+      within("div#Breakfast") do
+        click_link "Add to Cart"
       end
     end
     within("div#cart-contents") do
@@ -60,24 +58,21 @@ describe "An unauthenticated user" do
     end
   end
 
-  it "can add two items to a cart" do
+  xit "can add two items to a cart" do
     click_link_or_button "Browse by Categories"
     within(".categories") do
-      within("div#category-5") do
-        within("li:first") do
-          click_button "Add to Cart"
-        end
+      within("div#Breakfast") do
+        click_link "Add to Cart"
+        click_link "Add to Cart"
       end
     end
     within(".categories") do
-      within("div#category-6") do
-        within("li:first") do
-          click_button "Add to Cart"
-        end
+      within("div#Lunch") do
+        click_link "Add to Cart"
       end
     end
     within("div#cart-contents") do
-      expect(page).to have_content("2")
+      expect(page).to have_content("3")
     end
   end
 end

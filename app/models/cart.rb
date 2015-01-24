@@ -2,7 +2,7 @@ class Cart
   attr_reader :data
 
   def initialize(data)
-    @data = data || { "" => 0 }
+    @data = data || Hash.new
   end
 
   def add_item(item_id)
@@ -11,6 +11,6 @@ class Cart
   end
 
   def count(data)
-    data.values.reduce(:+)
+    data.values.reduce(0, :+)
   end
 end
