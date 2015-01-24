@@ -16,8 +16,8 @@ describe "An unauthenticated user" do
     visit root_path
   end
 
-  it "can browse all items" do
-    click_link_or_button "Browse all Items"
+  xit "can browse all items" do
+    click_link_or_button "Menu"
     expect(current_path).to eq(items_path)
     within("div.items") do
       within("div#item-1") do
@@ -32,7 +32,7 @@ describe "An unauthenticated user" do
   end
 
   it "can browse by categories" do
-    click_link_or_button "Browse by Categories"
+    click_link_or_button "Menu"
     expect(current_path).to eq(categories_path)
     within("div.categories") do
       within("div#Breakfast") do
@@ -47,7 +47,7 @@ describe "An unauthenticated user" do
   end
 
   xit "can add an item to a cart" do
-    click_link_or_button "Browse by Categories"
+    click_link_or_button "Menu"
     within(".categories") do
       within("div#Breakfast") do
         click_link "Add to Cart"
@@ -59,7 +59,7 @@ describe "An unauthenticated user" do
   end
 
   xit "can add two items to a cart" do
-    click_link_or_button "Browse by Categories"
+    click_link_or_button "Menu"
     within(".categories") do
       within("div#Breakfast") do
         click_link "Add to Cart"
@@ -77,7 +77,7 @@ describe "An unauthenticated user" do
   end
 
   it "can remove an item from a cart" do
-    click_link_or_button "Browse by Categories"
+    click_link_or_button "Menu"
     within(".categories") do
       within("div#Breakfast") do
         click_link "Add to Cart"
@@ -94,11 +94,11 @@ describe "An unauthenticated user" do
   end
 
   it "can login which does not clear cart" do
-    click_link_or_button "Browse by Categories"
+    click_link_or_button "Menu"
     within(".categories") do
-      within("div#category-9") do
+      within("div#Breakfast") do
         within("li:first") do
-          click_button "Add to Cart"
+          click_link "Add to Cart"
         end
       end
     end
@@ -121,11 +121,12 @@ describe "An unauthenticated user" do
   end
 
   it "can log out which does clear cart" do
-    click_link_or_button "Browse by Categories"
+    click_link_or_button "Menu"
+    puts page.body
     within(".categories") do
-      within("div#category-11") do
+      within("div#Breakfast") do
         within("li:first") do
-          click_button "Add to Cart"
+          click_link "Add to Cart"
         end
       end
     end
@@ -149,5 +150,10 @@ describe "An unauthenticated user" do
     within("#cart-contents") do
       expect(page).to have_content("0")
     end
+  end
+
+  it "can view their empty cart" do
+    click_link_or_button "Cart"
+    expect(current_path).to eq(new_order_path)
   end
 end

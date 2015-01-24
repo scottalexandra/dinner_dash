@@ -10,6 +10,7 @@
     <ul class="right">
       <li class="active"><%= link_to "Log In", login_path, :method => :get %></li>
       <li class="active"><%= link_to "Log Out", logout_path, :method => :delete %></li>
+      <li><%= link_to "Cart: #{@cart.count(@cart.data)}", new_order_path %></li>
       <li class="has-dropdown">
         <a href="#">Order Food Online</a>
         <ul class="dropdown">
@@ -22,11 +23,6 @@
     <!-- Left Nav Section -->
     <ul class="left">
       <li><a href="#">Left Nav Button</a></li>
-      <li>
-        <div id="cart-contents">
-        <%= "Cart: #{@cart.count(@cart.data)}" %>
-      </div>
-      </li>
     </ul>
   </section>
 </nav>
