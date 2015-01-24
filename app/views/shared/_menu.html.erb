@@ -24,8 +24,9 @@
       <li><a href="#">Left Nav Button</a></li>
       <li>
         <div id="cart-contents">
-        <%= "Cart: #{@cart.data.values.reduce(:+)}" %>
-      </div></li>
+        <%= "Cart: #{@cart.count(@cart.data)}" %>
+      </div>
+      </li>
     </ul>
   </section>
 </nav>
