@@ -46,7 +46,7 @@ describe "An unauthenticated user" do
     end
   end
 
-  xit "can add an item to a cart" do
+  it "can add an item to a cart" do
     click_link_or_button "Browse by Categories"
     within(".categories") do
       within("div#category-3") do
@@ -57,6 +57,28 @@ describe "An unauthenticated user" do
     end
     within("div#cart-contents") do
       expect(page).to have_content("1")
+    end
+  end
+
+  it "can add two items to a cart" do
+    click_link_or_button "Browse by Categories"
+    within(".categories") do
+      within("div#category-5") do
+        within("li:first") do
+          click_button "Add to Cart"
+        end
+      end
+    end
+    within(".categories") do
+      within("div#category-6") do
+        within("li:first") do
+          click_button "Add to Cart"
+        end
+      end
+    end
+    save_and_open_page
+    within("div#cart-contents") do
+      expect(page).to have_content("2")
     end
   end
 end
