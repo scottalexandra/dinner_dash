@@ -112,10 +112,10 @@ describe "An unauthenticated user" do
       end
     end
     User.create(first_name: "Rich",
-    last_name: "Shea",
-    email: "bryce@gmail.com",
-    display_name: "Rich",
-    password: "secret")
+                last_name: "Shea",
+                email: "bryce@gmail.com",
+                display_name: "Rich",
+                password: "secret")
     click_link_or_button "Log In"
     fill_in "session[email]", with: "bryce@gmail.com"
     fill_in "session[password]", with: "secret"
@@ -139,10 +139,10 @@ describe "An unauthenticated user" do
       end
     end
     User.create(first_name: "Rich",
-    last_name: "Shea",
-    email: "bryce@gmail.com",
-    display_name: "Rich",
-    password: "secret")
+                last_name: "Shea",
+                email: "bryce@gmail.com",
+                display_name: "Rich",
+                password: "secret")
     click_link_or_button "Log In"
     fill_in "session[email]", with: "bryce@gmail.com"
     fill_in "session[password]", with: "secret"
