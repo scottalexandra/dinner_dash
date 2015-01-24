@@ -6,9 +6,10 @@ Rails.application.routes.draw do
   post "/login", to: "sessions#create"
   delete "/logout", to: "sessions#destroy"
   post "/carts", to: "carts#create"
+  delete "/carts", to: "carts#destroy"
 
-  resources :categories, only: [:index, :show]
-  resources :items, only: [:index, :show]
+  resources :categories, only: [:index]
+  resources :items, only: [:show]
 
   resources :users, only: [:show, :edit, :update, :new] do
     member do

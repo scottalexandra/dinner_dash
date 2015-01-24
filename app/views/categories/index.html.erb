@@ -1,11 +1,14 @@
 <h1>Categories index</h1>
 <div class="categories">
   <% @categories.each do |category| %>
-    <div id=<%= category.name %>
+    <div id=<%= category.name %>>
       <h3><%= category.name %></h3>
       <ul>
         <% category.items.each do |item| %>
-          <li><%= item.title %><%= link_to "Add to Cart", carts_path(item_id: item.id), :method => :post %></li>
+          <li><%= item.title %>
+          <%= link_to "Add to Cart", carts_path(item_id: item.id), :method => :post %>
+          <%= link_to "Remove From Cart", carts_path(item_id: item.id), :method => :delete %>
+          </li>
         <% end %>
       </ul>
     </div>

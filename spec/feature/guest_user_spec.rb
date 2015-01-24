@@ -75,4 +75,79 @@ describe "An unauthenticated user" do
       expect(page).to have_content("3")
     end
   end
+
+  it "can remove an item from a cart" do
+    click_link_or_button "Browse by Categories"
+    within(".categories") do
+      within("div#Breakfast") do
+        click_link "Add to Cart"
+      end
+    end
+    within(".categories") do
+      within("div#Breakfast") do
+        click_link "Remove From Cart"
+      end
+    end
+    within("div#cart-contents") do
+      expect(page).to have_content("0")
+    end
+  end
+
+  it "can login which does not clear cart" do
+    click_link_or_button "Browse by Categories"
+    within(".categories") do
+      within("div#category-9") do
+        within("li:first") do
+          click_button "Add to Cart"
+        end
+      end
+    end
+    User.create(first_name: "Rich",
+                last_name: "Shea",
+                email: "bryce@gmail.com",
+                display_name: "Rich",
+                password: "secret")
+    click_link_or_button "Log In"
+    fill_in "session[email]", with: "bryce@gmail.com"
+    fill_in "session[password]", with: "secret"
+    click_link_or_button "Submit"
+    expect(current_path).to eq(root_path)
+    within("#flash_notice") do
+      expect(page).to have_content("Successfully Logged In")
+    end
+    within("#cart-contents") do
+      expect(page).to have_content("1")
+    end
+  end
+
+  it "can log out which does clear cart" do
+    click_link_or_button "Browse by Categories"
+    within(".categories") do
+      within("div#category-11") do
+        within("li:first") do
+          click_button "Add to Cart"
+        end
+      end
+    end
+    User.create(first_name: "Rich",
+                last_name: "Shea",
+                email: "bryce@gmail.com",
+                display_name: "Rich",
+                password: "secret")
+    click_link_or_button "Log In"
+    fill_in "session[email]", with: "bryce@gmail.com"
+    fill_in "session[password]", with: "secret"
+    click_link_or_button "Submit"
+    expect(current_path).to eq(root_path)
+    within("#cart-contents") do
+      expect(page).to have_content("1")
+    end
+    click_link_or_button "Log Out"
+    within("#flash_notice") do
+      expect(page).to have_content("Successfully Logged Out")
+    end
+    within("#cart-contents") do
+      expect(page).to have_content("0")
+    end
+  end
 end
