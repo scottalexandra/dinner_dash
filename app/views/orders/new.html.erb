@@ -1,0 +1,10 @@
+<h1>New order</h1>
+
+<% if @items.empty? %>
+  <p> Your cart is empty </p>
+<% else %>
+  <div class="items">
+    <%= render partial: "shared/items" %>
+  </div>
+<% end %>
+

@@ -16,23 +16,8 @@ describe "An unauthenticated user" do
     visit root_path
   end
 
-  it "can browse all items" do
-    click_link_or_button "Browse all Items"
-    expect(current_path).to eq(items_path)
-    within("div.items") do
-      within("div#item-1") do
-        expect(page).to have_content "Bacon and Eggs"
-        expect(page).to have_content "The classic breakfast dish"
-      end
-      within("div#item-2") do
-        expect(page).to have_content "BLT"
-        expect(page).to have_content "The classic lunch dish"
-      end
-    end
-  end
-
   it "can browse by categories" do
-    click_link_or_button "Browse by Categories"
+    click_link_or_button "Menu"
     expect(current_path).to eq(categories_path)
     within("div.categories") do
       within("div#Breakfast") do
@@ -46,62 +31,36 @@ describe "An unauthenticated user" do
     end
   end
 
-  xit "can add an item to a cart" do
-    click_link_or_button "Browse by Categories"
-    within(".categories") do
-      within("div#Breakfast") do
-        click_link "Add to Cart"
-      end
-    end
-    within("div#cart-contents") do
+  it "can add an item to a cart" do
+    click_add_to_cart_link("Breakfast")
+    within("#cart-contents") do
       expect(page).to have_content("1")
     end
   end
 
-  xit "can add two items to a cart" do
-    click_link_or_button "Browse by Categories"
-    within(".categories") do
-      within("div#Breakfast") do
-        click_link "Add to Cart"
-        click_link "Add to Cart"
-      end
-    end
-    within(".categories") do
-      within("div#Lunch") do
-        click_link "Add to Cart"
-      end
-    end
-    within("div#cart-contents") do
+  it "can add two items to a cart" do
+    click_add_to_cart_link("Breakfast")
+    click_add_to_cart_link("Breakfast")
+    click_add_to_cart_link("Lunch")
+    within("#cart-contents") do
       expect(page).to have_content("3")
     end
   end
 
   it "can remove an item from a cart" do
-    click_link_or_button "Browse by Categories"
-    within(".categories") do
-      within("div#Breakfast") do
-        click_link "Add to Cart"
-      end
-    end
+    click_add_to_cart_link("Breakfast")
     within(".categories") do
       within("div#Breakfast") do
         click_link "Remove From Cart"
       end
     end
-    within("div#cart-contents") do
+    within("#cart-contents") do
       expect(page).to have_content("0")
     end
   end
 
   it "can login which does not clear cart" do
-    click_link_or_button "Browse by Categories"
-    within(".categories") do
-      within("div#category-9") do
-        within("li:first") do
-          click_button "Add to Cart"
-        end
-      end
-    end
+    click_add_to_cart_link("Breakfast")
     User.create(first_name: "Rich",
                 last_name: "Shea",
                 email: "bryce@gmail.com",
@@ -120,15 +79,8 @@ describe "An unauthenticated user" do
     end
   end
 
-  it "can log out which does clear cart" do
-    click_link_or_button "Browse by Categories"
-    within(".categories") do
-      within("div#category-11") do
-        within("li:first") do
-          click_button "Add to Cart"
-        end
-      end
-    end
+  it "can log out which does not clear cart" do
+    click_add_to_cart_link("Breakfast")
     User.create(first_name: "Rich",
                 last_name: "Shea",
                 email: "bryce@gmail.com",
@@ -147,7 +99,41 @@ describe "An unauthenticated user" do
       expect(page).to have_content("Successfully Logged Out")
     end
     within("#cart-contents") do
-      expect(page).to have_content("0")
+      expect(page).to have_content("1")
+    end
+  end
+
+  it "can view their empty cart" do
+    click_link_or_button "Cart"
+    expect(current_path).to eq(new_order_path)
+    expect(page).to have_content("Your cart is empty")
+  end
+
+  it "can view their cart with items" do
+    click_add_to_cart_link("Breakfast")
+    click_add_to_cart_link("Breakfast")
+    click_link_or_button "Cart:"
+    expect(current_path).to eq(new_order_path)
+    expect(page).to have_content("Bacon and Eggs")
+    within "div#quantity" do
+      expect(page).to have_content("2")
+    end
+    within "div#description" do
+      expect(page).to have_content("The classic breakfast dish")
+    end
+    within "div#price" do
+      expect(page).to have_content("$10.00")
+    end
+  end
+
+  def click_add_to_cart_link(category)
+    click_link_or_button "Menu"
+    within(".categories") do
+      within("div##{category}") do
+        within("li:first") do
+          click_link "Add to Cart"
+        end
+      end
     end
   end
 end

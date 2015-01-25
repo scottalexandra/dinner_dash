@@ -5,7 +5,7 @@ describe "A session cart" do
 
   it "instantiates a cart with a controller action" do
     visit root_path
-    within("div#cart-contents") do
+    within("#cart-contents") do
       expect(page).to have_content("0")
     end
   end

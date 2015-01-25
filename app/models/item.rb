@@ -6,4 +6,14 @@ class Item < ActiveRecord::Base
   has_many :categories, through: :category_items
   has_many :line_items
   has_many :orders, through: :line_items
+
+  attr_reader :quantity
+
+  def add_quantity(quantity)
+    @quantity = quantity
+  end
+
+  def currency
+    price / 100
+  end
 end
