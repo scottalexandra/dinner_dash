@@ -81,7 +81,7 @@ describe "authenticated" do
       fill_in "admin_email", with: "kit@kit.com"
       fill_in "admin_password", with: "password"
       click_link_or_button "Submit"
-      within("flash_notice") do
+      within("#flash_notice") do
         expect(page).to have_content "Admin created successfully."
       end
     end

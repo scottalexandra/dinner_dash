@@ -14,7 +14,7 @@ class AdminsController < ApplicationController
       session[:admin_id] = @admin.id
       redirect_to root_path, notice: "Admin created successfully."
     else
-      redirect_to new_admin_path, error: "Invalid Login Credentials"
+      redirect_to new_admin_path, error: "Invalid  Credentials"
     end
   end
 
