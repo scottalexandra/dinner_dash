@@ -4,7 +4,7 @@ describe "an admin" do
   include Capybara::DSL
 
   it "create item listings including a name, description, price" do
-    category = Category.create(name: "Breakfast")
+    Category.create(name: "Breakfast")
     visit new_admin_item_path
     fill_in "item[title]", with: "New Item"
     fill_in "item[description]", with: "Description"
