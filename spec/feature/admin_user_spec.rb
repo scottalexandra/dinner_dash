@@ -9,6 +9,7 @@ describe "an admin" do
     fill_in "item[title]", with: "New Item"
     fill_in "item[description]", with: "Description"
     fill_in "item[price]", with: "1000"
+    fill_in "item[categories]", with: "Breakfast"
     click_link_or_button "Create"
     within("#flash_notice") do
       expect(page).to have_content("Successfully Created")
@@ -17,6 +18,7 @@ describe "an admin" do
       expect(page).to have_content("New Item")
       expect(page).to have_content("Description")
       expect(page).to have_content("$10.00")
+      expect(page).to have_content("Breakfast")
     end
   end
 
