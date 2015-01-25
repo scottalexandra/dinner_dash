@@ -1,0 +1,25 @@
+<%= form_for person do |f| %>
+  <p>
+    <%= f.label "First name" %>
+    <%= f.text_field :first_name %>
+  </p>
+  <p>
+    <%= f.label "Last name" %>
+    <%= f.text_field :last_name %>
+  </p>
+  <% if person == @user %>
+    <p>
+      <%= f.label "User name" %>
+      <%= f.text_field :display_name %>
+    </p>
+  <% end %>
+  <p>
+    <%= f.label :email %>
+    <%= f.text_field :email %>
+  </p>
+  <p>
+    <%= f.label :password %>
+    <%= f.password_field :password %>
+  </p>
+    <%= f.submit "Submit" %>
+<% end %>

@@ -12,7 +12,8 @@
   </head>
 
   <body>
-    <%= render "shared/menu" %>
+    <%= render "menu" %>
+    <%= render "admin_dashboard" %>
 
     <% flash.each do |name, msg| %>
       <%= content_tag :div, msg, id: "flash_#{name}" %>
@@ -20,8 +21,8 @@
 
     <%= yield %>
 
-    <%= render "shared/footer" %>
-    <%= render "shared/social_footer" %>
+    <%= render "footer" %>
+    <%= render "social_footer" %>
     <%= javascript_include_tag "application" %>
   </body>
 </html>
