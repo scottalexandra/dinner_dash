@@ -1,0 +1,9 @@
+<div class="category">
+  <h2>Name: <%= @category.name %></h2>
+  <% if @category.items %>
+    <h3>Items:</h3>
+    <% @category.items.each do |item| %>
+      <h4><%= item.title %></h4>
+    <% end %>
+  <% end %>
+</div>
