@@ -16,7 +16,7 @@ describe "An unauthenticated user" do
     visit root_path
   end
 
-  it "can browse by categories" do
+  it "can browse all items grouped by category (category index page)" do
     click_link_or_button "Menu"
     expect(current_path).to eq(categories_path)
     within("div.categories") do
@@ -29,6 +29,9 @@ describe "An unauthenticated user" do
         expect(page).to have_content "BLT"
       end
     end
+  end
+
+  xit "can browse items for a specific category (category show page)" do
   end
 
   it "can add an item to a cart" do
@@ -79,6 +82,9 @@ describe "An unauthenticated user" do
     end
   end
 
+  xit "cannot see the logout button" do
+  end
+
   it "can log out which does not clear cart" do
     click_add_to_cart_link("Breakfast")
     User.create(first_name: "Rich",
@@ -124,6 +130,36 @@ describe "An unauthenticated user" do
     within "div#price" do
       expect(page).to have_content("$10.00")
     end
+  end
+
+  xit "cannot view another person's private data" do
+  end
+
+  xit "cannot checkout" do
+  end
+
+  xit "cannot view the admin dashboard" do
+  end
+
+  xit "cannot create an item" do
+  end
+
+  xit "cannot modify an item" do
+  end
+
+  xit "cannot assign an item to a category" do
+  end
+
+  xit "cannot remove an item from a category" do
+  end
+
+  xit "cannot create a category" do
+  end
+
+  xit "cannot modify a category" do
+  end
+
+  xit "cannot make themselves an admin" do
   end
 
   def click_add_to_cart_link(category)
