@@ -88,7 +88,7 @@ describe "An unauthenticated user" do
         click_link "Remove From Cart"
       end
     end
-    within("div#cart-contents") do
+    within("#cart-contents") do
       expect(page).to have_content("0")
     end
   end
@@ -120,9 +120,8 @@ describe "An unauthenticated user" do
     end
   end
 
-  it "can log out which does clear cart" do
+  it "can log out which does not clear cart" do
     click_link_or_button "Menu"
-    puts page.body
     within(".categories") do
       within("div#Breakfast") do
         within("li:first") do
@@ -148,12 +147,37 @@ describe "An unauthenticated user" do
       expect(page).to have_content("Successfully Logged Out")
     end
     within("#cart-contents") do
-      expect(page).to have_content("0")
+      expect(page).to have_content("1")
     end
   end
 
   it "can view their empty cart" do
     click_link_or_button "Cart"
     expect(current_path).to eq(new_order_path)
+    expect(page).to have_content("Your cart is empty")
+  end
+
+  it "can view their cart with items" do
+    click_link_or_button "Menu"
+    within(".categories") do
+      within("div#Breakfast") do
+        within("li:first") do
+          click_link "Add to Cart"
+          click_link "Add to Cart"
+        end
+      end
+    end
+    click_link_or_button "Cart:"
+    expect(current_path).to eq(new_order_path)
+    expect(page).to have_content("Bacon and Eggs")
+    within "div#quantity" do
+      expect(page).to have_content("2")
+    end
+    within "div#description" do
+      expect(page).to have_content("The classic breakfast dish")
+    end
+    within "div#price" do
+      expect(page).to have_content("$10.00")
+    end
   end
 end

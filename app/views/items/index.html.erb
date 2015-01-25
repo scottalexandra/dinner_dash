@@ -1,6 +1,6 @@
 <div class="items">
   <% @items.each do |item| %>
-    <div id="item-<%= item.id %>">
+    <div id="<%= item.title %>">
       <h3><%= item.title %></h3>
       <p><%= item.description %></p>
     </div>

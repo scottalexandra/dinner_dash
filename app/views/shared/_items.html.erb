@@ -1,0 +1,16 @@
+<% @items.each do |item| %>
+  <hr><div class="item" id=<%= item.title %>>
+    <div id="description">
+      <h3><%= item.title %></h3>
+      <p><%= item.description %></p>
+    </div>
+    <div id="price">
+      <h4>Price</h4>
+      <h4><%= number_to_currency item.currency %></h4>
+    </div>
+    <div id="quantity">
+      <h4>Quantity</h4>
+      <h4><%= item.quantity %></h4>
+    </div>
+  </div><br>
+<% end %>
