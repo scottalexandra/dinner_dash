@@ -20,6 +20,9 @@ describe "an admin" do
     end
   end
 
+  xit "cannot create an item with invalid params" do
+  end
+
   xit "can create an item listing and attach it to a category" do
   end
 
@@ -29,7 +32,19 @@ describe "an admin" do
   xit "modify existing items’ name, description, price, and photo" do
   end
 
-  xit "create named categories for items" do
+  it "create named categories for items" do
+    visit new_admin_category_path
+    fill_in "category[name]", with: "Breakfast"
+    click_link_or_button "Create"
+    within("#flash_notice") do
+      expect(page).to have_content("Successfully Created")
+    end
+    within(".category") do
+      expect(page).to have_content("Breakfast")
+    end
+  end
+
+  xit "cannot create a category with invalid params" do
   end
 
   xit "assign items to categories or remove them from categories. Products can belong to more than one category" do
