@@ -6,6 +6,11 @@
   <%= f.label "Price" %>
   <%= f.text_field :price %>
   <%= f.label "Categories" %>
-  <%= f.text_field :categories %>
+  <%= f.collection_select(:categories,
+                          @categories,
+                          :id,
+                          :name,
+                          {},
+                          multiple: true) %>
   <%= f.submit "Create" %>
 <% end %>

@@ -3,13 +3,15 @@ require "rails_helper"
 describe "an admin" do
   include Capybara::DSL
 
-  it "create item listings including a name, description, price" do
+  it "create item listings including a name, description, price, and category" do
     Category.create(name: "Breakfast")
+    Category.create(name: "Brunch")
     visit new_admin_item_path
     fill_in "item[title]", with: "New Item"
     fill_in "item[description]", with: "Description"
     fill_in "item[price]", with: "1000"
-    fill_in "item[categories]", with: "Breakfast"
+    select "Breakfast", from: "item_categories"
+    select "Brunch", from: "item_categories"
     click_link_or_button "Create"
     within("#flash_notice") do
       expect(page).to have_content("Successfully Created")
@@ -23,10 +25,6 @@ describe "an admin" do
   end
 
   xit "cannot create an item with invalid params" do
-  end
-
-  xit "can create an item listing and attach it to a category" do
-    # add this to the first spec
   end
 
   xit "can create an item listing with a photo" do
