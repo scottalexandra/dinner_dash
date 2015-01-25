@@ -82,6 +82,9 @@ describe "An unauthenticated user" do
     end
   end
 
+  xit "cannot see the logout button" do
+  end
+
   it "can log out which does not clear cart" do
     click_add_to_cart_link("Breakfast")
     User.create(first_name: "Rich",
@@ -145,6 +148,18 @@ describe "An unauthenticated user" do
   end
 
   xit "cannot assign an item to a category" do
+  end
+
+  xit "cannot remove an item from a category" do
+  end
+
+  xit "cannot create a category" do
+  end
+
+  xit "cannot modify a category" do
+  end
+
+  xit "cannot make themselves an admin" do
   end
 
   def click_add_to_cart_link(category)
