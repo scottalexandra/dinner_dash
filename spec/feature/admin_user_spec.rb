@@ -24,9 +24,11 @@ describe "an admin" do
   end
 
   xit "can create an item listing and attach it to a category" do
+    #add this to the first spec
   end
 
   xit "can create an item listing with a photo" do
+    #add this to the first spec
   end
 
   xit "modify existing items’ name, description, price, and photo" do
