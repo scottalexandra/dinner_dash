@@ -15,7 +15,7 @@ class UsersController < ApplicationController
       session[:user_id] = @user.id
       redirect_to user_path(@user.id), notice: "User created successfully."
     else
-      redirect_to new_user_path, error: "Invalid Login Credentials"
+      redirect_to new_user_path, error: "Invalid Credentials"
     end
   end
 
