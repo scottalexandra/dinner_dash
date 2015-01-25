@@ -5,6 +5,12 @@ describe "an authenticated user" do
 
   let(:category1) { Category.create(name: "Breakfast") }
   let(:category2) { Category.create(name: "Lunch") }
+  let!(:valid_user) { User.create(
+                      first_name: "Alice",
+                      last_name: "Smith",
+                      email: "rich.shea@gmail.com",
+                      password: "password"
+                      )}
 
   before(:each) do
     category1.items.create(title: "Bacon and Eggs",
@@ -17,6 +23,7 @@ describe "an authenticated user" do
   end
 
   it "can browse all items grouped by category (category index page)" do
+    valid_user_logs_in
     click_link_or_button "Menu"
     expect(current_path).to eq(categories_path)
     within("div.categories") do
@@ -35,6 +42,7 @@ describe "an authenticated user" do
   end
 
   it "can add an item to a cart" do
+    valid_user_logs_in
     click_add_to_cart_link("Breakfast")
     within("#cart-contents") do
       expect(page).to have_content("1")
@@ -63,21 +71,15 @@ describe "an authenticated user" do
   end
 
   it "can view their own page" do
-    user = User.create(first_name: "Alice",
-                       last_name: "Smith",
-                       email: "rich.shea@gmail.com",
-                       password: "password")
-    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
-    visit user_path(user)
-    expect(current_path).to eq(user_path(user))
+    allow_any_instance_of(ApplicationController).to receive(:current_user).
+                                                    and_return(valid_user)
+    visit user_path(valid_user)
+    expect(current_path).to eq(user_path(valid_user))
   end
 
   it "cannot view another users private data" do
-    user = User.create(first_name: "Alice",
-                       last_name: "Smith",
-                       email: "rich.shea@gmail.com",
-                       password: "password")
-    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+    allow_any_instance_of(ApplicationController).to receive(:current_user).
+                                                    and_return(valid_user)
     user2 = User.create(first_name: "Bob",
                         last_name: "Smith",
                         email: "abcdef@kit.com",
@@ -91,37 +93,29 @@ describe "an authenticated user" do
                          last_name: "Last",
                          email: "admin@gmail.com",
                          password: "adminpassword")
-
-    user = User.create(first_name: "Alice",
-                       last_name: "Smith",
-                       email: "rich.shea@gmail.com",
-                       password: "password")
-    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+    allow_any_instance_of(ApplicationController).to receive(:current_user).
+                                                    and_return(valid_user)
     visit admin_path(admin)
     expect(current_path).to eq(not_found_path)
   end
 
-  it "can log out which does not clear cart" do
+  it "can log in and out without clearing the cart" do
+    within("#cart-contents") do
+      expect(page).to have_content("0")
+    end
     click_add_to_cart_link("Breakfast")
-    User.create(first_name: "Rich",
-                last_name: "Shea",
-                email: "bryce@gmail.com",
-                display_name: "Rich",
-                password: "secret")
-    click_link_or_button "Log In"
-    fill_in "session[email]", with: "bryce@gmail.com"
-    fill_in "session[password]", with: "secret"
-    click_link_or_button "Submit"
+    valid_user_logs_in
     expect(current_path).to eq(root_path)
     within("#cart-contents") do
       expect(page).to have_content("1")
     end
+    click_add_to_cart_link("Breakfast")
     click_link_or_button "Log Out"
     within("#flash_notice") do
       expect(page).to have_content("Successfully Logged Out")
     end
     within("#cart-contents") do
-      expect(page).to have_content("1")
+      expect(page).to have_content("2")
     end
   end
 
@@ -161,6 +155,7 @@ describe "an authenticated user" do
   end
 
   xit "cannot see the login button" do
+
   end
 
   xit "cannot create an item" do
@@ -193,5 +188,12 @@ describe "an authenticated user" do
         end
       end
     end
+  end
+
+  def valid_user_logs_in
+    click_link_or_button "Log In"
+    fill_in 'session_email', :with => "rich.shea@gmail.com"
+    fill_in 'session_password', :with => "password"
+    click_link_or_button "Submit"
   end
 end

@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   resources :categories, only: [:index]
   resources :items, only: [:show]
 
-  resources :users, only: [:show, :edit, :update, :new]
+  resources :users
   resources :orders
 
   resources :admins
