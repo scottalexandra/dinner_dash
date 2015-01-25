@@ -3,7 +3,18 @@ require "rails_helper"
 describe "an admin" do
   include Capybara::DSL
 
-  xit "create item listings including a name, description, price, and upload a photo" do
+  it "create item listings including a name, description, price, and upload a photo" do
+    category = Category.create(name: "Breakfast")
+    visit new_admin_item_path
+    fill_in "session[title]", with: "New Item"
+    fill_in "session[description]", with: "Description"
+    fill_in "session[price]", with: "$10.00"
+    select category.name, :from => "category-dropdown"
+    click_link_or_button "Create"
+    expect(current_path).to eq(item_path(item))
+    within("#flash_notice") do
+      expect(page).to have_content("Successfully Created")
+    end
   end
 
   xit "modify existing items’ name, description, price, and photo" do
