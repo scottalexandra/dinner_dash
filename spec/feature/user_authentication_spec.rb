@@ -66,12 +66,11 @@ describe "authenticated" do
 
   context "admin" do
     let!(:admin) do
-    Admin.create(first_name: "Rich",
-                 last_name: "Shea",
-                 email: "bryce@gmail.com",
-                 password: "adminpassword")
+      Admin.create(first_name: "Rich",
+                   last_name: "Shea",
+                   email: "bryce@gmail.com",
+                   password: "adminpassword")
     end
-
 
     it "can be added to the system" do
       visit(new_admin_path(admin))

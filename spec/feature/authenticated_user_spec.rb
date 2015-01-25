@@ -5,12 +5,12 @@ describe "an authenticated user" do
 
   let(:category1) { Category.create(name: "Breakfast") }
   let(:category2) { Category.create(name: "Lunch") }
-  let!(:valid_user) { User.create(
-                      first_name: "Alice",
-                      last_name: "Smith",
-                      email: "rich.shea@gmail.com",
-                      password: "password"
-                      )}
+  let!(:valid_user) do
+    User.create(first_name: "Alice",
+                last_name: "Smith",
+                email: "rich.shea@gmail.com",
+                password: "password")
+  end
 
   before(:each) do
     category1.items.create(title: "Bacon and Eggs",
@@ -192,8 +192,8 @@ describe "an authenticated user" do
 
   def valid_user_logs_in
     click_link_or_button "Log In"
-    fill_in 'session_email', :with => "rich.shea@gmail.com"
-    fill_in 'session_password', :with => "password"
+    fill_in 'session_email', with: "rich.shea@gmail.com"
+    fill_in 'session_password', with: "password"
     click_link_or_button "Submit"
   end
 end
