@@ -4,11 +4,18 @@ describe "authenticated" do
   include Capybara::DSL
 
   let!(:user) do
-    User.create(first_name: "Rich",
-                last_name: "Shea",
+    User.create(first_name: "Bryce",
+                last_name: "Holcomb",
                 email: "bryce@gmail.com",
-                display_name: "Rich",
-                password: "secret")
+                display_name: "bholcomb",
+                password: "userpassword")
+  end
+
+  let!(:admin) do
+    Admin.create(first_name: "Rich",
+                last_name: "Shea",
+                email: "rich@gmail.com",
+                password: "adminpassword")
   end
 
   before(:each) do
@@ -17,7 +24,6 @@ describe "authenticated" do
   end
 
   context "user" do
-
     it "can add them self to the system" do
       expect(page).to have_content("Log In")
       click_link_or_button "Sign Up"
@@ -35,7 +41,7 @@ describe "authenticated" do
     end
 
     it "can log in if registered" do
-      user_log_in("secret")
+      log_in(user, "userpassword")
       expect(current_path).to eq(root_path)
       within("#flash_notice") do
         expect(page).to have_content("Successfully Logged In")
@@ -43,7 +49,7 @@ describe "authenticated" do
     end
 
     it "can not login with invalid credentials" do
-      user_log_in("incorect_password")
+      log_in(user, "incorect_password")
       expect(current_path).to eq(login_path)
       within("#flash_error") do
         expect(page).to have_content("Invalid Login Credentials")
@@ -51,7 +57,7 @@ describe "authenticated" do
     end
 
     it "can log out" do
-      user_log_in("secret")
+      log_in(user, "userpassword")
       expect(current_path).to eq(root_path)
       within("#flash_notice") do
         expect(page).to have_content("Successfully Logged In")
@@ -65,54 +71,39 @@ describe "authenticated" do
   end
 
   context "admin" do
-    let!(:admin) do
-      Admin.create(first_name: "Rich",
-                   last_name: "Shea",
-                   email: "bryce@gmail.com",
-                   password: "adminpassword")
-    end
-
-    let!(:admin2) do
-      Admin.create(first_name: "Rich",
-                   last_name: "Shea",
-                   email: "rich@gmail.com",
-                   password: "adminpassword")
-    end
-
-    it "can login" do
-      visit(login_path)
-      fill_in "Email",    with: "bryce@gmail.com"
-      fill_in "Password", with: "adminpassword"
-      click_link_or_button "Submit"
-      expect(page).to have_content("Welcome Rich")
-    end
-
-    it "can not view other admins profile" do
-      allow_any_instance_of(ApplicationController).to receive(:current_admin).
-                                                   and_return(admin2)
-
-      visit(admin_path(admin))
-    end
-
-    it "can create a new admin" do
-      visit(new_admin_path(admin))
-      click_link_or_button "New Admin"
-      fill_in "admin_first_name", with: "Kit"
-      fill_in "admin_last_name", with: "Pearson"
-      fill_in "admin_email", with: "kit@kit.com"
-      fill_in "admin_password", with: "password"
-      click_link_or_button "Submit"
+    it "can log in if registered" do
+      log_in(admin, "adminpassword")
+      expect(current_path).to eq(root_path)
       within("#flash_notice") do
-        expect(page).to have_content "Admin created successfully."
+        expect(page).to have_content("Successfully Logged In")
       end
     end
 
+    it "can not login with invalid credentials" do
+      log_in(admin, "incorect_password")
+      expect(current_path).to eq(login_path)
+      within("#flash_error") do
+        expect(page).to have_content("Invalid Login Credentials")
+      end
+    end
+
+    it "can log out" do
+      log_in(admin, "adminpassword")
+      expect(current_path).to eq(root_path)
+      within("#flash_notice") do
+        expect(page).to have_content("Successfully Logged In")
+      end
+      click_link_or_button "Log Out"
+      expect(current_path).to eq(root_path)
+      within("#flash_notice") do
+        expect(page).to have_content("Successfully Logged Out")
+      end
+    end
   end
 
-  def user_log_in(password)
-    fill_in "session[email]", with: "bryce@gmail.com"
+  def log_in(user_type, password)
+    fill_in "session[email]", with: user_type.email
     fill_in "session[password]", with: password
     click_link_or_button "Submit"
   end
-
 end
