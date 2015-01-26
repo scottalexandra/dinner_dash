@@ -3,7 +3,7 @@ require "rails_helper"
 describe "an admin" do
   include Capybara::DSL
 
-  it "create item listings including a name, description, price, and category" do
+  it "create item listings including name, description, price, and category" do
     Category.create(name: "Breakfast")
     Category.create(name: "Brunch")
     visit new_admin_item_path
@@ -35,8 +35,8 @@ describe "an admin" do
     Category.create(name: "Brunch")
     category = Category.create(name: "Breakfast")
     item = Item.create(title: "Bacon",
-                description: "desc",
-                price: 1000)
+                       description: "desc",
+                       price: 1000)
     item.categories << category
     visit item_path(item)
     click_link_or_button "Edit"
