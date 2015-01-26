@@ -65,8 +65,11 @@ describe "an admin" do
   xit "cannot create an item with invalid params" do
   end
 
-  xit "can create an item listing with a photo" do
+  xit "can create an item listing and attach it to a category" do
     # add this to the first spec
+  end
+
+  xit "can create an item listing with a photo" do
   end
 
   it "modify existing items’ name, description, price, and category" do
@@ -172,5 +175,3 @@ describe "an admin" do
   xit "cannot modify any personal data aside from their own" do
   end
 end
-
-
