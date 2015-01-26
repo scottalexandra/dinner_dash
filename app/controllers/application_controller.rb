@@ -20,10 +20,5 @@ class ApplicationController < ActionController::Base
     @current_user
   end
 
-  # def current_admin
-  #   @current_user ||= Admin.find(session[:admin_id]) if session[:admin_id]
-  # end
-
-
   helper_method :current_user
 end

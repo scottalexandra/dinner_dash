@@ -110,7 +110,6 @@ describe "an authenticated user" do
       expect(page).to have_content("1")
     end
     click_add_to_cart_link("Breakfast")
-    # save_and_open_page
     click_link_or_button "Log Out"
     within("#flash_notice") do
       expect(page).to have_content("Successfully Logged Out")
@@ -193,8 +192,8 @@ describe "an authenticated user" do
 
   def valid_user_logs_in
     click_link_or_button "Log In"
-    fill_in 'session_email', with: "rich@gmail.com"
-    fill_in 'session_password', with: "password"
+    fill_in "session_email", with: "rich@gmail.com"
+    fill_in "session_password", with: "password"
     click_link_or_button "Submit"
   end
 end

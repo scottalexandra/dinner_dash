@@ -94,7 +94,6 @@ describe "authenticated" do
       visit(admin_path(admin))
     end
 
-
     it "can create a new admin" do
       visit(new_admin_path(admin))
       click_link_or_button "New Admin"
