@@ -5,10 +5,13 @@
       <h3><%= category.name %></h3>
       <ul>
         <% category.items.each do |item| %>
-          <li><%= item.title %>
-          <%= link_to "Add to Cart", carts_path(item_id: item.id), :method => :post %>
-          <%= link_to "Remove From Cart", carts_path(item_id: item.id), :method => :delete %>
-          </li>
+          <div id="test"%>
+            <li><%= item.title %>
+                <%= image_tag "#{item.image}" %>
+            <%= link_to "Add to Cart", carts_path(item_id: item.id), :method => :post %>
+            <%= link_to "Remove From Cart", carts_path(item_id: item.id), :method => :delete %>
+            </li>
+          </div>
         <% end %>
       </ul>
     </div>

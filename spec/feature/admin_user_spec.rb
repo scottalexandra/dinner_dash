@@ -27,8 +27,7 @@ describe "an admin" do
     # add this to the first spec
   end
 
-  xit "can create an item listing with a photo" do
-    # add this to the first spec
+  xit "can create an item listing with a photo" do    
   end
 
   xit "modify existing items’ name, description, price, and photo" do
@@ -110,5 +109,3 @@ describe "an admin" do
   xit "cannot modify any personal data aside from their own" do
   end
 end
-
-
