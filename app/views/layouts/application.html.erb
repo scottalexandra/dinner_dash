@@ -13,7 +13,8 @@
 
   <body>
     <%= render "menu" %>
-    <%= render "admin_dashboard" %>
+
+    <%= render "admin_dashboard" if current_user && current_user.admin? %>
 
     <% flash.each do |name, msg| %>
       <%= content_tag :div, msg, id: "flash_#{name}" %>

@@ -15,7 +15,7 @@ describe "Admin" do
     click_link_or_button "Log In"
   end
 
-  xit "can log in if registered" do
+  it "can log in if registered" do
     fill_in "session[email]", with: "bryce@gmail.com"
     fill_in "session[password]", with: "secret"
     click_link_or_button "Submit"
@@ -23,9 +23,12 @@ describe "Admin" do
     within("#flash_notice") do
       expect(page).to have_content("Successfully Logged In")
     end
+    expect(page).to have_content("Admin Dashboard")
+    expect(page).to have_content("Welcome Rich")
+    expect(page).to_not have_content("Log In")
   end
 
-  xit "can not login with invalid credentials" do
+  it "can not login with invalid credentials" do
     fill_in "session[email]", with: "rich.shea@gmail.com"
     fill_in "session[password]", with: "invalid password"
     click_link_or_button "Submit"
@@ -35,7 +38,7 @@ describe "Admin" do
     end
   end
 
-  xit "can log out" do
+  it "can log out" do
     fill_in "session[email]", with: "bryce@gmail.com"
     fill_in "session[password]", with: "secret"
     click_link_or_button "Submit"
@@ -48,5 +51,7 @@ describe "Admin" do
     within("#flash_notice") do
       expect(page).to have_content("Successfully Logged Out")
     end
+    expect(page).to have_content("Log In")
+    expect(page).to have_content("Sign Up")
   end
 end
