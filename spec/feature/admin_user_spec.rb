@@ -12,7 +12,7 @@ describe "an admin" do
     fill_in "item[price]", with: "1000"
     select "Breakfast", from: "item_categories"
     select "Brunch", from: "item_categories"
-    click_link_or_button "Create"
+    click_link_or_button "Create Item"
     within("#flash_notice") do
       expect(page).to have_content("Successfully Created")
     end
@@ -32,6 +32,7 @@ describe "an admin" do
   end
 
   it "modify existing items’ name, description, price, and category" do
+    Category.create(name: "Brunch")
     category = Category.create(name: "Breakfast")
     item = Item.create(title: "Bacon",
                 description: "desc",
@@ -40,16 +41,11 @@ describe "an admin" do
     visit item_path(item)
     click_link_or_button "Edit"
     expect(current_path).to eq(edit_admin_item_path(item))
-    expect(page).to have_content("Bacon")
-    expect(page).to have_content("desc")
-    expect(page).to have_content("$10.00")
-    expect(page).to have_content("Breakfast")
     fill_in "item[title]", with: "Eggs"
     fill_in "item[description]", with: "a different description"
     fill_in "item[price]", with: "2000"
-    Category.create(name: "Brunch")
     select "Brunch", from: "item_categories"
-    click_link_or_button "Update"
+    click_link_or_button "Update Item"
     expect(page).to have_content("Successfully Updated")
     expect(page).to have_content("Eggs")
     expect(page).to have_content("a different description")

@@ -21,6 +21,19 @@ class Admin::ItemsController < ApplicationController
 
   def edit
     @item = Item.find(params[:id])
+    @categories = Category.all
+  end
+
+  def update
+    @item = Item.find(params[:id])
+    @item.update(item_params)
+    @item.categories = []
+    params[:item][:categories].shift
+    params[:item][:categories].each do |cat_id|
+      @item.categories << Category.find(cat_id.to_i)
+    end
+    flash[:notice] = "Successfully Updated"
+    redirect_to item_path(@item)
   end
 
   def item_params
