@@ -1,6 +1,6 @@
 <div class="category">
   <h2>Name: <%= @category.name %></h2>
-  <% if @category.items %>
+  <% if !@category.items.empty? %>
     <h3>Items:</h3>
     <% @category.items.each do |item| %>
       <h4><%= item.title %></h4>
