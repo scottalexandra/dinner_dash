@@ -164,12 +164,15 @@ describe "An unauthenticated user" do
 
   it "can view items with photo next to item" do
     category = Category.create(name: "Dessert")
-    category.items.create(title: "Bacon Ice Cream", description: "Very delicious", price: 5000, image: "bacon_ice_cream.jpg")
+    category.items.create(title: "Bacon Ice Cream",
+                          description: "Very delicious",
+                          price: 5000,
+                          image: "bacon_ice_cream.jpg")
     click_link_or_button "Menu"
     within("div.categories") do
       within("div##{category.name}") do
         within("div#test") do
-          expect(page).to have_css('img', visible: true)
+          expect(page).to have_css("img", visible: true)
         end
       end
     end
