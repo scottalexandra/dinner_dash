@@ -31,7 +31,31 @@ describe "an admin" do
     # add this to the first spec
   end
 
-  xit "modify existing items’ name, description, price, and photo" do
+  it "modify existing items’ name, description, price, and category" do
+    category = Category.create(name: "Breakfast")
+    item = Item.create(title: "Bacon",
+                description: "desc",
+                price: 1000)
+    item.categories << category
+    visit item_path(item)
+    click_link_or_button "Edit"
+    expect(current_path).to eq(edit_admin_item_path(item))
+    expect(page).to have_content("Bacon")
+    expect(page).to have_content("desc")
+    expect(page).to have_content("$10.00")
+    expect(page).to have_content("Breakfast")
+    fill_in "item[title]", with: "Eggs"
+    fill_in "item[description]", with: "a different description"
+    fill_in "item[price]", with: "2000"
+    Category.create(name: "Brunch")
+    select "Brunch", from: "item_categories"
+    click_link_or_button "Update"
+    expect(page).to have_content("Successfully Updated")
+    expect(page).to have_content("Eggs")
+    expect(page).to have_content("a different description")
+    expect(page).to have_content("$20.00")
+    expect(page).to have_content("Brunch")
+    expect(page).to_not have_content("Breakfast")
   end
 
   it "create named categories for items" do
