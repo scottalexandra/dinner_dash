@@ -13,9 +13,9 @@ describe "authenticated" do
 
   let!(:admin) do
     Admin.create(first_name: "Rich",
-                last_name: "Shea",
-                email: "rich@gmail.com",
-                password: "adminpassword")
+                 last_name: "Shea",
+                 email: "rich@gmail.com",
+                 password: "adminpassword")
   end
 
   before(:each) do
