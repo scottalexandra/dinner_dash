@@ -3,13 +3,16 @@ require "rails_helper"
 describe "an admin" do
   include Capybara::DSL
 
-  it "create item listings including a name, description, price" do
+  it "create item listings including name, description, price, and category" do
     Category.create(name: "Breakfast")
+    Category.create(name: "Brunch")
     visit new_admin_item_path
     fill_in "item[title]", with: "New Item"
     fill_in "item[description]", with: "Description"
     fill_in "item[price]", with: "1000"
-    click_link_or_button "Create"
+    select "Breakfast", from: "item_categories"
+    select "Brunch", from: "item_categories"
+    click_link_or_button "Create Item"
     within("#flash_notice") do
       expect(page).to have_content("Successfully Created")
     end
@@ -17,6 +20,7 @@ describe "an admin" do
       expect(page).to have_content("New Item")
       expect(page).to have_content("Description")
       expect(page).to have_content("$10.00")
+      expect(page).to have_content("Breakfast")
     end
   end
 
@@ -27,10 +31,30 @@ describe "an admin" do
     # add this to the first spec
   end
 
-  xit "can create an item listing with a photo" do    
+  xit "can create an item listing with a photo" do
   end
 
-  xit "modify existing items’ name, description, price, and photo" do
+  it "modify existing items’ name, description, price, and category" do
+    Category.create(name: "Brunch")
+    category = Category.create(name: "Breakfast")
+    item = Item.create(title: "Bacon",
+                       description: "desc",
+                       price: 1000)
+    item.categories << category
+    visit item_path(item)
+    click_link_or_button "Edit"
+    expect(current_path).to eq(edit_admin_item_path(item))
+    fill_in "item[title]", with: "Eggs"
+    fill_in "item[description]", with: "a different description"
+    fill_in "item[price]", with: "2000"
+    select "Brunch", from: "item_categories"
+    click_link_or_button "Update Item"
+    expect(page).to have_content("Successfully Updated")
+    expect(page).to have_content("Eggs")
+    expect(page).to have_content("a different description")
+    expect(page).to have_content("$20.00")
+    expect(page).to have_content("Brunch")
+    expect(page).to have_content("Breakfast")
   end
 
   it "create named categories for items" do
