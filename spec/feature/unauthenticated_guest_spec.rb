@@ -31,7 +31,16 @@ describe "An unauthenticated user" do
     end
   end
 
-  xit "can browse items for a specific category (category show page)" do
+  it "can browse items for a specific category (category show page)" do
+    click_link_or_button "Menu"
+    within("div.categories") do
+      click_link_or_button "Breakfast"
+    end
+    expect(current_path).to eq(category_path(category1.id))
+    within("div.item") do
+      expect(page).to have_content("Bacon and Eggs")
+      expect(page).to have_content("The classic breakfast dish")
+    end
   end
 
   it "can add an item to a cart" do
