@@ -183,7 +183,7 @@ describe "an authenticated user" do
     click_link_or_button "Menu"
     within(".categories") do
       within("div##{category}") do
-        within("li:first") do
+        within("div.item") do
           click_link "Add to Cart"
         end
       end

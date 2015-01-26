@@ -171,7 +171,7 @@ describe "An unauthenticated user" do
     click_link_or_button "Menu"
     within("div.categories") do
       within("div##{category.name}") do
-        within("div#test") do
+        within("div.item") do
           expect(page).to have_css("img", visible: true)
         end
       end
@@ -183,7 +183,7 @@ describe "An unauthenticated user" do
     click_link_or_button "Menu"
     within(".categories") do
       within("div##{category}") do
-        within("li:first") do
+        within("div.item") do
           click_link "Add to Cart"
         end
       end
