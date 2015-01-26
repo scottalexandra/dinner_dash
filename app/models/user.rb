@@ -13,4 +13,8 @@ class User < ActiveRecord::Base
             allow_blank: true
 
   has_many :orders
+
+  def admin?
+    false
+  end
 end

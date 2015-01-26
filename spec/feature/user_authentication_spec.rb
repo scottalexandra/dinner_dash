@@ -72,7 +72,30 @@ describe "authenticated" do
                    password: "adminpassword")
     end
 
-    it "can be added to the system" do
+    let!(:admin2) do
+      Admin.create(first_name: "Rich",
+                   last_name: "Shea",
+                   email: "rich@gmail.com",
+                   password: "adminpassword")
+    end
+
+    it "can login" do
+      visit(login_path)
+      fill_in "Email",    with: "bryce@gmail.com"
+      fill_in "Password", with: "adminpassword"
+      click_link_or_button "Submit"
+      expect(page).to have_content("Welcome Rich")
+    end
+
+    it "can not view other admins profile" do
+      allow_any_instance_of(ApplicationController).to receive(:current_admin).
+                                                   and_return(admin2)
+
+      visit(admin_path(admin))
+    end
+
+
+    it "can create a new admin" do
       visit(new_admin_path(admin))
       click_link_or_button "New Admin"
       fill_in "admin_first_name", with: "Kit"
@@ -84,6 +107,7 @@ describe "authenticated" do
         expect(page).to have_content "Admin created successfully."
       end
     end
+
   end
 
   def user_log_in(password)
