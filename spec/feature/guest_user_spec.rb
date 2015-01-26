@@ -176,7 +176,6 @@ describe "An unauthenticated user" do
         end
       end
     end
-    save_and_open_page
   end
 
   def click_add_to_cart_link(category)
