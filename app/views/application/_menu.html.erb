@@ -8,11 +8,11 @@
   <section class="top-bar-section">
     <!-- Right Nav Section -->
     <ul class="right">
-      <% if current_user_ %>
+      <% if current_user && current_user.admin? %>
+        <li class="active"><%= link_to "Log Out", logout_path, :method => :delete %></li>
+      <% elsif current_user %>
         <li class="active"><%= link_to "Log Out", logout_path, :method => :delete %></li>
         <li class="active"><%= link_to "Settings", user_path(current_user.id) %></li>
-      <% elsif current_admin %>
-        <li class="active"><%= link_to "Log Out", logout_path, :method => :delete %></li>
       <% else %>
         <li class="active"><%= link_to "Log In", login_path %></li>
         <li class="active"><%= link_to "Sign Up", new_user_path %></li>
