@@ -27,7 +27,6 @@ class Admin::ItemsController < ApplicationController
   def update
     @item = Item.find(params[:id])
     @item.update(item_params)
-    @item.categories = []
     params[:item][:categories].shift
     params[:item][:categories].each do |cat_id|
       @item.categories << Category.find(cat_id.to_i)
@@ -35,6 +34,8 @@ class Admin::ItemsController < ApplicationController
     flash[:notice] = "Successfully Updated"
     redirect_to item_path(@item)
   end
+
+  private
 
   def item_params
     params.require(:item).permit(:title, :description, :price, :categories)

@@ -51,7 +51,7 @@ describe "an admin" do
     expect(page).to have_content("a different description")
     expect(page).to have_content("$20.00")
     expect(page).to have_content("Brunch")
-    expect(page).to_not have_content("Breakfast")
+    expect(page).to have_content("Breakfast")
   end
 
   it "create named categories for items" do
