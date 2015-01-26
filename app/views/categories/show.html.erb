@@ -9,7 +9,7 @@
           <%= image_tag "#{item.image}" %>
         </div>
         <p><%= item.description %></p>
-        <h3><%= "$#{item.currency}" %></h3>
+        <h3><%= number_to_currency item.currency %></h3>
           <%= link_to "Add to Cart", carts_path(item_id: item.id), :method => :post %> |
           <%= link_to "Remove From Cart", carts_path(item_id: item.id), :method => :delete %>
       </div>
