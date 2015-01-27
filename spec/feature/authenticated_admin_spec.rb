@@ -114,7 +114,7 @@ describe "an admin" do
   xit "cannot create a category with invalid params" do
   end
 
-  xit "assign items to categories or remove them from categories. Products can belong to more than one category" do
+  xit "assign items to categories or remove them from categories" do
     category = Category.create(name: "Breakfast")
     item = Item.create(title: "Bacon",
                        description: "desc",
@@ -139,7 +139,7 @@ describe "an admin" do
     end
   end
 
-  it "retire an item from being sold, which hides it from browsing by any non-administrator" do
+  it "retire an item from being sold, which hides it from non-administrator" do
     category = Category.create(name: "Breakfast")
     item = Item.create(title: "Bacon",
                        description: "desc",
