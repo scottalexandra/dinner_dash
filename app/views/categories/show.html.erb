@@ -1,18 +1,5 @@
 <div class="category">
-  <h2>Name: <%= @category.name %></h2>
-  <% if !@category.items.empty? %>
-    <h3>Items:</h3>
-    <% @category.items.each do |item| %>
-      <div class="item">
-        <h4><%= item.title %></h4>
-        <div id="image">
-          <%= image_tag "#{item.image}" %>
-        </div>
-        <p><%= item.description %></p>
-        <h3><%= number_to_currency item.currency %></h3>
-          <%= link_to "Add to Cart", carts_path(item_id: item.id), :method => :post %> |
-          <%= link_to "Remove From Cart", carts_path(item_id: item.id), :method => :delete %>
-      </div>
-    <% end %>
-  <% end %>
+  <h2><%= @category.name %></h2>
+  <h3>Items:</h3>
+  <%= render partial: "category_items", locals: { category: @category } %>
 </div>
