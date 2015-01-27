@@ -131,8 +131,8 @@ Item.create(title: "Bacon Skewers",
 
 CategoryItem.create(item_id: 16, category_id: 5)
 
-Item.create(title: "Brownies",
-            description: "Chocolate brownies smothered in vanilla icing and topped with bacon!",
+Item.create(title: "Chocolate Brownies",
+            description: "Smothered in vanilla icing and bacon!",
             price: 1000,
             image: "brownies.jpg")
 
