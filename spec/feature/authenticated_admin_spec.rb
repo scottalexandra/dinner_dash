@@ -32,11 +32,12 @@ describe "an admin" do
     end
   end
 
-  xit "can not view other admins profile" do
+  it "can not view other admins profile" do
     allow_any_instance_of(ApplicationController).to receive(:current_user).
                                                  and_return(admin)
 
     visit(admin_path(admin2))
+    expect(current_path).to eq(not_found_path)
   end
 
   it "create item listings including name, description, price, and category" do
@@ -66,7 +67,6 @@ describe "an admin" do
   end
 
   xit "can create an item listing and attach it to a category" do
-    # add this to the first spec
   end
 
   xit "can create an item listing with a photo" do
@@ -121,7 +121,8 @@ describe "an admin" do
   end
 
   context "can view a dashboard with" do
-    xit "the total number of orders by status" do
+
+    it "the total number of orders by status" do
     end
 
     xit "links for each individual order" do
