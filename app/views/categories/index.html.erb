@@ -9,6 +9,7 @@
             <h2><%= item.title %></h2>
               <div id="image">
                 <%= image_tag "#{item.image}" %>
+                <%#= image_tag item.image_url.to_s %>
               </div>
               <p><%= item.description %></p>
               <h3><%= "$#{item.price/100}" %></h3>

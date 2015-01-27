@@ -2,6 +2,11 @@
   <h2>Title: <%= @item.title %></h2>
   <h3>Price: <%= number_to_currency @item.currency %></h3>
   <p>Description: <%= @item.description %></p>
+  <div id="image">
+    <%= image_tag "#{@item.image}" %>
+    <h5>Image Place holder <%= @item.image %></h5>
+    <%= image_tag @item.image_url.to_s %>
+  </div>
   <% if !@item.categories.empty? %>
     <h3>Categories:</h3>
     <% @item.categories.each do |cat| %>

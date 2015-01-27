@@ -4,6 +4,7 @@
       <h3><%= item.title %></h3>
       <p><%= item.description %></p>
     </div>
+    <%= image_tag item.image_url.to_s %>
     <div id="price">
       <h4>Price</h4>
       <h4><%= number_to_currency item.currency %></h4>
