@@ -11,22 +11,6 @@ class Order < ActiveRecord::Base
     end
   end
 
-  def add_line_items_from_cart(cart)
-    cart[:item_id]
-  end
-
-  def item_ids(order_items)
-    item_ids = []
-    order_items.each do |item|
-      item_ids << item.id
-    end
-  end
-
-  def find_order_items(order_id)
-    @order = Order.find(id: order_id.to_i)
-    @order.items
-  end
-
   def total(line_items)
     line_items.map do |line_item|
       (line_item.quantity * line_item.item.price)/100
