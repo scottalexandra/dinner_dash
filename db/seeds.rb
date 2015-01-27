@@ -123,3 +123,38 @@ Item.create(title: "Apple Bacon Galette",
             image: "galette.jpg")
 
 CategoryItem.create(item_id: 15, category_id: 5)
+
+Item.create(title: "Bacon Skewers",
+description: "Maple Chocolate Bacon Skewers",
+price: 900,
+image: "skewers.jpg")
+
+CategoryItem.create(item_id: 16, category_id: 5)
+
+Item.create(title: "Brownies",
+description: "Chocolate brownies smothered in vanilla icing and topped with bacon!",
+price: 1000,
+image: "brownies.jpg")
+
+CategoryItem.create(item_id: 17, category_id: 5)
+
+Item.create(title: "Ice Cream",
+description: "Bacon infused ice cream",
+price: 1400,
+image: "ice_cream2.jpg")
+
+CategoryItem.create(item_id: 18, category_id: 5)
+
+Item.create(title: "Chipotle Bacon Spicy Pecan Caramel Apples",
+description: "Spicy sweet savory crunchy tart crisp",
+price: 1100,
+image: "apples.jpg")
+
+CategoryItem.create(item_id: 19, category_id: 5)
+
+Item.create(title: "Bacon Treats",
+description: "Chocolate covered bacon strips with sprinkles",
+price: 1600,
+image: "choc_covered.jpg")
+
+CategoryItem.create(item_id: 20, category_id: 5)
