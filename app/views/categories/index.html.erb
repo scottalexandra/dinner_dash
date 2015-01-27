@@ -1,38 +1,16 @@
-<h1>Categories index</h1>
+<h1>Categories</h1>
 <div class="categories">
   <% @categories.each do |category| %>
     <div id=<%= category.name %>>
-      <h3><%= link_to "#{category.name}", category_path(category.id) %></h3>
+      <h2><%= link_to "#{category.name}", category_path(category.id) %></h2>
       <div class="shown_items">
-        <% category.items.each do |item| %>
-          <div class="item" id="<%= item.title %>">
-            <h2><%= item.title %></h2>
-              <div id="image">
-                <%= image_tag item.image_url(:thumb).to_s %>
-              </div>
-              <p><%= item.description %></p>
-            <h3><%= number_to_currency item.currency %></h3>
-            <%= link_to "Add to Cart", carts_path(item_id: item.id), method: :post %> |
-            <%= link_to "Remove From Cart", carts_path(item_id: item.id), method: :delete %>
-            <%= link_to "Hide", admin_item_path(item), method: :delete %>
-          </div>
-        <% end %>
+        <%= render partial: "category_items", locals: { category: category } %>
       </div>
     </div>
   <% end %>
 </div>
 <% if !@hidden_items.empty? %>
-  <hr>
   <div class="hidden_items">
-    <% @hidden_items.each do |item| %>
-      <div class="item" id="<%= item.title %>">
-        <h2><%= item.title %></h2>
-        <div id="image">
-          <%= image_tag "#{item.image}" %>
-        </div>
-        <p><%= item.description %></p>
-        <h3><%= number_to_currency item.currency %></h3>
-      </div>
-    <% end %>
+    <%= render partial: "hidden_items", locals: { hidden_items: @hidden_items } %>
   </div>
 <% end %>

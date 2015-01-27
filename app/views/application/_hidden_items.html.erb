@@ -1,0 +1,13 @@
+<hr>
+<h1>Hidden Items</h1>
+<% hidden_items.each do |item| %>
+  <div class="item" id="<%= item.title %>">
+    <h3><%= item.title %></h3>
+    <h4><%= number_to_currency item.currency %></h4>
+    <div id="image">
+      <%= image_tag "#{item.image}" %>
+    </div>
+    <p><%= item.description %></p>
+    <%= link_to "Reveal", admin_item_path(item) %>
+  </div>
+<% end %>
