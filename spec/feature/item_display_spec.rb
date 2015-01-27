@@ -24,7 +24,6 @@ describe "An unauthenticated user" do
     click_link_or_button "Menu"
     within("div.categories") do
       within("div#Lunch") do
-      #within("div##{category.name}") do
         within("div.item") do
           within("div#image") do
             expect(page).to have_selector('img[alt="Blt"]')
