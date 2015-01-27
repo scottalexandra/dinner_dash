@@ -164,7 +164,7 @@ describe "an admin" do
     expect(page).to_not have_content("$10.00")
   end
 
-  it "can get to the admin items index page to edit them" do
+  it "can click and edit button on the cat index page" do
     category = Category.create(name: "Breakfast")
     item = Item.create(title: "Bacon",
                        description: "desc",
@@ -172,7 +172,7 @@ describe "an admin" do
     category.items << item
     allow_any_instance_of(ApplicationController).to receive(:current_user).
                                                  and_return(admin)
-    visit admin_items_path
+    visit categories_path
     expect(page).to have_content("Bacon")
     expect(page).to have_content("desc")
     expect(page).to have_content("$10.00")
