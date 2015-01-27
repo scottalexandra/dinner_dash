@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   resources :users
   resources :orders
 
+
   resources :admins
 
   namespace :admin do
@@ -21,4 +22,8 @@ Rails.application.routes.draw do
     resources :items, only: [:edit, :update, :create, :new, :delete]
     resources :orders
   end
+
+  # namespace :user do
+    # resources :orders, only: [:edit, :update, :create, :new, :delete]
+  # end
 end
