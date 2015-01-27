@@ -1,10 +1,3 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
-#
-# Examples:
-#
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
 Admin.create([{first_name: "Admin_first",
 							last_name: "Admin_last",
 							email: "admin@email.com",
@@ -45,12 +38,12 @@ categories = Category.create([{ name: "Breakfast" },
 path = 'app/assets/images/'
 
 # #breakfast items ----------------------------------------------------------
-categories[1].items.create(title: "Bagel Sandwich",
+Item.create(title: "Bagel Sandwich",
 		description: "Toasted bagel, fried egg, and bacon",
 		price: 750,
 		image: open(path + "bagel_sandwich.jpg"))
 
-# CategoryItem.create(item_id: 1, category_id: 1)
+CategoryItem.create(item_id: 1, category_id: 1)
 
 Item.create(title: "Bacon and Egg Cups",
 		description: "Bacon cups filled with egg",
@@ -155,3 +148,38 @@ Item.create(title: "Apple Bacon Galette",
 		image: open(path + "galette.jpg"))
 
 CategoryItem.create(item_id: 15, category_id: 5)
+
+Item.create(title: "Bacon Skewers",
+            description: "Maple Chocolate Bacon Skewers",
+            price: 900,
+            image: open(path + "skewers.jpg"))
+
+CategoryItem.create(item_id: 16, category_id: 5)
+
+Item.create(title: "Chocolate Brownies",
+            description: "Smothered in vanilla icing and bacon!",
+            price: 1000,
+            image: open(path + "brownies.jpg"))
+
+CategoryItem.create(item_id: 17, category_id: 5)
+
+Item.create(title: "Ice Cream",
+            description: "Bacon infused ice cream",
+            price: 1400,
+            image: open(path + "ice_cream2.jpg"))
+
+CategoryItem.create(item_id: 18, category_id: 5)
+
+Item.create(title: "Chipotle Bacon Spicy Pecan Caramel Apples",
+            description: "Spicy sweet savory crunchy tart crisp",
+            price: 1100,
+            image: open(path + "apples.jpg"))
+
+CategoryItem.create(item_id: 19, category_id: 5)
+
+Item.create(title: "Bacon Treats",
+            description: "Chocolate covered bacon strips with sprinkles",
+            price: 1600,
+            image: open(path + "choc_covered.jpg"))
+
+CategoryItem.create(item_id: 20, category_id: 5)
