@@ -7,7 +7,7 @@
     </div>
     <p><%= item.description %></p>
     <%= link_to "Add to Cart", carts_path(item_id: item.id), method: :post %> |
-    <%= link_to "Remove From Cart", carts_path(item_id: item.id), method: :delete %>
+    <%= link_to "Remove From Cart", carts_path(item_id: item.id), method: :delete %> |
     <%= link_to "Hide", admin_item_path(item), method: :delete %>
   </div>
 <% end %>

@@ -42,6 +42,13 @@ class Admin::ItemsController < ApplicationController
     redirect_to categories_path
   end
 
+  def show
+    @item = Item.hidden.find(params[:id])
+    @item.update(status: "show")
+    flash[:notice] = "Item Successfully Revealed"
+    redirect_to categories_path
+  end
+
   private
 
   def item_params
