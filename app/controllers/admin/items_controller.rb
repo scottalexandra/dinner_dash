@@ -35,6 +35,13 @@ class Admin::ItemsController < ApplicationController
     redirect_to item_path(@item)
   end
 
+  def destroy
+    @item = Item.find(params[:id])
+    @item.update(status: "hidden")
+    flash[:notice] = "Item Successfully Hidden"
+    redirect_to categories_path
+  end
+
   private
 
   def item_params

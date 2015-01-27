@@ -31,7 +31,16 @@ describe "An unauthenticated user" do
     end
   end
 
-  xit "can browse items for a specific category (category show page)" do
+  it "can browse items for a specific category (category show page)" do
+    click_link_or_button "Menu"
+    within("div.categories") do
+      click_link_or_button "Breakfast"
+    end
+    expect(current_path).to eq(category_path(category1.id))
+    within("div.item") do
+      expect(page).to have_content("Bacon and Eggs")
+      expect(page).to have_content("The classic breakfast dish")
+    end
   end
 
   it "can add an item to a cart" do
@@ -132,13 +141,29 @@ describe "An unauthenticated user" do
     end
   end
 
-  xit "cannot view another person's private data" do
+  it "cannot view another person's private data" do
+    user = User.create(first_name: "Rich",
+                       last_name: "Shea",
+                       email: "bryce@gmail.com",
+                       display_name: "Rich",
+                       password: "secret")
+    visit user_path(user)
+    expect(current_path).to eq(not_found_path)
   end
 
-  xit "cannot checkout" do
+  it "cannot checkout" do
+    click_add_to_cart_link("Breakfast")
+    click_add_to_cart_link("Breakfast")
+    click_link_or_button "Cart:"
+    expect(current_path).to eq(new_order_path)
+    click_link_or_button "Checkout"
+    expect(current_path).to eq(login_path)
+    within("#flash_notice") do
+      expect(page).to have_content("Please login or signup to continue with checkout")
+    end
   end
 
-  xit "cannot view the admin dashboard" do
+  it "cannot view the admin dashboard" do
   end
 
   xit "cannot create an item" do
@@ -160,23 +185,6 @@ describe "An unauthenticated user" do
   end
 
   xit "cannot make themselves an admin" do
-  end
-
-  it "can view items with photo next to item" do
-    category = Category.create(name: "Dessert")
-    category.items.create(title: "Bacon Ice Cream",
-                          description: "Very delicious",
-                          price: 5000,
-                          image: "bacon_ice_cream.jpg")
-    click_link_or_button "Menu"
-    within("div.categories") do
-      within("div##{category.name}") do
-        within("div.item") do
-          expect(page).to have_css("img", visible: true)
-        end
-      end
-    end
-    save_and_open_page
   end
 
   def click_add_to_cart_link(category)
