@@ -122,9 +122,7 @@ describe "an admin" do
 
   context "can view a dashboard with" do
 
-
     it "the total number of orders by status" do
-
     end
 
     xit "links for each individual order" do
@@ -174,7 +172,7 @@ describe "an admin" do
       end
     end
   end
-
+  
   xit "cannot modify any personal data aside from their own" do
   end
 end
