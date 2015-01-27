@@ -1,0 +1,10 @@
+<% hidden_items.each do |item| %>
+  <div class="item" id="<%= item.title %>">
+    <h2><%= item.title %></h2>
+    <div id="image">
+      <%= image_tag "#{item.image}" %>
+    </div>
+    <p><%= item.description %></p>
+    <h3><%= number_to_currency item.currency %></h3>
+  </div>
+<% end %>

@@ -169,7 +169,7 @@ describe "an admin" do
     end
   end
 
-  xit "retire an item from the category show page" do
+  it "retire an item from the category show page" do
     category = Category.create(name: "Breakfast")
     item = Item.create(title: "Bacon",
                        description: "desc",
@@ -183,6 +183,7 @@ describe "an admin" do
       expect(page).to have_content("desc")
       expect(page).to have_content("$10.00")
     end
+    save_and_open_page
     within("#Bacon") do
       click_link_or_button "Hide"
     end
