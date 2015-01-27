@@ -1,4 +1,9 @@
 class Admin::ItemsController < ApplicationController
+  def index
+    @items = Item.all
+    @hidden_items = Item.hidden
+  end
+
   def new
     @item = Item.new
     @categories = Category.all

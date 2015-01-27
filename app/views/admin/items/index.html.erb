@@ -1,0 +1,24 @@
+<div class="shown_items">
+  <% @items.each do |item| %>
+    <div class="item" id="<%= item.title %>">
+      <h3><%= item.title %></h3>
+      <h4><%= number_to_currency item.currency %></h4>
+      <div id="image">
+        <%= image_tag "#{item.image}" %>
+      </div>
+      <p><%= item.description %></p>
+      <h4>Categories:</h4>
+      <ul>
+        <% item.categories.each do |cat| %>
+          <li><%= cat.name %></li>
+        <% end %>
+      </ul>
+      <%= link_to "Edit", edit_admin_item_path(item) %>
+    </div>
+  <% end %>
+</div>
+<% if !@hidden_items.empty? %>
+  <div class="hidden_items">
+    <%= render partial: "hidden_items", locals: { hidden_items: @hidden_items } %>
+  </div>
+<% end %>

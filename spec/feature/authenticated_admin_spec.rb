@@ -139,29 +139,46 @@ describe "an admin" do
     expect(page).to_not have_content("$10.00")
   end
 
-  xit "can remove items from categories on show page" do
+  it "can remove items from categories on show page" do
     category = Category.create(name: "Breakfast")
     item = Item.create(title: "Bacon",
                        description: "desc",
                        price: 1000)
-    item.categories << category
+    item2 = Item.create(title: "Eggs",
+                        description: "another",
+                        price: 2000)
+    category.items << [item, item2]
     allow_any_instance_of(ApplicationController).to receive(:current_user).
                                                  and_return(admin)
     visit category_path(category)
-    within(".item") do
-      expect(page).to have_content("Bacon")
-      expect(page).to have_content("desc")
-      expect(page).to have_content("$10.00")
-    end
+    expect(page).to have_content("Bacon")
+    expect(page).to have_content("desc")
+    expect(page).to have_content("$10.00")
     within("#Bacon") do
       click_link_or_button "Remove from Category"
     end
+    expect(current_path).to eq(categories_path)
     expect(page).to have_content("Successfully Removed Item from Breakfast")
-    within(".item") do
-      expect(page).to_not have_content("Bacon")
-      expect(page).to_not have_content("desc")
-      expect(page).to_not have_content("$10.00")
-    end
+    expect(page).to_not have_content("Bacon")
+    expect(page).to_not have_content("desc")
+    expect(page).to_not have_content("$10.00")
+  end
+
+  it "can get to the admin items index page to edit them" do
+    category = Category.create(name: "Breakfast")
+    item = Item.create(title: "Bacon",
+                       description: "desc",
+                       price: 1000)
+    category.items << item
+    allow_any_instance_of(ApplicationController).to receive(:current_user).
+                                                 and_return(admin)
+    visit admin_items_path
+    expect(page).to have_content("Bacon")
+    expect(page).to have_content("desc")
+    expect(page).to have_content("$10.00")
+    expect(page).to have_content("Breakfast")
+    click_link_or_button "Edit"
+    expect(current_path).to eq(edit_admin_item_path(item))
   end
 
   it "retire an item from being sold, which hides it from non-administrator" do
