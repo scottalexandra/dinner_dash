@@ -14,8 +14,4 @@ class OrdersController < ApplicationController
       flash[:notice] = "Please login or signup to continue with checkout"
     end
   end
-
-  # def order_params
-    # params.require(:order).permit(:user_id)
-  # end
 end

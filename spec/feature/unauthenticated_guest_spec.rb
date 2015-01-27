@@ -159,8 +159,7 @@ describe "An unauthenticated user" do
     click_link_or_button "Checkout"
     expect(current_path).to eq(login_path)
     within("#flash_notice") do
-      expect(page)
-          .to have_content("Please login or signup to continue with checkout")
+      expect(page).to have_content("Please login or signup to continue with checkout")
     end
   end
 
