@@ -119,6 +119,17 @@ describe "an authenticated user" do
     end
   end
 
+  it "checkout" do
+    allow_any_instance_of(ApplicationController).to receive(:current_user).
+    and_return(valid_user)
+    click_add_to_cart_link("Breakfast")
+    click_link_or_button "Cart:"
+    click_link_or_button "Checkout"
+    within("#flash_notice") do
+      expect(page).to have_content("Your delicious food is on the way")
+    end
+  end
+
   xit "can view their past orders with links to each order" do
   end
 
