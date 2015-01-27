@@ -97,6 +97,18 @@ describe "an admin" do
     expect(page).to have_content("Breakfast")
   end
 
+  xit "add an image to a new item" do
+    allow_any_instance_of(ApplicationController).to receive(:current_user).
+                                                 and_return(admin)
+    visit new_admin_item_path
+    click_link_or_button "Add Item"
+    fill_in "item[title]", with: "Eggs"
+    fill_in "item[description]", with: "a different description"
+    fill_in "item[price]", with: "2000"
+    select "Brunch", from: "item_categories"
+    click_link_or_button "Add Image"
+  end
+
   it "create named categories for items" do
     allow_any_instance_of(ApplicationController).to receive(:current_user).
                                                  and_return(admin)
