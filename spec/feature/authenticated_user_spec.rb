@@ -140,22 +140,22 @@ describe "an authenticated user" do
     within('#item-title') do
       expect(page).to have_content("Bacon and Eggs")
     end
-    within('#item-description') do
+    within("#item-description") do
       expect(page).to have_content("The classic breakfast dish")
     end
-    within('#item-quantity') do
+    within("#item-quantity") do
       expect(page).to have_content("1")
     end
-    within('#item-price') do
+    within("#item-price") do
       expect(page).to have_content("10.00")
     end
-    within('#item-subtotal') do
+    within("#item-subtotal") do
       expect(page).to have_content("10.00")
     end
-    within('#item-total') do
+    within("#item-total") do
       expect(page).to have_content("10.00")
     end
-    within('#order-status') do
+    within("#order-status") do
       expect(page).to have_content("ordered")
     end
   end

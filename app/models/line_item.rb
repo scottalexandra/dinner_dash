@@ -15,6 +15,6 @@ class LineItem < ActiveRecord::Base
   end
 
   def subtotal(price, quantity)
-    price * quantity 
+    price * quantity
   end
 end

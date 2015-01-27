@@ -13,7 +13,7 @@ class Order < ActiveRecord::Base
 
   def total(line_items)
     line_items.map do |line_item|
-      (line_item.quantity * line_item.item.price)/100
+      (line_item.quantity * line_item.item.price) / 100
     end.reduce(:+)
   end
 end
