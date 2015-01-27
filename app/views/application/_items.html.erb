@@ -1,17 +1,16 @@
-<% @items.each do |item| %>
-  <hr><div class="item" id=<%= item.title %>>
-    <div id="description">
-      <h3><%= item.title %></h3>
-      <p><%= item.description %></p>
-    </div>
-    <%= image_tag item.image_url.to_s %>
-    <div id="price">
-      <h4>Price</h4>
-      <h4><%= number_to_currency item.currency %></h4>
-    </div>
-    <div id="quantity">
-      <h4>Quantity</h4>
-      <h4><%= item.quantity %></h4>
-    </div>
-  </div><br>
-<% end %>
+<div class="item" id="<%= item.title %>">
+  <h3><%= item.title %></h3>
+  <h4><%= number_to_currency item.currency %></h4>
+  <div id="image">
+    <%= image_tag "#{item.image}" %>
+  </div>
+  <p><%= item.description %></p>
+  <% if current_user && current_user.admin? %>
+    <%= link_to "Remove from Category", admin_category_path(category, item_id: item.id), method: :patch %> |
+    <%= link_to "Hide", admin_item_path(item), method: :delete %> |
+    <%= link_to "Edit", edit_admin_item_path(item) %>
+  <% else %>
+    <%= link_to "Add to Cart", carts_path(item_id: item.id), method: :post %> |
+    <%= link_to "Remove From Cart", carts_path(item_id: item.id), method: :delete %>
+  <% end %>
+</div>

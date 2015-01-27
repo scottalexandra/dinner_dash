@@ -40,7 +40,7 @@ describe "an admin" do
     expect(current_path).to eq(not_found_path)
   end
 
-  it "create item listings including name, description, price, and category" do
+  it "can create item listings incl name, description, price, and category" do
     Category.create(name: "Breakfast")
     Category.create(name: "Brunch")
     allow_any_instance_of(ApplicationController).to receive(:current_user).
@@ -72,7 +72,7 @@ describe "an admin" do
   xit "can create an item listing with a photo" do
   end
 
-  it "modify existing items’ name, description, price, and category" do
+  it "can modify existing items’ name, description, price, and category" do
     Category.create(name: "Brunch")
     category = Category.create(name: "Breakfast")
     item = Item.create(title: "Bacon",
@@ -97,19 +97,7 @@ describe "an admin" do
     expect(page).to have_content("Breakfast")
   end
 
-  xit "add an image to a new item" do
-    allow_any_instance_of(ApplicationController).to receive(:current_user).
-                                                 and_return(admin)
-    visit new_admin_item_path
-    click_link_or_button "Add Item"
-    fill_in "item[title]", with: "Eggs"
-    fill_in "item[description]", with: "a different description"
-    fill_in "item[price]", with: "2000"
-    select "Brunch", from: "item_categories"
-    click_link_or_button "Add Image"
-  end
-
-  it "create named categories for items" do
+  it "can create named categories for items" do
     allow_any_instance_of(ApplicationController).to receive(:current_user).
                                                  and_return(admin)
     visit new_admin_category_path
@@ -126,29 +114,71 @@ describe "an admin" do
   xit "cannot create a category with invalid params" do
   end
 
-  xit "assign items to categories or remove them from categories" do
+  it "can remove items from categories on index page" do
     category = Category.create(name: "Breakfast")
     item = Item.create(title: "Bacon",
                        description: "desc",
                        price: 1000)
-    item.categories << category
+    item2 = Item.create(title: "Eggs",
+                        description: "another",
+                        price: 2000)
+    category.items << [item, item2]
     allow_any_instance_of(ApplicationController).to receive(:current_user).
                                                  and_return(admin)
     visit categories_path
-    within(".item") do
-      expect(page).to have_content("Bacon")
-      expect(page).to have_content("desc")
-      expect(page).to have_content("$10.00")
-    end
+    expect(page).to have_content("Bacon")
+    expect(page).to have_content("desc")
+    expect(page).to have_content("$10.00")
     within("#Bacon") do
       click_link_or_button "Remove from Category"
     end
-    expect(page).to have_content("Successfully Removed Item from Category")
-    within(".item") do
-      expect(page).to_not have_content("Bacon")
-      expect(page).to_not have_content("desc")
-      expect(page).to_not have_content("$10.00")
+    expect(current_path).to eq(categories_path)
+    expect(page).to have_content("Successfully Removed Item from Breakfast")
+    expect(page).to_not have_content("Bacon")
+    expect(page).to_not have_content("desc")
+    expect(page).to_not have_content("$10.00")
+  end
+
+  it "can remove items from categories on show page" do
+    category = Category.create(name: "Breakfast")
+    item = Item.create(title: "Bacon",
+                       description: "desc",
+                       price: 1000)
+    item2 = Item.create(title: "Eggs",
+                        description: "another",
+                        price: 2000)
+    category.items << [item, item2]
+    allow_any_instance_of(ApplicationController).to receive(:current_user).
+                                                 and_return(admin)
+    visit category_path(category)
+    expect(page).to have_content("Bacon")
+    expect(page).to have_content("desc")
+    expect(page).to have_content("$10.00")
+    within("#Bacon") do
+      click_link_or_button "Remove from Category"
     end
+    expect(current_path).to eq(categories_path)
+    expect(page).to have_content("Successfully Removed Item from Breakfast")
+    expect(page).to_not have_content("Bacon")
+    expect(page).to_not have_content("desc")
+    expect(page).to_not have_content("$10.00")
+  end
+
+  it "can click and edit button on the cat index page" do
+    category = Category.create(name: "Breakfast")
+    item = Item.create(title: "Bacon",
+                       description: "desc",
+                       price: 1000)
+    category.items << item
+    allow_any_instance_of(ApplicationController).to receive(:current_user).
+                                                 and_return(admin)
+    visit categories_path
+    expect(page).to have_content("Bacon")
+    expect(page).to have_content("desc")
+    expect(page).to have_content("$10.00")
+    expect(page).to have_content("Breakfast")
+    click_link_or_button "Edit"
+    expect(current_path).to eq(edit_admin_item_path(item))
   end
 
   it "retire an item from being sold, which hides it from non-administrator" do
@@ -181,7 +211,7 @@ describe "an admin" do
     end
   end
 
-  it "retire an item from the category show page" do
+  it "can retire an item from the category show page" do
     category = Category.create(name: "Breakfast")
     item = Item.create(title: "Bacon",
                        description: "desc",

@@ -1,16 +1,1 @@
-<div class="item">
-  <h2>Title: <%= @item.title %></h2>
-  <h3>Price: <%= number_to_currency @item.currency %></h3>
-  <p>Description: <%= @item.description %></p>
-  <div id="image">
-    <%#= image_tag "#{@item.image}" %>
-    <%= image_tag @item.image_url(:thumb).to_s %>
-  </div>
-  <% if !@item.categories.empty? %>
-    <h3>Categories:</h3>
-    <% @item.categories.each do |cat| %>
-      <h4><%= cat.name %></h4>
-    <% end %>
-  <% end %>
-  <%= link_to "Edit", edit_admin_item_path(@item) %>
-</div>
+<%= render partial: "item_with_categories", locals: { item: @item } %>
