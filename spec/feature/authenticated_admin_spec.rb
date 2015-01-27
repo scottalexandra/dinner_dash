@@ -40,7 +40,7 @@ describe "an admin" do
     expect(current_path).to eq(not_found_path)
   end
 
-  it "can create item listings including name, description, price, and category" do
+  it "can create item listings incl name, description, price, and category" do
     Category.create(name: "Breakfast")
     Category.create(name: "Brunch")
     allow_any_instance_of(ApplicationController).to receive(:current_user).
