@@ -54,6 +54,22 @@ RSpec.describe Item, :type => :model do
     expect(item).to_not be_valid
   end
 
+  it "is not valid without a status" do
+    item = Item.create(title: "another item",
+                       description: "item description",
+                       status: nil,
+                       price: 1000)
+    expect(item).to_not be_valid
+  end
+
+  it "can have hidden items" do
+    item = Item.create(title: "Title",
+                       description: "desc",
+                       price: 1000,
+                       status: "hidden")
+    expect(Item.hidden.count).to eq(1)
+  end
+
   it "can belong to an order" do
     item = Item.new
 

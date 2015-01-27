@@ -115,9 +115,144 @@ describe "an admin" do
   end
 
   xit "assign items to categories or remove them from categories. Products can belong to more than one category" do
+    category = Category.create(name: "Breakfast")
+    item = Item.create(title: "Bacon",
+                       description: "desc",
+                       price: 1000)
+    item.categories << category
+    allow_any_instance_of(ApplicationController).to receive(:current_user).
+                                                 and_return(admin)
+    visit categories_path
+    within(".item") do
+      expect(page).to have_content("Bacon")
+      expect(page).to have_content("desc")
+      expect(page).to have_content("$10.00")
+    end
+    within("#Bacon") do
+      click_link_or_button "Remove from Category"
+    end
+    expect(page).to have_content("Successfully Removed Item from Category")
+    within(".item") do
+      expect(page).to_not have_content("Bacon")
+      expect(page).to_not have_content("desc")
+      expect(page).to_not have_content("$10.00")
+    end
   end
 
-  xit "retire a item from being sold, which hides it from browsing by any non-administrator" do
+  it "retire an item from being sold, which hides it from browsing by any non-administrator" do
+    category = Category.create(name: "Breakfast")
+    item = Item.create(title: "Bacon",
+                       description: "desc",
+                       price: 1000)
+    item.categories << category
+    allow_any_instance_of(ApplicationController).to receive(:current_user).
+                                                 and_return(admin)
+    visit categories_path
+    within(".item") do
+      expect(page).to have_content("Bacon")
+      expect(page).to have_content("desc")
+      expect(page).to have_content("$10.00")
+    end
+    within("#Bacon") do
+      click_link_or_button "Hide"
+    end
+    expect(page).to have_content("Item Successfully Hidden")
+    within(".shown_items") do
+      expect(page).to_not have_content("Bacon")
+      expect(page).to_not have_content("desc")
+      expect(page).to_not have_content("$10.00")
+    end
+    within(".hidden_items") do
+      expect(page).to have_content("Bacon")
+      expect(page).to have_content("desc")
+      expect(page).to have_content("$10.00")
+    end
+  end
+
+  xit "retire an item from the category show page" do
+    category = Category.create(name: "Breakfast")
+    item = Item.create(title: "Bacon",
+                       description: "desc",
+                       price: 1000)
+    item.categories << category
+    allow_any_instance_of(ApplicationController).to receive(:current_user).
+                                                 and_return(admin)
+    visit category_path(category)
+    within(".item") do
+      expect(page).to have_content("Bacon")
+      expect(page).to have_content("desc")
+      expect(page).to have_content("$10.00")
+    end
+    within("#Bacon") do
+      click_link_or_button "Hide"
+    end
+    expect(page).to have_content("Item Successfully Hidden")
+    within(".shown_items") do
+      expect(page).to_not have_content("Bacon")
+      expect(page).to_not have_content("desc")
+      expect(page).to_not have_content("$10.00")
+    end
+    within(".hidden_items") do
+      expect(page).to have_content("Bacon")
+      expect(page).to have_content("desc")
+      expect(page).to have_content("$10.00")
+    end
+  end
+
+  xit "can reveal an item previously hidden from cat index page" do
+    category = Category.create(name: "Breakfast")
+    item = Item.create(title: "Bacon",
+                       description: "desc",
+                       price: 1000,
+                       status: "hidden")
+    item.categories << category
+    allow_any_instance_of(ApplicationController).to receive(:current_user).
+                                                 and_return(admin)
+    visit categories_path
+    within(".hidden_items") do
+      expect(page).to have_content("Bacon")
+      expect(page).to have_content("desc")
+      expect(page).to have_content("$10.00")
+      click_link_or_button "Reveal"
+    end
+    within(".shown_items") do
+      expect(page).to have_content("Bacon")
+      expect(page).to have_content("desc")
+      expect(page).to have_content("$10.00")
+    end
+    within(".hidden_items") do
+      expect(page).to_not have_content("Bacon")
+      expect(page).to_not have_content("desc")
+      expect(page).to_not have_content("$10.00")
+    end
+  end
+
+  xit "can reveal an item previously hidden from cat index page" do
+    category = Category.create(name: "Breakfast")
+    item = Item.create(title: "Bacon",
+                       description: "desc",
+                       price: 1000,
+                       status: "hidden")
+    item.categories << category
+    allow_any_instance_of(ApplicationController).to receive(:current_user).
+                                                 and_return(admin)
+    visit category_path(category)
+    within(".hidden_items") do
+      expect(page).to have_content("Bacon")
+      expect(page).to have_content("desc")
+      expect(page).to have_content("$10.00")
+      click_link_or_button "Reveal"
+    end
+    within(".shown_items") do
+      expect(page).to have_content("Bacon")
+      expect(page).to have_content("desc")
+      expect(page).to have_content("$10.00")
+    end
+    within(".hidden_items") do
+      expect(page).to_not have_content("Bacon")
+      expect(page).to_not have_content("desc")
+      expect(page).to_not have_content("$10.00")
+    end
   end
 
   context "can view a dashboard with" do
