@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "items can be viewed" do
+describe "items viewed" do
   include Capybara::DSL
 
   let(:category1) { Category.create(name: "Breakfast") }
@@ -22,12 +22,40 @@ describe "items can be viewed" do
                            price: 5000,
                            image: open(path + "bacon_ice_cream.jpg"))
     visit root_path
+    click_link_or_button "Menu"
   end
 
-  context 'as a guest user' do
-    it "can view an items image" do
-      click_link_or_button "Menu"
+  context 'by a guest user' do
+    it "can see an items image" do
       expect(page).to have_css('img[src*="bacon_and_egg"]')
     end
+
+    it "can see title and discription" do
+      expect(page).to have_content("Bacon and Eggs")
+      expect(page).to have_content("The classic breakfast dish")
+    end
+
+    xit "can be added to the cart" do
+      within("#cart-contents") do
+        expect(page).to have_content("0")
+      end
+      save_and_open_page
+      within(".item#Bacon") do
+        click_link_or_button "Add to Cart"
+      end
+      within("#cart-contents") do
+        expect(page).to have_content("1")
+      end
+    end
+  end
+
+  context "as a logged in user" do
+    it "does something" do
+
+    end
+
+  # allow_any_instance_of(ApplicationController).to receive(:current_user).
+                                                 # and_return(admin)
+
   end
 end
