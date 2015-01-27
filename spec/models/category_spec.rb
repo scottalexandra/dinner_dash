@@ -9,17 +9,17 @@ RSpec.describe Category, type: :model do
 
   it "has an item" do
     category = Category.create(name: "NewCategory")
-    item = category.items.create(title: "NewTitle",
-                                 description: "new description",
-                                 price: 2000)
+    category.items.create(title: "NewTitle",
+                          description: "new description",
+                          price: 2000)
     expect(category.items.first.title).to eq("NewTitle")
   end
 
   it "shows only the items with status of show" do
     category = Category.create(name: "NewCategory")
-    item = category.items.create(title: "NewTitle",
-                                 description: "new description",
-                                 price: 2000)
+    category.items.create(title: "NewTitle",
+                          description: "new description",
+                          price: 2000)
     item2 = category.items.create(title: "Another",
                                   description: "another description",
                                   price: 2000,
