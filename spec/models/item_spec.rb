@@ -93,8 +93,8 @@ RSpec.describe Item, :type => :model do
 
   it "has a currency that converts cents to dollars" do
     item = Item.create(title: "next item",
-                description: "desc",
-                price: 2000)
+                       description: "desc",
+                       price: 2000)
 
     expect(item.currency).to eq(20)
   end
