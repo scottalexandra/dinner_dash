@@ -172,7 +172,7 @@ describe "an admin" do
       end
     end
   end
-  
+
   xit "cannot modify any personal data aside from their own" do
   end
 end
