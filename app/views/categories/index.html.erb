@@ -21,7 +21,7 @@
     </div>
   <% end %>
 </div>
-<% if @hidden_items %>
+<% if !@hidden_items.empty? %>
   <hr>
   <div class="hidden_items">
     <% @hidden_items.each do |item| %>
