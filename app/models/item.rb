@@ -19,4 +19,6 @@ class Item < ActiveRecord::Base
   def currency
     price / 100
   end
+
+
 end
