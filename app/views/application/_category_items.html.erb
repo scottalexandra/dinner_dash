@@ -6,8 +6,12 @@
       <%= image_tag "#{item.image}" %>
     </div>
     <p><%= item.description %></p>
-    <%= link_to "Add to Cart", carts_path(item_id: item.id), method: :post %> |
-    <%= link_to "Remove From Cart", carts_path(item_id: item.id), method: :delete %> |
-    <%= link_to "Hide", admin_item_path(item), method: :delete %>
+    <% if current_user && current_user.admin? %>
+      <%= link_to "Remove from Category", admin_category_path(category, item_id: item.id), method: :patch %> |
+      <%= link_to "Hide", admin_item_path(item), method: :delete %>
+    <% else %>
+      <%= link_to "Add to Cart", carts_path(item_id: item.id), method: :post %> |
+      <%= link_to "Remove From Cart", carts_path(item_id: item.id), method: :delete %>
+    <% end %>
   </div>
 <% end %>
