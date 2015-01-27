@@ -31,9 +31,9 @@ RSpec.describe Item, :type => :model do
   end
 
   it "is not valid without unique title" do
-    item = Item.create(title: "NewTitle",
-                       description: "new description",
-                       price: 1000)
+    Item.create(title: "NewTitle",
+                description: "new description",
+                price: 1000)
     item2 = Item.new(title: "NewTitle",
                      description: "newer description",
                      price: 1000)
@@ -52,6 +52,22 @@ RSpec.describe Item, :type => :model do
                        description: "item description",
                        price: "werwsd")
     expect(item).to_not be_valid
+  end
+
+  it "is not valid without a status" do
+    item = Item.create(title: "another item",
+                       description: "item description",
+                       status: nil,
+                       price: 1000)
+    expect(item).to_not be_valid
+  end
+
+  it "can have hidden items" do
+    Item.create(title: "Title",
+                description: "desc",
+                price: 1000,
+                status: "hidden")
+    expect(Item.hidden.count).to eq(1)
   end
 
   it "can belong to an order" do
