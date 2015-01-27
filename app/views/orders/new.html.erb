@@ -1,12 +1,12 @@
 <h1>New order</h1>
 
-<% if @items.empty? %>
+<% if @order.items.empty? %>
   <p> Your cart is empty </p>
 <% else %>
   <div class="items">
-    <%= render partial: "items" %>
+    <%= render partial: "order_items" %>
   </div>
   <div id="checkout">
-      <%= link_to "Checkout", orders_path, :method => :post %>
+    <%= link_to "Checkout", orders_path(item_ids: @order.item_ids(@order.items)), method: :post %>
   </div>
 <% end %>
