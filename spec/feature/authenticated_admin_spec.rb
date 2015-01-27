@@ -3,9 +3,48 @@ require "rails_helper"
 describe "an admin" do
   include Capybara::DSL
 
+  let!(:admin) do
+    Admin.create(first_name: "Bryce",
+                 last_name: "Holcomb",
+                 email: "bryce@gmail.com",
+                 password: "password")
+  end
+
+  let!(:admin2) do
+    Admin.create(first_name: "Rich",
+                 last_name: "Shea",
+                 email: "rich@gmail.com",
+                 password: "adminpassword")
+  end
+
+  it "can create a new admin" do
+    allow_any_instance_of(ApplicationController).to receive(:current_user).
+                                                 and_return(admin)
+    visit root_path
+    click_link_or_button "New Admin"
+    fill_in "admin_first_name", with: "Kit"
+    fill_in "admin_last_name", with: "Pearson"
+    fill_in "admin_email", with: "kit@kit.com"
+    fill_in "admin_password", with: "password"
+    click_link_or_button "Submit"
+    within("#flash_notice") do
+      expect(page).to have_content "Admin created successfully."
+    end
+  end
+
+  it "can not view other admins profile" do
+    allow_any_instance_of(ApplicationController).to receive(:current_user).
+                                                 and_return(admin)
+
+    visit(admin_path(admin2))
+    expect(current_path).to eq(not_found_path)
+  end
+
   it "create item listings including name, description, price, and category" do
     Category.create(name: "Breakfast")
     Category.create(name: "Brunch")
+    allow_any_instance_of(ApplicationController).to receive(:current_user).
+                                                 and_return(admin)
     visit new_admin_item_path
     fill_in "item[title]", with: "New Item"
     fill_in "item[description]", with: "Description"
@@ -28,7 +67,6 @@ describe "an admin" do
   end
 
   xit "can create an item listing and attach it to a category" do
-    # add this to the first spec
   end
 
   xit "can create an item listing with a photo" do
@@ -41,6 +79,8 @@ describe "an admin" do
                        description: "desc",
                        price: 1000)
     item.categories << category
+    allow_any_instance_of(ApplicationController).to receive(:current_user).
+                                                 and_return(admin)
     visit item_path(item)
     click_link_or_button "Edit"
     expect(current_path).to eq(edit_admin_item_path(item))
@@ -58,6 +98,8 @@ describe "an admin" do
   end
 
   it "create named categories for items" do
+    allow_any_instance_of(ApplicationController).to receive(:current_user).
+                                                 and_return(admin)
     visit new_admin_category_path
     fill_in "category[name]", with: "Breakfast"
     click_link_or_button "Create"
@@ -79,7 +121,8 @@ describe "an admin" do
   end
 
   context "can view a dashboard with" do
-    xit "the total number of orders by status" do
+
+    it "the total number of orders by status" do
     end
 
     xit "links for each individual order" do

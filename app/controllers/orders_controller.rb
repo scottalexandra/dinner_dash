@@ -7,4 +7,11 @@ class OrdersController < ApplicationController
       @items << item
     end
   end
+
+  def create
+    if current_user.nil?
+      redirect_to login_path
+      flash[:notice] = "Please login or signup to continue with checkout"
+    end
+  end
 end
