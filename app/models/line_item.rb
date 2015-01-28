@@ -11,7 +11,7 @@ class LineItem < ActiveRecord::Base
   end
 
   def price
-    item.price / 100
+    item.currency
   end
 
   def subtotal(price, quantity)

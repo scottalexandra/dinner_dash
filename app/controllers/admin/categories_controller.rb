@@ -14,12 +14,6 @@ class Admin::CategoriesController < ApplicationController
     end
   end
 
-  private
-
-  def category_params
-    params.require(:category).permit(:name)
-  end
-
   def update
     @category = Category.find(params[:id])
     @item = Item.find(params[:item_id])
@@ -27,4 +21,11 @@ class Admin::CategoriesController < ApplicationController
     flash[:notice] = "Successfully Removed Item from #{@category.name}"
     redirect_to categories_path
   end
+
+  private
+
+  def category_params
+    params.require(:category).permit(:name)
+  end
+
 end

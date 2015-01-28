@@ -125,7 +125,6 @@ describe "an authenticated user" do
     click_add_to_cart_link("Breakfast")
     click_link_or_button "Cart:"
     click_link_or_button "Checkout"
-    save_and_open_page
     within("#flash_notice") do
       expect(page).to have_content("Your delicious food is on the way")
     end
