@@ -47,7 +47,7 @@ describe "An unauthenticated user" do
       click_link_or_button "Breakfast"
     end
     expect(current_path).to eq(category_path(category1.id))
-    within("#Bacon") do
+    within("#item_1") do
       expect(page).to have_content("Bacon")
       expect(page).to have_content("The classic breakfast dish")
     end
@@ -72,7 +72,7 @@ describe "An unauthenticated user" do
   it "can remove an item from a cart" do
     click_add_to_cart_link("Breakfast")
     visit new_order_path
-    within("#Bacon") do
+    within("#item_1") do
       click_link "Remove From Cart"
     end
     within("#cart-contents") do
