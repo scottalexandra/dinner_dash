@@ -1,5 +1,4 @@
-<div class="panel" id="<%= item.title %>">
-
+<%= div_for item, class: "panel" do %>
   <h3><%= item.title %></h3>
   <h4><%= number_to_currency item.currency %></h4>
   <div id="image">
@@ -13,4 +12,4 @@
   <% else %>
     <%= link_to "Add to Cart", carts_path(item_id: item.id), method: :post %>
   <% end %>
-</div>
+<% end %>

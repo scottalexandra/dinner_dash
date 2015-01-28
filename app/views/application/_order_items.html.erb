@@ -1,5 +1,5 @@
 <% order.items.each do |item| %>
-  <div class="panel" id= <%= item.title %> >
+  <%= div_for item, class: "panel" do %>
     <h3><%= item.title %></h3>
     <div id="image">
       <%= image_tag "#{item.image}" %>
@@ -16,5 +16,5 @@
       <h4><%= item.quantity %></h4>
     </div>
     <%= link_to "Remove From Cart", carts_path(item_id: item.id), method: :delete %>
-  </div><br>
+  <% end %>
 <% end %>

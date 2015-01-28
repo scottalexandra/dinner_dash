@@ -56,7 +56,7 @@ describe "an admin" do
     within("#flash_notice") do
       expect(page).to have_content("Successfully Created")
     end
-    within("#BLT") do
+    within("#item_1") do
       expect(page).to have_content("BLT")
       expect(page).to have_content("Description")
       expect(page).to have_content("$10.00")
@@ -130,7 +130,7 @@ describe "an admin" do
     expect(page).to have_content("Bacon")
     expect(page).to have_content("desc")
     expect(page).to have_content("$10.00")
-    within("#Bacon") do
+    within("#item_1") do
       click_link_or_button "Remove from Category"
     end
     expect(current_path).to eq(categories_path)
@@ -155,7 +155,7 @@ describe "an admin" do
     expect(page).to have_content("Bacon")
     expect(page).to have_content("desc")
     expect(page).to have_content("$10.00")
-    within("#Bacon") do
+    within("#item_1") do
       click_link_or_button "Remove from Category"
     end
     expect(current_path).to eq(categories_path)
@@ -191,12 +191,12 @@ describe "an admin" do
     allow_any_instance_of(ApplicationController).to receive(:current_user).
                                                  and_return(admin)
     visit categories_path
-    within("#Bacon") do
+    within("#item_1") do
       expect(page).to have_content("Bacon")
       expect(page).to have_content("desc")
       expect(page).to have_content("$10.00")
     end
-    within("#Bacon") do
+    within("#item_1") do
       click_link_or_button "Hide"
     end
     expect(page).to have_content("Item Successfully Hidden")
@@ -221,12 +221,12 @@ describe "an admin" do
     allow_any_instance_of(ApplicationController).to receive(:current_user).
                                                  and_return(admin)
     visit category_path(category)
-    within("#Bacon") do
+    within("#item_1") do
       expect(page).to have_content("Bacon")
       expect(page).to have_content("desc")
       expect(page).to have_content("$10.00")
     end
-    within("#Bacon") do
+    within("#item_1") do
       click_link_or_button "Hide"
     end
     expect(page).to have_content("Item Successfully Hidden")

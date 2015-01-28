@@ -61,7 +61,7 @@ describe "an authenticated user" do
   it "can remove an item from a cart" do
     click_add_to_cart_link("Breakfast")
     visit new_order_path
-    within("#Bacon") do
+    within("#item_1") do
       click_link "Remove From Cart"
     end
     within("#cart-contents") do
