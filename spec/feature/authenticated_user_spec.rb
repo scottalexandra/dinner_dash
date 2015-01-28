@@ -167,10 +167,33 @@ describe "an authenticated user" do
 
   context "can view the order page with" do
 
-    xit "items with quantity ordered and line-item subtotals" do
+    it "items with quantity ordered and line-item subtotals" do
+      allow_any_instance_of(ApplicationController).to receive(:current_user).
+                                                      and_return(valid_user)
+      click_add_to_cart_link("Breakfast")
+      click_link_or_button "Cart:"
+      click_link_or_button "Checkout"
+      within("#item-quantity") do
+        expect(page).to have_content("1")
+      end
+      within("#item-subtotal") do
+        expect(page).to have_content("$10.00")
+      end
     end
 
-    xit "items with links to each item description page" do
+    it "items with links to each item description page" do
+      allow_any_instance_of(ApplicationController).to receive(:current_user).
+      and_return(valid_user)
+      click_add_to_cart_link("Breakfast")
+      click_link_or_button "Cart:"
+      click_link_or_button "Checkout"
+      within("#item-title") do
+        click_link_or_button "Bacon and Eggs"
+      end
+      expect(current_path).to eq(categories_path)
+      within("#Breakfast") do
+        expect(page).to have_content("Bacon and Eggs")
+      end
     end
 
     xit "the current status of the order" do

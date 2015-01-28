@@ -2,7 +2,7 @@
 
 <% @order.line_items.each do |line_item| %>
   <div id="item-title">
-    Title: <%= line_item.title %>
+    Title: <%=link_to line_item.title, categories_path(anchor: "item_#{line_item.item_id}") %>
   </div>
   <div id="item-description">
     Description: <%= line_item.description %>
