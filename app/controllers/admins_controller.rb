@@ -6,6 +6,7 @@ class AdminsController < ApplicationController
 
   def new
     @admin = Admin.new
+    authorize! :read, @admin
   end
 
   def create

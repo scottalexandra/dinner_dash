@@ -2,6 +2,7 @@ class Admin::ItemsController < ApplicationController
   def new
     @item = Item.new
     @categories = Category.all
+    authorize! :read, @admin
   end
 
   def create
@@ -22,6 +23,7 @@ class Admin::ItemsController < ApplicationController
   def edit
     @item = Item.find(params[:id])
     @categories = Category.all
+    authorize! :read, @admin
   end
 
   def update
@@ -33,6 +35,7 @@ class Admin::ItemsController < ApplicationController
     end
     flash[:notice] = "Successfully Updated"
     redirect_to item_path(@item)
+    authorize! :read, @admin
   end
 
   def destroy
