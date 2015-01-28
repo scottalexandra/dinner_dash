@@ -27,7 +27,15 @@ RSpec.describe Cart, type: :model do
   it "can have an item removed" do
     cart = Cart.new(nil)
     cart.add_item("1")
+    cart.add_item("1")
     cart.remove_item("1")
-    expect(cart.data).to eq("1" => 0)
+    expect(cart.data).to eq("1" => 1)
+  end
+
+  it "removes the item when quantity is zero" do
+    cart = Cart.new(nil)
+    cart.add_item("1")
+    cart.remove_item("1")
+    expect(cart.data).to eq({})
   end
 end
