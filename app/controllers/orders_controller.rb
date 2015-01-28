@@ -11,10 +11,8 @@ class OrdersController < ApplicationController
   def create
     if current_user
       @order = Order.new(user_id: current_user.id)
-      params[:item_ids].each do |item_id|
-        item = Item.find(item_id.to_i)
-        @order.items << item
-      end
+      line_items = @order.create_line_items(@cart.data)
+      @order.line_items << line_items
       if @order.save
         flash[:notice] = "Your delicious food is on the way"
         redirect_to order_path(@order.id)
@@ -29,5 +27,6 @@ class OrdersController < ApplicationController
   end
 
   def show
+    @order = Order.find(params[:id])
   end
 end

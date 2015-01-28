@@ -29,7 +29,6 @@ class Admin::CategoriesController < ApplicationController
     authorize! :read, @admin
   end
 
-  private
   def category_params
     params.require(:category).permit(:name)
   end
