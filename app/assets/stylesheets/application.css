@@ -26,6 +26,10 @@
   margin-right: auto;
 }
 
+.panel {
+  clear: both;
+}
+
 div {
   display: inline-block;
 }
