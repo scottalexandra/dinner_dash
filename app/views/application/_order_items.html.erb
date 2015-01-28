@@ -1,5 +1,8 @@
-<% @order.items.each do |item| %>
+<% order.items.each do |item| %>
   <hr><div class="order_item" id= <%= item.title %> >
+    <div id="image">
+      <%= image_tag "#{item.image}" %>
+    </div>
     <div id="description">
       <h3><%= item.title %></h3>
       <p><%= item.description %></p>
