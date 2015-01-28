@@ -16,6 +16,6 @@ class Cart
 
   def remove_item(item_id)
     @data[item_id] -= 1
-    @data.delete_if { |item, quantity| quantity == 0 }
+    @data.delete_if { |_item, quantity| quantity == 0 }
   end
 end
