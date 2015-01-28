@@ -18,6 +18,6 @@ class Order < ActiveRecord::Base
   end
 
   def format_order_number(order_id)
-    order_id.to_s.rjust(5,"0")
+    order_id.to_s.rjust(5, "0")
   end
 end
