@@ -185,6 +185,7 @@ describe "An unauthenticated user" do
   end
 
   xit "cannot make themselves an admin" do
+    visit
   end
 
   def click_add_to_cart_link(category)

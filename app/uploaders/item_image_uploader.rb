@@ -9,6 +9,10 @@ class ItemImageUploader < CarrierWave::Uploader::Base
     "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
   end
 
+  def default_url
+    ActionController::Base.helpers.asset_path("fallback/default_image.png")
+  end
+
   # Process files as they are uploaded:
   # process :scale => [200, 300]
   #
@@ -18,7 +22,7 @@ class ItemImageUploader < CarrierWave::Uploader::Base
 
   # Create different versions of your uploaded files:
   version :thumb do
-    process resize_to_fit: [150, 150]
+    process resize_to_fit: [200, 200]
   end
 
   def extension_white_list
