@@ -13,7 +13,7 @@ describe "an authenticated user" do
   end
 
   before(:each) do
-    category1.items.create(title: "Bacon and Eggs",
+    category1.items.create(title: "Bacon",
                            description: "The classic breakfast dish",
                            price: 1000)
     category2.items.create(title: "BLT",
@@ -29,7 +29,7 @@ describe "an authenticated user" do
     within("div.categories") do
       within("div#Breakfast") do
         expect(page).to have_content category1.name
-        expect(page).to have_content "Bacon and Eggs"
+        expect(page).to have_content "Bacon"
       end
       within("div#Lunch") do
         expect(page).to have_content category2.name
@@ -60,14 +60,15 @@ describe "an authenticated user" do
 
   it "can remove an item from a cart" do
     click_add_to_cart_link("Breakfast")
-    within(".categories") do
-      within("div#Breakfast") do
-        click_link "Remove From Cart"
-      end
+    visit new_order_path
+    within("#Bacon") do
+      click_link "Remove From Cart"
     end
     within("#cart-contents") do
       expect(page).to have_content("0")
     end
+    expect(current_path).to eq(new_order_path)
+    expect(page).to_not have_content("Bacon")
   end
 
   it "can view their own page" do
@@ -137,7 +138,7 @@ describe "an authenticated user" do
     click_link_or_button "Cart:"
     click_link_or_button "Checkout"
     within("#item-title") do
-      expect(page).to have_content("Bacon and Eggs")
+      expect(page).to have_content("Bacon")
     end
     within("#item-description") do
       expect(page).to have_content("The classic breakfast dish")
@@ -246,9 +247,7 @@ describe "an authenticated user" do
     click_link_or_button "Menu"
     within(".categories") do
       within("div##{category}") do
-        within("div.item") do
           click_link "Add to Cart"
-        end
       end
     end
   end
