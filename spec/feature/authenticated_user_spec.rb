@@ -167,13 +167,15 @@ describe "an authenticated user" do
   end
 
   context "can view the order page with" do
-
-    it "items with quantity ordered and line-item subtotals" do
+    before(:each) do
       allow_any_instance_of(ApplicationController).to receive(:current_user).
-                                                      and_return(valid_user)
+      and_return(valid_user)
       click_add_to_cart_link("Breakfast")
       click_link_or_button "Cart:"
       click_link_or_button "Checkout"
+    end
+
+    it "items with quantity ordered and line-item subtotals" do
       within("#item-quantity") do
         expect(page).to have_content("1")
       end
@@ -183,27 +185,30 @@ describe "an authenticated user" do
     end
 
     it "items with links to each item description page" do
-      allow_any_instance_of(ApplicationController).to receive(:current_user).
-      and_return(valid_user)
-      click_add_to_cart_link("Breakfast")
-      click_link_or_button "Cart:"
-      click_link_or_button "Checkout"
       within("#item-title") do
-        click_link_or_button "Bacon and Eggs"
+        click_link_or_button "Bacon"
       end
       expect(current_path).to eq(categories_path)
       within("#Breakfast") do
-        expect(page).to have_content("Bacon and Eggs")
+        expect(page).to have_content("Bacon")
       end
     end
 
-    xit "the current status of the order" do
+    it "the current status of the order" do
+      within("#order-status") do
+        expect(page).to have_content("ordered")
+      end
     end
 
-    xit "order total price" do
+    it "order total price" do
+      within("#item-total") do
+        expect(page).to have_content("$10.00")
+      end
     end
 
     xit "date/time order was submitted" do
+      within("#order-submit-time") do
+      end
     end
 
     xit "a timestamp when that action took place if completed or cancelled" do
