@@ -121,7 +121,7 @@ describe "an authenticated user" do
 
   it "checkout" do
     allow_any_instance_of(ApplicationController).to receive(:current_user).
-    and_return(valid_user)
+                                                    and_return(valid_user)
     click_add_to_cart_link("Breakfast")
     click_link_or_button "Cart:"
     click_link_or_button "Checkout"
@@ -130,7 +130,36 @@ describe "an authenticated user" do
     end
   end
 
-  xit "can view their past orders with links to each order" do
+  it "can view their order after checkout" do
+    allow_any_instance_of(ApplicationController).to receive(:current_user).
+                                                    and_return(valid_user)
+    click_add_to_cart_link("Breakfast")
+    click_link_or_button "Cart:"
+    click_link_or_button "Checkout"
+    within("#item-title") do
+      expect(page).to have_content("Bacon and Eggs")
+    end
+    within("#item-description") do
+      expect(page).to have_content("The classic breakfast dish")
+    end
+    within("#item-quantity") do
+      expect(page).to have_content("1")
+    end
+    within("#item-price") do
+      expect(page).to have_content("$10.00")
+    end
+    within("#item-subtotal") do
+      expect(page).to have_content("$10.00")
+    end
+    within("#item-total") do
+      expect(page).to have_content("$10.00")
+    end
+    within("#order-status") do
+      expect(page).to have_content("ordered")
+    end
+  end
+
+  xit "can view past orders with links to each order" do
   end
 
   xit "can view particular orders (order show page)" do
