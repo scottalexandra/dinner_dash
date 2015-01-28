@@ -45,7 +45,8 @@ describe "an admin" do
     Category.create(name: "Brunch")
     allow_any_instance_of(ApplicationController).to receive(:current_user).
                                                  and_return(admin)
-    visit new_admin_item_path
+    visit root_path
+    click_link_or_button "New Item"
     fill_in "item[title]", with: "New Item"
     fill_in "item[description]", with: "Description"
     fill_in "item[price]", with: "1000"

@@ -1,8 +1,8 @@
 class Admin::ItemsController < ApplicationController
   def new
     @item = Item.new
+    authorize! :new, @item
     @categories = Category.all
-    authorize! :read, @admin
   end
 
   def create
@@ -23,11 +23,12 @@ class Admin::ItemsController < ApplicationController
   def edit
     @item = Item.find(params[:id])
     @categories = Category.all
-    authorize! :read, @admin
+    authorize! :edit, @item
   end
 
   def update
     @item = Item.find(params[:id])
+    authorize! :update, @item
     @item.update(item_params)
     params[:item][:categories].shift
     params[:item][:categories].each do |cat_id|
@@ -35,11 +36,11 @@ class Admin::ItemsController < ApplicationController
     end
     flash[:notice] = "Successfully Updated"
     redirect_to item_path(@item)
-    authorize! :read, @admin
   end
 
   def destroy
     @item = Item.find(params[:id])
+    # authorize! :destroy, @item
     @item.update(status: "hidden")
     flash[:notice] = "Item Successfully Hidden"
     redirect_to categories_path
