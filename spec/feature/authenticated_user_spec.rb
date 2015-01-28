@@ -146,19 +146,19 @@ describe "an authenticated user" do
       expect(page).to have_content("1")
     end
     within("#item-price") do
-      expect(page).to have_content("10.00")
+      expect(page).to have_content("$10.00")
     end
     within("#item-subtotal") do
-      expect(page).to have_content("10.00")
+      expect(page).to have_content("$10.00")
     end
     within("#item-total") do
-      expect(page).to have_content("10.00")
+      expect(page).to have_content("$10.00")
     end
     within("#order-status") do
       expect(page).to have_content("ordered")
     end
   end
-  
+
   xit "can view past orders with links to each order" do
   end
 
