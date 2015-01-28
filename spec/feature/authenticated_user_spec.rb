@@ -160,10 +160,28 @@ describe "an authenticated user" do
     end
   end
 
-  xit "can view past orders with links to each order" do
+  it "can view past orders with links to each order" do
+    allow_any_instance_of(ApplicationController).to receive(:current_user).
+                                                    and_return(valid_user)
+    order = Order.create(user_id: valid_user.id)
+    order2 = Order.create(user_id: valid_user.id)
+    visit user_path(valid_user.id)
+    click_link_or_button "View past orders"
+    expect(current_path).to eq(orders_path)
+    within(".orders-list") do
+      expect(page).to have_content("Order 00003")
+    end
   end
 
-  xit "can view particular orders (order show page)" do
+  it "can view particular orders (order show page)" do
+    allow_any_instance_of(ApplicationController).to receive(:current_user).
+    and_return(valid_user)
+    order = Order.create(user_id: valid_user.id)
+    visit user_path(valid_user.id)
+    click_link_or_button "View past orders"
+    save_and_open_page
+    click_link_or_button "Order 00005"
+    expect(page).to have_content("Order 00005")
   end
 
   context "can view the order page with" do
@@ -206,8 +224,9 @@ describe "an authenticated user" do
       end
     end
 
-    xit "date/time order was submitted" do
+    it "date/time order was submitted" do
       within("#order-submit-time") do
+        expect(page).to have_content("Order submitted at:")
       end
     end
 

@@ -1,0 +1,5 @@
+<% @orders.each do |order| %>
+<ul>
+  <li><%= link_to "Order #{order.format_order_number(order.id)}", order_path(order.id) %></li>
+</ul>
+<% end %>
