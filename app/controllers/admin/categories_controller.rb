@@ -1,6 +1,7 @@
 class Admin::CategoriesController < ApplicationController
   def new
     @category = Category.new
+    authorize! :new, @category
   end
 
   def create
@@ -14,15 +15,22 @@ class Admin::CategoriesController < ApplicationController
     end
   end
 
-  def category_params
-    params.require(:category).permit(:name)
+  def edit
+    @category = Category.find(params[:id])
+    authorize! :edit, @category
   end
 
   def update
     @category = Category.find(params[:id])
+    authorize! :update, @category
     @item = Item.find(params[:item_id])
     @category.items.delete(@item)
     flash[:notice] = "Successfully Removed Item from #{@category.name}"
     redirect_to categories_path
+  end
+
+  private
+  def category_params
+    params.require(:category).permit(:name)
   end
 end

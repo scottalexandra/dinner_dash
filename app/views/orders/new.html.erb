@@ -7,6 +7,6 @@
     <%= render partial: "order_items" %>
   </div>
   <div id="checkout">
-    <%= link_to "Checkout", orders_path(item_ids: @order.item_ids(@order.items)), method: :post %>
+    <%= link_to "Checkout", orders_path, method: :post %>
   </div>
 <% end %>

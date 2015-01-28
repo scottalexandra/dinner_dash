@@ -3,16 +3,26 @@ require "rails_helper"
 describe "An unauthenticated user" do
   include Capybara::DSL
 
-  let(:category1) { Category.create(name: "Breakfast") }
-  let(:category2) { Category.create(name: "Lunch") }
-
-  before(:each) do
+  let!(:category1) { Category.create(name: "Breakfast") }
+  let!(:category2) { Category.create(name: "Lunch") }
+  let!(:item) do
     category1.items.create(title: "Bacon and Eggs",
                            description: "The classic breakfast dish",
                            price: 1000, image: "bacon_and_eggs.jpg")
+  end
+  let!(:item2) do
     category2.items.create(title: "BLT",
                            description: "The classic lunch dish",
                            price: 1000, image: "blt.jpg")
+  end
+  let!(:valid_user) do
+    User.create(first_name: "Alice",
+                last_name: "Smith",
+                email: "rich@gmail.com",
+                password: "password")
+  end
+
+  before(:each) do
     visit root_path
   end
 
@@ -91,7 +101,12 @@ describe "An unauthenticated user" do
     end
   end
 
-  xit "cannot see the logout button" do
+  it "cannot see the logout button" do
+    expect(page).to_not have_content("Log Out")
+    allow_any_instance_of(ApplicationController).to receive(:current_user).
+                                                    and_return(valid_user)
+    visit root_path
+    expect(page).to have_content("Log Out")
   end
 
   it "can log out which does not clear cart" do
@@ -164,27 +179,46 @@ describe "An unauthenticated user" do
   end
 
   it "cannot view the admin dashboard" do
+    expect(page).to_not have_content("Admin Dashboard")
   end
 
-  xit "cannot create an item" do
+  it "cannot create an item" do
+    visit new_admin_item_path
+    expect(page).to have_content("Page Not Found")
   end
 
-  xit "cannot modify an item" do
+  it "cannot modify an item" do
+    visit edit_admin_item_path(item)
+    expect(page).to have_content("Page Not Found")
   end
 
-  xit "cannot assign an item to a category" do
+  it "cannot assign an item to a category" do
+    visit edit_admin_category_path(category1)
+    expect(page).to have_content("Page Not Found")
+    visit categories_path
+    expect(page).to_not have_content("Add to Category")
   end
 
-  xit "cannot remove an item from a category" do
+  it "cannot remove an item from a category" do
+    visit new_admin_category_path
+    expect(page).to have_content("Page Not Found")
+    visit categories_path
+    expect(page).to_not have_content("Remove from Category")
   end
 
-  xit "cannot create a category" do
+  it "cannot create a category" do
+    visit new_admin_category_path
+    expect(page).to have_content("Page Not Found")
   end
 
-  xit "cannot modify a category" do
+  it "cannot modify a category" do
+    visit edit_admin_category_path(category1)
+    expect(page).to have_content("Page Not Found")
   end
 
-  xit "cannot make themselves an admin" do
+  it "cannot make themselves an admin" do
+    visit new_admin_path
+    expect(page).to have_content("Page Not Found")
   end
 
   def click_add_to_cart_link(category)
@@ -197,5 +231,4 @@ describe "An unauthenticated user" do
       end
     end
   end
-
 end
