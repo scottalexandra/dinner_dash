@@ -47,7 +47,7 @@ describe "an admin" do
                                                  and_return(admin)
     visit root_path
     click_link_or_button "New Item"
-    fill_in "item[title]", with: "New Item"
+    fill_in "item[title]", with: "BLT"
     fill_in "item[description]", with: "Description"
     fill_in "item[price]", with: "1000"
     select "Breakfast", from: "item_categories"
@@ -56,8 +56,8 @@ describe "an admin" do
     within("#flash_notice") do
       expect(page).to have_content("Successfully Created")
     end
-    within(".item") do
-      expect(page).to have_content("New Item")
+    within("#BLT") do
+      expect(page).to have_content("BLT")
       expect(page).to have_content("Description")
       expect(page).to have_content("$10.00")
       expect(page).to have_content("Breakfast")
@@ -191,7 +191,7 @@ describe "an admin" do
     allow_any_instance_of(ApplicationController).to receive(:current_user).
                                                  and_return(admin)
     visit categories_path
-    within(".item") do
+    within("#Bacon") do
       expect(page).to have_content("Bacon")
       expect(page).to have_content("desc")
       expect(page).to have_content("$10.00")
@@ -221,7 +221,7 @@ describe "an admin" do
     allow_any_instance_of(ApplicationController).to receive(:current_user).
                                                  and_return(admin)
     visit category_path(category)
-    within(".item") do
+    within("#Bacon") do
       expect(page).to have_content("Bacon")
       expect(page).to have_content("desc")
       expect(page).to have_content("$10.00")
