@@ -22,6 +22,7 @@ describe "an authenticated user" do
     visit root_path
   end
 
+
   it "can browse all items grouped by category (category index page)" do
     valid_user_logs_in
     click_link_or_button "Menu"
@@ -214,9 +215,19 @@ describe "an authenticated user" do
   end
 
   xit "cannot modify a category" do
+    allow_any_instance_of(ApplicationController).to receive(:current_user).
+                                                    and_return(valid_user)
+    visit root_path
+    expect(page).to have_content("Categroies")
+    visit edit_admin_category_path(category1)
+    expect(page).to have_content("Page Not Found")
   end
 
-  xit "cannot make themselves an admin" do
+  it "cannot make themselves an admin" do
+    allow_any_instance_of(ApplicationController).to receive(:current_user).
+                                                    and_return(valid_user)
+    visit new_admin_path
+    expect(page).to have_content("Page Not Found")
   end
 
   def click_add_to_cart_link(category)

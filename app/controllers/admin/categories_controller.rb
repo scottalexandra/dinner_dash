@@ -6,6 +6,7 @@ class Admin::CategoriesController < ApplicationController
 
   def create
     category = Category.new(category_params)
+
     if category.save
       flash[:notice] = "Successfully Created"
       redirect_to category_path(category)

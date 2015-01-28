@@ -3,8 +3,8 @@ require "rails_helper"
 describe "An unauthenticated user" do
   include Capybara::DSL
 
-  let!(:category1) { Category.create(name: "Breakfast") }
-  let!(:category2) { Category.create(name: "Lunch") }
+  let(:category1) { Category.create(name: "Breakfast") }
+  let(:category2) { Category.create(name: "Lunch") }
   let!(:item) do
     category1.items.create(title: "Bacon and Eggs",
                            description: "The classic breakfast dish",
