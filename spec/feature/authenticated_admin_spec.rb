@@ -269,6 +269,15 @@ describe "an admin" do
   context "can view a dashboard with" do
 
     it "the total number of orders by status" do
+      allow_any_instance_of(ApplicationController).to receive(:current_user).
+                                                           and_return(admin)
+      create_user_orders_with_items
+      visit admin_orders_path
+      expect(page).to have_content("All Orders")
+      within(".orders-list") do
+        expect(page).to have_content("Order 00001")
+        expect(page).to have_content("Status: ordered")
+      end
     end
 
     xit "links for each individual order" do
@@ -320,5 +329,21 @@ describe "an admin" do
   end
 
   xit "cannot modify any personal data aside from their own" do
+  end
+
+  def create_user_orders_with_items
+    order = Order.create(user_id: 1)
+    item = Item.create(title: "Bacon",
+                       description: "desc",
+                       price: 1000,
+                       status: "hidden")
+    item2 = Item.create(title: "Eggs",
+                        description: "another",
+                        price: 2000)
+    order.line_items.create(item_id: item.id, quantity: 1)
+    order.line_items.create(item_id: item2.id, quantity: 2)
+    order2 = Order.create(user_id: 1)
+    order.line_items.create(item_id: 1, quantity: 10)
+    order.line_items.create(item_id: 2, quantity: 11)
   end
 end

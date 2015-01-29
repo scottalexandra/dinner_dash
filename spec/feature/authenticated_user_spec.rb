@@ -169,7 +169,7 @@ describe "an authenticated user" do
     click_link_or_button "View past orders"
     expect(current_path).to eq(orders_path)
     within(".orders-list") do
-      expect(page).to have_content("Order 00003")
+      expect(page).to have_content("Order 00001")
     end
   end
 
@@ -179,9 +179,8 @@ describe "an authenticated user" do
     Order.create(user_id: valid_user.id)
     visit user_path(valid_user.id)
     click_link_or_button "View past orders"
-    save_and_open_page
-    click_link_or_button "Order 00005"
-    expect(page).to have_content("Order 00005")
+    click_link_or_button "Order 00001"
+    expect(page).to have_content("Order 00001")
   end
 
   context "can view the order page with" do
