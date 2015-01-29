@@ -35,12 +35,11 @@ describe "items viewed" do
       expect(page).to have_content("The classic breakfast dish")
     end
 
-    xit "can be added to the cart" do
+    it "can be added to the cart" do
       within("#cart-contents") do
         expect(page).to have_content("0")
       end
-      save_and_open_page
-      within(".item#Bacon") do
+      within("#item_1") do
         click_link_or_button "Add to Cart"
       end
       within("#cart-contents") do
