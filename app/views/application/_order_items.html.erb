@@ -1,6 +1,6 @@
 <% order.items.each do |item| %>
   <%= div_for item, class: "panel" do %>
-    <h3><%= item.title %></h3>
+    <h3><%= link_to item.title, categories_path(anchor: "item_#{item.id}")%></h3>
     <div id="image">
       <%= image_tag "#{item.image}" %>
     </div>

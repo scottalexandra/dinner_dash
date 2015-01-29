@@ -211,10 +211,7 @@ describe "an authenticated user" do
       within("#item-title") do
         click_link_or_button "Bacon"
       end
-      expect(current_path).to eq(categories_path)
-      within("#Breakfast") do
-        expect(page).to have_content("Bacon")
-      end
+      expect(page).to have_content("Bacon")
     end
 
     it "the current status of the order" do
