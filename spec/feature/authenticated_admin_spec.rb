@@ -35,7 +35,6 @@ describe "an admin" do
   it "can not view other admins profile" do
     allow_any_instance_of(ApplicationController).to receive(:current_user).
                                                  and_return(admin)
-
     visit(admin_path(admin2))
     expect(current_path).to eq(not_found_path)
   end
@@ -62,12 +61,6 @@ describe "an admin" do
       expect(page).to have_content("$10.00")
       expect(page).to have_content("Breakfast")
     end
-  end
-
-  xit "cannot create an item with invalid params" do
-  end
-
-  xit "can create an item listing with a photo" do
   end
 
   it "can modify existing items’ name, description, price, and category" do
@@ -108,9 +101,6 @@ describe "an admin" do
     within(".category") do
       expect(page).to have_content("Breakfast")
     end
-  end
-
-  xit "cannot create a category with invalid params" do
   end
 
   it "can remove items from categories on index page" do
@@ -280,14 +270,15 @@ describe "an admin" do
       allow_any_instance_of(ApplicationController).to receive(:current_user).
                                                            and_return(admin)
       create_user_orders_with_items
-      visit admin_orders_path
+      visit root_path
+      click_link_or_button "View All Orders"
       expect(page).to have_content("All Orders")
       expect(page).to have_content("Completed: 2")
       expect(page).to have_content("Ordered: 1")
       expect(page).to have_content("Paid: 0")
     end
 
-    xit "links for each individual order" do
+    it "links for each individual order" do
       allow_any_instance_of(ApplicationController).to receive(:current_user).
                                                            and_return(admin)
       create_user_orders_with_items
@@ -298,65 +289,69 @@ describe "an admin" do
       expect(page).to have_content("Order 00001")
     end
 
-    xit "filter orders to display by status type (for statuses 'ordered', 'paid', 'cancelled', 'completed')" do
-    end
-
     context "a link to" do
-      xit "to 'cancel' individual orders which are currently 'ordered' or 'paid'" do
+      it "to cancel individual orders which are currently 'ordered' or paid" do
+        allow_any_instance_of(ApplicationController).to receive(:current_user).
+        and_return(admin)
+        create_user_orders_with_items
+        visit admin_orders_path
+        within(".orders-list") do
+          click_link_or_button "Order 00001"
+        end
+        within("#order-status") do
+          click_link_or_button "change to paid"
+        end
+        within("#order-status") do
+          expect(page).to have_content("Status: paid")
+        end
       end
 
-      xit "'mark as paid' orders which are 'ordered'" do
+      it "'mark as completed' individual orders which are currently 'paid'" do
+        allow_any_instance_of(ApplicationController).to receive(:current_user).
+                                                              and_return(admin)
+        create_user_orders_with_items
+        visit admin_orders_path
+        within(".orders-list") do
+          click_link_or_button "Order 00001"
+        end
+        within("#order-status") do
+          click_link_or_button "change to complete"
+        end
+        within("#order-status") do
+          expect(page).to have_content("Status: completed")
+        end
       end
 
-      xit "'mark as completed' individual orders which are currently 'paid'" do
-      end
-
-      xit "'cancel' individual orders which are currently 'ordered' or 'paid'" do
+      it "'cancel' individual orders which are currently 'ordered' or 'paid'" do
+        allow_any_instance_of(ApplicationController).to receive(:current_user).
+                                                              and_return(admin)
+        create_user_orders_with_items
+        visit admin_orders_path
+        within(".orders-list") do
+          click_link_or_button "Order 00001"
+        end
+        within("#order-status") do
+          click_link_or_button "change to cancel"
+        end
+        within("#order-status") do
+          expect(page).to have_content("Status: cancelled")
+        end
       end
     end
-
-    context "access details of an individual order, including:" do
-      xit "order date and time" do
-      end
-
-      xit "purchaser full name and email address" do
-      end
-      context "For each item on the order:" do
-        xit "Name linked to the item page" do
-        end
-
-        xit "Quantity" do
-        end
-
-        xit "Price" do
-        end
-
-        xit "Line item subtotal" do
-        end
-      end
-
-      xit "Total for the order" do
-      end
-
-      xit "Status of the order" do
-      end
-    end
-  end
-
-  xit "cannot modify any personal data aside from their own" do
   end
 
   def create_user_orders_with_items
     breakfast = Category.create(name: "Breakfast")
+
     item1 = Item.new(title: "Bacon and Eggs",
                      description: "The classic breakfast dish",
-                     price: 1000,)
+                     price: 1000)
     item1.categories << breakfast
     item1.save
 
-    item2 = Item.new(title: "Bacon and Eggs",
-                     description: "The classic breakfast dish",
-                     price: 1000,)
+    item2 = Item.new(title: "Lunch Item",
+                     description: "The classic Lunch dish",
+                     price: 1000)
     item2.categories << breakfast
     item2.save
 

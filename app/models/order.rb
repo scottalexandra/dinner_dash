@@ -20,4 +20,12 @@ class Order < ActiveRecord::Base
   def format_order_number(order_id)
     order_id.to_s.rjust(5, "0")
   end
+
+  def formatted_created_at
+    created_at.strftime("%m/%d/%Y at: %I:%M %p")
+  end
+
+  def find_user_info(user_id)
+    User.find(user_id)
+  end
 end

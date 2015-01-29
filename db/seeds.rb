@@ -146,7 +146,7 @@ item12.save
 item13 = Item.new(title: "Pecan-Bacon Squares a la Mode",
                   description: "A warm treat topped with delicous vanilla ice cream",
                   price: 1600,
-                  image: open(path + "venison.jpg"))
+                  image: open(path + "ice_cream.jpg"))
 
 item13.categories << categories[4]
 item13.save
