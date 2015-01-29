@@ -11,7 +11,7 @@ class SessionsController < ApplicationController
       assign_session_id(admin, :admin_id)
     else
       flash[:error] = "Invalid Login Credentials"
-      render :new
+      redirect_to :back
     end
   end
 
@@ -24,6 +24,6 @@ class SessionsController < ApplicationController
   def assign_session_id(user_type, id)
     session[id] = user_type.id
     flash[:notice] = "Successfully Logged In"
-    redirect_to root_path
+    redirect_to :back
   end
 end

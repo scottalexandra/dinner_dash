@@ -112,7 +112,6 @@ describe "an authenticated user" do
     end
     click_add_to_cart_link("Breakfast")
     valid_user_logs_in
-    expect(current_path).to eq(root_path)
     within("#cart-contents") do
       expect(page).to have_content("1")
     end
@@ -292,7 +291,6 @@ describe "an authenticated user" do
   end
 
   def valid_user_logs_in
-    click_link_or_button "Log In"
     fill_in "session_email", with: "rich@gmail.com"
     fill_in "session_password", with: "password"
     click_link_or_button "Log In"
