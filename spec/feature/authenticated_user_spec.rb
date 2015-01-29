@@ -224,7 +224,7 @@ describe "an authenticated user" do
 
     it "date/time order was submitted" do
       within("#order-submit-time") do
-        expect(page).to have_content("Order submitted at:")
+        expect(page).to have_content("Order Submitted At:")
       end
     end
   end
