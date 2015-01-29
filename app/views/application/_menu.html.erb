@@ -12,9 +12,26 @@
         <li class="active"><%= link_to "Log Out", logout_path, :method => :delete %></li>
       <% elsif current_user %>
         <li class="active"><%= link_to "Log Out", logout_path, :method => :delete %></li>
+        <li class="divider"></li>
         <li class="active"><%= link_to "Settings", user_path(current_user.id) %></li>
       <% else %>
-        <li class="active"><%= link_to "Log In", login_path %></li>
+        <li class="has-form">
+          <div class="row collapse">
+            <div class="large-4 small-8 columns">
+              <%= form_for :session, url: login_path do |f| %>
+              <%= f.text_field :email, placeholder: "email" %>
+            </div>
+
+            <div class="large-4 small-8 columns">
+              <%= f.password_field :password, placeholder: "Password" %>
+            </div>
+            <div class="large-3 small-3 columns">
+              <%= f.submit "Log In", class: 'active' %>
+              <% end %>
+            </div>
+          </div>
+        </li>
+
         <li class="active"><%= link_to "Sign Up", new_user_path %></li>
       <% end %>
       <li id="cart-contents"><%= link_to "Cart: #{@cart.count(@cart.data)}", new_order_path %></li>
@@ -32,6 +49,8 @@
       <li class="name">
         <h1><%= link_to "Welcome #{current_user.first_name}", root_path if current_user %></h1>
       </li>
+
+
     </ul>
   </section>
 </nav>

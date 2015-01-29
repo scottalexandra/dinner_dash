@@ -3,8 +3,8 @@ require "rails_helper"
 describe "an authenticated user" do
   include Capybara::DSL
 
-  let(:category1) { Category.create(name: "Breakfast") }
-  let(:category2) { Category.create(name: "Lunch") }
+  let!(:category1) { Category.create(name: "Breakfast") }
+  let!(:category2) { Category.create(name: "Lunch") }
   let!(:valid_user) do
     User.create(first_name: "Alice",
                 last_name: "Smith",
@@ -13,12 +13,18 @@ describe "an authenticated user" do
   end
 
   before(:each) do
-    category1.items.create(title: "Bacon",
-                           description: "The classic breakfast dish",
-                           price: 1000)
-    category2.items.create(title: "BLT",
-                           description: "The classic lunch dish",
-                           price: 1000)
+    item = Item.new(title: "Bacon and Eggs",
+              description: "The classic breakfast dish",
+              price: 1000)
+    item.categories << category1
+    item.save
+
+    item = Item.new(title: "BLT",
+              description: "The classic lunch dish",
+              price: 1000)
+    item.categories << category2
+    item.save
+
     visit root_path
   end
 
@@ -240,18 +246,18 @@ describe "an authenticated user" do
   context ", when an item is retired," do
     before(:each) do
       allow_any_instance_of(ApplicationController).to receive(:current_user).
-      and_return(valid_user)
+                                                      and_return(valid_user)
       click_add_to_cart_link("Breakfast")
-      item = Item.find_by(title: "Bacon")
+      item = Item.find_by(title: "Bacon and Eggs")
       item.update(status: "hidden")
       click_link_or_button "Cart:"
       click_link_or_button "Checkout"
     end
 
-    xit "can still access the item page" do
-      click_link_or_button "item_1"
-      expect(current_path).to eq(item_path(item))
-      expect(page).to have_content(item.title)
+    it "can still access the item page" do
+      click_link_or_button "Bacon and Eggs"
+      expect(current_path).to eq(item_path(1))
+      expect(page).to have_content("Bacon and Eggs")
     end
 
     xit "cannot add it to a new cart" do
@@ -304,9 +310,11 @@ describe "an authenticated user" do
     expect(page).to have_content("Page Not Found")
   end
 
-  it "cannot modify a category" do
+  xit "cannot modify a category" do
     allow_any_instance_of(ApplicationController).to receive(:current_user).
                                                     and_return(valid_user)
+    visit root_path
+    expect(page).to have_content("Categories")
     visit edit_admin_category_path(category1)
     expect(page).to have_content("Page Not Found")
   end
@@ -331,6 +339,6 @@ describe "an authenticated user" do
     click_link_or_button "Log In"
     fill_in "session_email", with: "rich@gmail.com"
     fill_in "session_password", with: "password"
-    click_link_or_button "Submit"
+    click_link_or_button "Log In"
   end
 end

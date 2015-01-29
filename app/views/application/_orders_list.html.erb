@@ -1,5 +1,11 @@
-<% @orders.each do |order| %>
-<ul>
-  <li><%= link_to "Order #{order.format_order_number(order.id)}", order_path(order.id) %></li>
-</ul>
+<% @orders.order("status").each do |order| %>
+<div id=<%= order.id %>>
+  <ul>
+    <li>
+      <%= link_to "Order #{order.format_order_number(order.id)}",
+      order_path(order.id) %>
+      Status: <%= order.status %>
+    </li>
+  </ul>
+</div>
 <% end %>
