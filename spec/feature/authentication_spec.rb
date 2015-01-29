@@ -104,6 +104,6 @@ describe "authenticated" do
   def log_in(user_type, password)
     fill_in "session[email]", with: user_type.email
     fill_in "session[password]", with: password
-    click_link_or_button "Submit"
+    click_link_or_button "Log In"
   end
 end
