@@ -17,16 +17,16 @@
       <% else %>
         <li>
           <div class="row collapse">
-              <%= form_for :session, url: {action: "create", controller: "sessions"} do |f| %>
-                <div class="large-4 small-8 columns">
-                  <%= f.text_field :email, placeholder: "email" %>
-                </div>
-              <div class="large-4 small-8 columns">
-                <%= f.password_field :password, placeholder: "Password" %>
-              </div>
-              <div class="large-3 small-3 columns">
-                <%= f.submit "Log In" %>
-              </div>
+            <%= form_for :session, url: {action: "create", controller: "sessions"} do |f| %>
+            <div class="large-4 small-8 columns">
+              <%= f.text_field :email, placeholder: "email" %>
+            </div>
+            <div class="large-4 small-8 columns">
+              <%= f.password_field :password, placeholder: "Password" %>
+            </div>
+            <div class="large-3 small-3 columns">
+              <%= f.submit "Log In" %>
+            </div>
             <% end %>
           </div>
         </li>
