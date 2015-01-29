@@ -11,7 +11,7 @@ class SessionsController < ApplicationController
       assign_session_id(admin, :admin_id)
     else
       flash[:error] = "Invalid Login Credentials"
-      render :new
+      redirect_to root_path
     end
   end
 

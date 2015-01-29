@@ -350,15 +350,13 @@ describe "an admin" do
     breakfast = Category.create(name: "Breakfast")
     item1 = Item.new(title: "Bacon and Eggs",
                     description: "The classic breakfast dish",
-                    price: 1000,
-                    status: "hidden")
+                    price: 1000,)
     item1.categories << breakfast
     item1.save
 
     item2 = Item.new(title: "Bacon and Eggs",
                     description: "The classic breakfast dish",
-                    price: 1000,
-                    status: "hidden")
+                    price: 1000,)
     item2.categories << breakfast
     item2.save
 
