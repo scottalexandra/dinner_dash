@@ -343,7 +343,7 @@ describe "an admin" do
     order.line_items.create(item_id: item.id, quantity: 1)
     order.line_items.create(item_id: item2.id, quantity: 2)
     order2 = Order.create(user_id: 1)
-    order.line_items.create(item_id: 1, quantity: 10)
-    order.line_items.create(item_id: 2, quantity: 11)
+    order2.line_items.create(item_id: 1, quantity: 10)
+    order2.line_items.create(item_id: 2, quantity: 11)
   end
 end
