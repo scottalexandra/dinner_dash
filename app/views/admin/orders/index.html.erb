@@ -3,9 +3,9 @@
 Orders By Status<br>
 
   Ordered: <%= link_to @ordered_orders.count, admin_filtered_orders_path(status: "ordered") %><br>
-     Paid: <%= link_to @paid_orders.count, admin_filtered_orders_path(orders: @paid_orders)%><br>
-Completed: <%= link_to @completed_orders.count, admin_filtered_orders_path(orders: @completed_orders) %><br>
-Cancelled: <%= link_to @cancelled_orders.count, admin_filtered_orders_path(orders: @cancelled_orders) %><br>
+     Paid: <%= link_to @paid_orders.count, admin_filtered_orders_path(status: "paid")%><br>
+Completed: <%= link_to @completed_orders.count, admin_filtered_orders_path(status: "completed") %><br>
+Cancelled: <%= link_to @cancelled_orders.count, admin_filtered_orders_path(status: "cancelled") %><br>
 
 <hr>
 <div class="orders-list">
