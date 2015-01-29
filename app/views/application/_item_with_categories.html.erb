@@ -5,6 +5,7 @@
     <%= image_tag "#{item.image}" %>
   </div>
   <p><%= item.description %></p>
+  <h4>Status: <%= item.status %></h4>
   <h4>Categories:</h4>
   <ul>
     <% item.categories.each do |cat| %>

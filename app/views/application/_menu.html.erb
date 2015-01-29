@@ -15,20 +15,19 @@
         <li class="divider"></li>
         <li class="active"><%= link_to "Settings", user_path(current_user.id) %></li>
       <% else %>
-        <li class="has-form">
+        <li>
           <div class="row collapse">
-            <div class="large-4 small-8 columns">
-              <%= form_for :session, url: login_path do |f| %>
-              <%= f.text_field :email, placeholder: "email" %>
-            </div>
-
-            <div class="large-4 small-8 columns">
-              <%= f.password_field :password, placeholder: "Password" %>
-            </div>
-            <div class="large-3 small-3 columns">
-              <%= f.submit "Log In", class: 'active' %>
-              <% end %>
-            </div>
+              <%= form_for :session, url: {action: "create", controller: "sessions"} do |f| %>
+                <div class="large-4 small-8 columns">
+                  <%= f.text_field :email, placeholder: "email" %>
+                </div>
+              <div class="large-4 small-8 columns">
+                <%= f.password_field :password, placeholder: "Password" %>
+              </div>
+              <div class="large-3 small-3 columns">
+                <%= f.submit "Log In" %>
+              </div>
+            <% end %>
           </div>
         </li>
 
