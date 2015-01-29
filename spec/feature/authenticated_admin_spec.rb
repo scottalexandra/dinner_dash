@@ -349,10 +349,10 @@ describe "an admin" do
                         price: 2000)
     order.line_items.create(item_id: item.id, quantity: 1)
     order.line_items.create(item_id: item2.id, quantity: 2)
-    order2 = Order.create(user_id: 1, status:"completed")
+    order2 = Order.create(user_id: 1, status: "completed")
     order2.line_items.create(item_id: 1, quantity: 10)
     order2.line_items.create(item_id: 2, quantity: 11)
-    order3 = Order.create(user_id: 1, status:"completed")
+    order3 = Order.create(user_id: 1, status: "completed")
     order3.line_items.create(item_id: 1, quantity: 10)
     order3.line_items.create(item_id: 2, quantity: 11)
   end
