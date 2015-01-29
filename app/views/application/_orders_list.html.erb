@@ -1,4 +1,5 @@
-<% @orders.order("status").each do |order| %>
+<% orders.each do |order| %>
+<h3><%= order.status.capitalize %> orders</h3>
 <div id=<%= order.id %>>
   <ul>
     <li>
