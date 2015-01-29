@@ -1,26 +1,5 @@
-<h1>Your Order</h1>
+<h1>Order <%= @order.format_order_number(@order.id) %></h1>
 
-<% @order.line_items.each do |line_item| %>
-  <div id="item-title">
-    Title: <%= line_item.title %>
-  </div>
-  <div id="item-description">
-    Description: <%= line_item.description %>
-  </div>
-  <div id="item-price">
-    Unit Price: <%= number_to_currency line_item.price %>
-  </div>
-  <div id="item-quantity">
-    Quantity: <%= line_item.quantity %>
-  </div>
-  <div id="item-subtotal">
-    Subtotal: <%= number_to_currency line_item.subtotal(line_item.price, line_item.quantity) %>
-  </div>
-<% end %>
-
-<div id="item-total">
-  Total: <%= number_to_currency @order.total(@order.line_items) %>
-</div>
-<div id="order-status">
-  Order Status: <%= @order.status %>
+<div class="order-details">
+  <%= render partial: "order_details", locals: { orders: @orders } %>
 </div>
