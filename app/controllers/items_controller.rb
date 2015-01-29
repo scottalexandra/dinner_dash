@@ -4,6 +4,6 @@ class ItemsController < ApplicationController
   end
 
   def show
-    @item = Item.find(params[:id])
+    @item = Item.unscoped.find(params[:id])
   end
 end

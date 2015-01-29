@@ -48,8 +48,8 @@ RSpec.describe Order, type: :model do
     expect(user.orders.first).to eq(order)
   end
 
-  xit "can have formatted ordernumbers" do
-    order_id = 10
-    expect(format_order_number(order_id)).to eq("00010")
+  it "can have formatted ordernumbers" do
+    order = Order.create(user_id: 1)
+    expect(order.format_order_number(order.id)).to eq("00001")
   end
 end
