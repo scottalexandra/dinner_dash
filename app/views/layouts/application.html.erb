@@ -12,22 +12,37 @@
   </head>
 
   <body>
-    <%= render "menu" %>
     <div class="row">
       <div class="large-12 columns">
 
-        <%= render "admin_dashboard" if current_user && current_user.admin? %>
+        <div class="row">
+          <div class="large-12 columns">
+          <%= render "menu" %>
+          </div>
+        </div>
 
-        <% flash.each do |name, msg| %>
-          <%= content_tag :div, msg, id: "flash_#{name}" %>
-        <% end %>
+          <div class="row">
 
-        <%= yield %>
+            <div class="large-12 small-12 columns">
+              <%= render "admin_dashboard" if current_user && current_user.admin? %>
+            </div>
+            <% flash.each do |name, msg| %>
+              <%= content_tag :div, msg, id: "flash_#{name}" %>
+            <% end %>
 
-        <%= javascript_include_tag "application" %>
+                  <div class="row">
+                    <div class="large-12 columns">
+                      <%= yield %>
+                    </div>
+                  </div>
+
+                  <%= javascript_include_tag "application" %>
+                </div>
+            <%= render "social_footer" %>
+            <%= render "footer" %>
+          </div>
+        </div>
       </div>
     </div>
-    <%= render "social_footer" %>
-    <%= render "footer" %>
   </body>
 </html>

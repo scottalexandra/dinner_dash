@@ -1,10 +1,15 @@
-<h1>Categories</h1>
+<h1>Menu</h1>
 <div class="categories">
   <% @categories.each do |category| %>
+  <div class="large-4 small-8 columns">
     <div id=<%= category.name %>>
-      <h2><%= link_to "#{category.name}", category_path(category.id) %></h2>
-      <div class="shown_items">
-        <%= render partial: "category_items", locals: { category: category } %>
+
+        <div class="panel">
+          <h2><%= link_to "#{category.name}", category_path(category.id) %></h2>
+          <div class="shown_items">
+            <%= render partial: "category_items", locals: { category: category } %>
+          </div>
+        </div>
       </div>
     </div>
   <% end %>
