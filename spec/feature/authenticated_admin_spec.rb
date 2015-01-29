@@ -290,7 +290,7 @@ describe "an admin" do
     end
 
     context "a link to" do
-      it "to 'cancel' individual orders which are currently 'ordered' or 'paid'" do
+      it "to cancel individual orders which are currently 'ordered' or paid" do
         allow_any_instance_of(ApplicationController).to receive(:current_user).
         and_return(admin)
         create_user_orders_with_items
