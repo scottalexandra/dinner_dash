@@ -22,7 +22,6 @@ RSpec.describe User, type: :model do
                              last_name: "Smith",
                              email: "kit@kit.com",
                              password: "password")
-
     expect(invalid_user1).to_not be_valid
     expect(invalid_user2).to_not be_valid
   end
@@ -37,7 +36,6 @@ RSpec.describe User, type: :model do
                              last_name: "Smith",
                              email: "kitAtkit.com",
                              password: "password")
-
     expect(invalid_user1).to_not be_valid
     expect(invalid_user2).to_not be_valid
   end
@@ -47,7 +45,6 @@ RSpec.describe User, type: :model do
                             last_name: "Anderson",
                             email: "kit@kit.com",
                             password: "password")
-
     expect(invalid_user).to_not be_valid
   end
 
@@ -60,12 +57,8 @@ RSpec.describe User, type: :model do
     expect(valid_user.orders).to eq([])
   end
 
-  it "has an order" do
-    item = Item.create(title: "title",
-                       description: "desc",
-                       price: 10)
+  it "can be assigned a specific order" do
     order = Order.new(user_id: valid_user.id)
-    order.items << item
     order.save
     expect(valid_user.orders.first).to eq(order)
   end

@@ -9,18 +9,25 @@ describe "items viewed" do
 
   before(:each) do
     path = 'app/assets/images/'
-    category1.items.create(title: "Bacon and Eggs",
-                           description: "The classic breakfast dish",
-                           price: 1000,
-                           image: open(path + "bacon_and_egg_cups.jpg"))
-    category2.items.create(title: "BLT",
-                           description: "The classic lunch dish",
-                           price: 1000,
-                           image: open(path + "blt.jpg"))
-    category3.items.create(title: "Bacon Ice Cream",
-                           description: "Very delicious",
-                           price: 5000,
-                           image: open(path + "bacon_ice_cream.jpg"))
+    item = Item.new(title: "Bacon and Eggs",
+                    description: "The classic breakfast dish",
+                    price: 1000,
+                    image: open(path + "bacon_and_egg_cups.jpg"))
+    item.categories << category1
+    item.save
+    item2 = Item.new(title: "BLT",
+                     description: "The classic lunch dish",
+                     price: 1000,
+                     image: open(path + "blt.jpg"))
+    item2.categories << category2
+    item2.save
+    item3 = Item.new(title: "Bacon Ice Cream",
+                     description: "Very delicious",
+                     price: 5000,
+                     image: open(path + "bacon_ice_cream.jpg"))
+    item3.categories << category3
+    item3.save
+
     visit root_path
     click_link_or_button "Menu"
   end
@@ -34,28 +41,5 @@ describe "items viewed" do
       expect(page).to have_content("Bacon and Eggs")
       expect(page).to have_content("The classic breakfast dish")
     end
-
-    xit "can be added to the cart" do
-      within("#cart-contents") do
-        expect(page).to have_content("0")
-      end
-      save_and_open_page
-      within(".item#Bacon") do
-        click_link_or_button "Add to Cart"
-      end
-      within("#cart-contents") do
-        expect(page).to have_content("1")
-      end
-    end
-  end
-
-  context "as a logged in user" do
-    it "does something" do
-
-    end
-
-  # allow_any_instance_of(ApplicationController).to receive(:current_user).
-                                                 # and_return(admin)
-
   end
 end

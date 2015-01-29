@@ -3,8 +3,8 @@ require "rails_helper"
 describe "an authenticated user" do
   include Capybara::DSL
 
-  let(:category1) { Category.create(name: "Breakfast") }
-  let(:category2) { Category.create(name: "Lunch") }
+  let!(:category1) { Category.create(name: "Breakfast") }
+  let!(:category2) { Category.create(name: "Lunch") }
   let!(:valid_user) do
     User.create(first_name: "Alice",
                 last_name: "Smith",
@@ -13,15 +13,20 @@ describe "an authenticated user" do
   end
 
   before(:each) do
-    category1.items.create(title: "Bacon and Eggs",
-                           description: "The classic breakfast dish",
-                           price: 1000)
-    category2.items.create(title: "BLT",
-                           description: "The classic lunch dish",
-                           price: 1000)
+    item = Item.new(title: "Bacon and Eggs",
+              description: "The classic breakfast dish",
+              price: 1000)
+    item.categories << category1
+    item.save
+
+    item = Item.new(title: "BLT",
+              description: "The classic lunch dish",
+              price: 1000)
+    item.categories << category2
+    item.save
+
     visit root_path
   end
-
 
   it "can browse all items grouped by category (category index page)" do
     valid_user_logs_in

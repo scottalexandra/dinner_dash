@@ -67,19 +67,17 @@ describe "an admin" do
   xit "cannot create an item with invalid params" do
   end
 
-  xit "can create an item listing and attach it to a category" do
-  end
-
   xit "can create an item listing with a photo" do
   end
 
   it "can modify existing items’ name, description, price, and category" do
     Category.create(name: "Brunch")
     category = Category.create(name: "Breakfast")
-    item = Item.create(title: "Bacon",
+    item = Item.new(title: "Bacon",
                        description: "desc",
                        price: 1000)
     item.categories << category
+    item.save
     allow_any_instance_of(ApplicationController).to receive(:current_user).
                                                  and_return(admin)
     visit item_path(item)
@@ -117,13 +115,16 @@ describe "an admin" do
 
   it "can remove items from categories on index page" do
     category = Category.create(name: "Breakfast")
-    item = Item.create(title: "Bacon",
-                       description: "desc",
-                       price: 1000)
-    item2 = Item.create(title: "Eggs",
-                        description: "another",
-                        price: 2000)
-    category.items << [item, item2]
+    item = Item.new(title: "Bacon",
+                    description: "desc",
+                    price: 1000)
+    item.categories << category
+    item.save
+    item2 = Item.new(title: "Eggs",
+                     description: "another",
+                     price: 2000)
+    item2.categories << category
+    item2.save
     allow_any_instance_of(ApplicationController).to receive(:current_user).
                                                  and_return(admin)
     visit categories_path
@@ -145,10 +146,13 @@ describe "an admin" do
     item = Item.create(title: "Bacon",
                        description: "desc",
                        price: 1000)
-    item2 = Item.create(title: "Eggs",
+    item.categories << category
+    item.save
+    item2 = Item.new(title: "Eggs",
                         description: "another",
                         price: 2000)
-    category.items << [item, item2]
+    item2.categories << category
+    item2.save
     allow_any_instance_of(ApplicationController).to receive(:current_user).
                                                  and_return(admin)
     visit category_path(category)
@@ -165,12 +169,13 @@ describe "an admin" do
     expect(page).to_not have_content("$10.00")
   end
 
-  it "can click and edit button on the cat index page" do
+  it "can navegate to the cat index page" do
     category = Category.create(name: "Breakfast")
-    item = Item.create(title: "Bacon",
+    item = Item.new(title: "Bacon",
                        description: "desc",
                        price: 1000)
-    category.items << item
+    item.categories << category
+    item.save
     allow_any_instance_of(ApplicationController).to receive(:current_user).
                                                  and_return(admin)
     visit categories_path
@@ -184,10 +189,11 @@ describe "an admin" do
 
   it "retire an item from being sold, which hides it from non-administrator" do
     category = Category.create(name: "Breakfast")
-    item = Item.create(title: "Bacon",
+    item = Item.new(title: "Bacon",
                        description: "desc",
                        price: 1000)
     item.categories << category
+    item.save
     allow_any_instance_of(ApplicationController).to receive(:current_user).
                                                  and_return(admin)
     visit categories_path
@@ -214,10 +220,11 @@ describe "an admin" do
 
   it "can retire an item from the category show page" do
     category = Category.create(name: "Breakfast")
-    item = Item.create(title: "Bacon",
+    item = Item.new(title: "Bacon",
                        description: "desc",
                        price: 1000)
     item.categories << category
+    item.save
     allow_any_instance_of(ApplicationController).to receive(:current_user).
                                                  and_return(admin)
     visit category_path(category)
@@ -244,11 +251,12 @@ describe "an admin" do
 
   it "can reveal an item previously hidden from cat index page" do
     category = Category.create(name: "Breakfast")
-    item = Item.create(title: "Bacon",
+    item = Item.new(title: "Bacon",
                        description: "desc",
                        price: 1000,
                        status: "hidden")
     item.categories << category
+    item.save
     allow_any_instance_of(ApplicationController).to receive(:current_user).
                                                  and_return(admin)
     visit categories_path

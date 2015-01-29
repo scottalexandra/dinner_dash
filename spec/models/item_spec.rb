@@ -1,14 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe Item, :type => :model do
-    @category  = Category.create(name: "NewCategory")
-    @category2 = Category.create(name: "NewCategory2")
   let!(:valid_item) do
     @category  = Category.create(name: "NewCategory")
     @category2 = Category.create(name: "NewCategory2")
     item = Item.new(title: "title", description: "desc", price: 10)
-    item.categories << @category2
     item.categories << @category
+    item.categories << @category2
     item.save
     item
   end
@@ -25,7 +23,7 @@ RSpec.describe Item, :type => :model do
     end
 
     it "description" do
-      item = Item.new(title: "NewTitle", description: nil, price: 2000)
+      item  = Item.new(title: "NewTitle", description: nil, price: 2000)
       item2 = Item.new(title: "NewTitle", description: "", price: 2000)
       item.categories << @category
       item2.categories << @category
@@ -45,8 +43,8 @@ RSpec.describe Item, :type => :model do
 
     it "unique title" do
       item = Item.create(title: "NewTitle",
-                  description: "new description",
-                  price: 1000)
+                         description: "new description",
+                         price: 1000)
       item.categories << @category
       item2 = Item.new(title: "NewTitle",
                        description: "newer description",
@@ -79,10 +77,21 @@ RSpec.describe Item, :type => :model do
       expect(item.save).to eq false
     end
 
-    it "an associated category" do
-      categoryless_item = valid_item.categories.delete @category
-      expect(categoryless_item).to_not be_valid
+    it "a category" do
+      item = Item.create(title: "another item",
+                         description: "item description",
+                         price: 1000)
+      # item.categories << @category
+      expect(item.save).to eq false
     end
+  end
+
+  it "can not have it last category removed" do
+    expect(valid_item.categories.count).to eq 2
+      valid_item.categories.delete @category
+    expect(valid_item.categories.count).to eq 1
+      valid_item.categories.delete @category
+    expect(valid_item.categories.count).to eq 1
   end
 
   it "can have hidden items" do
@@ -93,7 +102,6 @@ RSpec.describe Item, :type => :model do
 
   it "can belong to an order" do
     item = Item.new
-
     expect(item.orders).to eq([])
   end
 
@@ -115,7 +123,6 @@ RSpec.describe Item, :type => :model do
     item = Item.create(title: "next item",
                        description: "desc",
                        price: 2000)
-
     expect(item.currency).to eq(20)
   end
 end
