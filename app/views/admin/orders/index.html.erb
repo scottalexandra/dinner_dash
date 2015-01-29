@@ -1,5 +1,9 @@
 <h1>All Orders</h1>
 
+  Ordered: <%= @orders.where(status: "ordered").count %><br>
+     Paid: <%= @orders.where(status: "paid").count %><br>
+Completed: <%= @orders.where(status: "completed").count %><br>
+Cancelled: <%= @orders.where(status: "cancelled").count %><br>
 <div class="orders-list">
   <%= render partial: "orders_list" %>
 </div>

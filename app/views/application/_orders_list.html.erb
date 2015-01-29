@@ -1,4 +1,4 @@
-<% @orders.each do |order| %>
+<% @orders.order("status").each do |order| %>
 <div id=<%= order.id %>>
   <ul>
     <li>

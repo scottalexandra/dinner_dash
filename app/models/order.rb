@@ -20,4 +20,8 @@ class Order < ActiveRecord::Base
   def format_order_number(order_id)
     order_id.to_s.rjust(5, "0")
   end
+
+  def self.select_orders_by_status(status, orders)
+    orders.select(status: status)
+  end
 end
