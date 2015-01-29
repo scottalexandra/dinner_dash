@@ -47,7 +47,7 @@ describe "an admin" do
                                                  and_return(admin)
     visit root_path
     click_link_or_button "New Item"
-    fill_in "item[title]", with: "New Item"
+    fill_in "item[title]", with: "BLT"
     fill_in "item[description]", with: "Description"
     fill_in "item[price]", with: "1000"
     select "Breakfast", from: "item_categories"
@@ -56,8 +56,8 @@ describe "an admin" do
     within("#flash_notice") do
       expect(page).to have_content("Successfully Created")
     end
-    within(".item") do
-      expect(page).to have_content("New Item")
+    within("#item_1") do
+      expect(page).to have_content("BLT")
       expect(page).to have_content("Description")
       expect(page).to have_content("$10.00")
       expect(page).to have_content("Breakfast")
@@ -131,7 +131,7 @@ describe "an admin" do
     expect(page).to have_content("Bacon")
     expect(page).to have_content("desc")
     expect(page).to have_content("$10.00")
-    within("#Bacon") do
+    within("#item_1") do
       click_link_or_button "Remove from Category"
     end
     expect(current_path).to eq(categories_path)
@@ -159,7 +159,7 @@ describe "an admin" do
     expect(page).to have_content("Bacon")
     expect(page).to have_content("desc")
     expect(page).to have_content("$10.00")
-    within("#Bacon") do
+    within("#item_1") do
       click_link_or_button "Remove from Category"
     end
     expect(current_path).to eq(categories_path)
@@ -197,12 +197,12 @@ describe "an admin" do
     allow_any_instance_of(ApplicationController).to receive(:current_user).
                                                  and_return(admin)
     visit categories_path
-    within(".item") do
+    within("#item_1") do
       expect(page).to have_content("Bacon")
       expect(page).to have_content("desc")
       expect(page).to have_content("$10.00")
     end
-    within("#Bacon") do
+    within("#item_1") do
       click_link_or_button "Hide"
     end
     expect(page).to have_content("Item Successfully Hidden")
@@ -228,12 +228,12 @@ describe "an admin" do
     allow_any_instance_of(ApplicationController).to receive(:current_user).
                                                  and_return(admin)
     visit category_path(category)
-    within(".item") do
+    within("#item_1") do
       expect(page).to have_content("Bacon")
       expect(page).to have_content("desc")
       expect(page).to have_content("$10.00")
     end
-    within("#Bacon") do
+    within("#item_1") do
       click_link_or_button "Hide"
     end
     expect(page).to have_content("Item Successfully Hidden")
@@ -277,9 +277,25 @@ describe "an admin" do
   context "can view a dashboard with" do
 
     it "the total number of orders by status" do
+      allow_any_instance_of(ApplicationController).to receive(:current_user).
+                                                           and_return(admin)
+      create_user_orders_with_items
+      visit admin_orders_path
+      expect(page).to have_content("All Orders")
+      expect(page).to have_content("Completed: 2")
+      expect(page).to have_content("Ordered: 1")
+      expect(page).to have_content("Paid: 0")
     end
 
     xit "links for each individual order" do
+      allow_any_instance_of(ApplicationController).to receive(:current_user).
+                                                           and_return(admin)
+      create_user_orders_with_items
+      visit admin_orders_path
+      within(".orders-list") do
+        click_link_or_button "Order 00001"
+      end
+      expect(page).to have_content("Order 00001")
     end
 
     xit "filter orders to display by status type (for statuses 'ordered', 'paid', 'cancelled', 'completed')" do
@@ -328,5 +344,24 @@ describe "an admin" do
   end
 
   xit "cannot modify any personal data aside from their own" do
+  end
+
+  def create_user_orders_with_items
+    order = Order.create(user_id: 1)
+    item = Item.create(title: "Bacon",
+                       description: "desc",
+                       price: 1000,
+                       status: "hidden")
+    item2 = Item.create(title: "Eggs",
+                        description: "another",
+                        price: 2000)
+    order.line_items.create(item_id: item.id, quantity: 1)
+    order.line_items.create(item_id: item2.id, quantity: 2)
+    order2 = Order.create(user_id: 1, status: "completed")
+    order2.line_items.create(item_id: 1, quantity: 10)
+    order2.line_items.create(item_id: 2, quantity: 11)
+    order3 = Order.create(user_id: 1, status: "completed")
+    order3.line_items.create(item_id: 1, quantity: 10)
+    order3.line_items.create(item_id: 2, quantity: 11)
   end
 end

@@ -37,7 +37,7 @@ describe "An unauthenticated user" do
     within("div.categories") do
       within("div#Breakfast") do
         expect(page).to have_content category1.name
-        expect(page).to have_content "Bacon and Eggs"
+        expect(page).to have_content "Bacon"
       end
       within("div#Lunch") do
         expect(page).to have_content category2.name
@@ -52,8 +52,8 @@ describe "An unauthenticated user" do
       click_link_or_button "Breakfast"
     end
     expect(current_path).to eq(category_path(category1.id))
-    within("div.item") do
-      expect(page).to have_content("Bacon and Eggs")
+    within("#item_1") do
+      expect(page).to have_content("Bacon")
       expect(page).to have_content("The classic breakfast dish")
     end
   end
@@ -76,14 +76,15 @@ describe "An unauthenticated user" do
 
   it "can remove an item from a cart" do
     click_add_to_cart_link("Breakfast")
-    within(".categories") do
-      within("div#Breakfast") do
-        click_link "Remove From Cart"
-      end
+    visit new_order_path
+    within("#item_1") do
+      click_link "Remove From Cart"
     end
     within("#cart-contents") do
       expect(page).to have_content("0")
     end
+    expect(current_path).to eq(new_order_path)
+    expect(page).to_not have_content("Bacon")
   end
 
   it "can login which does not clear cart" do
@@ -149,7 +150,7 @@ describe "An unauthenticated user" do
     click_add_to_cart_link("Breakfast")
     click_link_or_button "Cart:"
     expect(current_path).to eq(new_order_path)
-    expect(page).to have_content("Bacon and Eggs")
+    expect(page).to have_content("Bacon")
     within "div#quantity" do
       expect(page).to have_content("2")
     end
@@ -230,7 +231,7 @@ describe "An unauthenticated user" do
     click_link_or_button "Menu"
     within(".categories") do
       within("div##{category}") do
-        within("div.item") do
+        within("div.panel") do
           click_link "Add to Cart"
         end
       end
