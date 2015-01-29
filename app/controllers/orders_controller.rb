@@ -22,7 +22,7 @@ class OrdersController < ApplicationController
       end
     else
       flash[:notice] = "Please login or signup to continue with checkout"
-      redirect_to login_path
+      redirect_to :back
     end
   end
 

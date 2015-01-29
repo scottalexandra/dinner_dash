@@ -18,7 +18,7 @@ class SessionsController < ApplicationController
   def destroy
     session[:admin_id] = nil
     session[:user_id] = nil
-    redirect_to root_path, notice: "Successfully Logged Out"
+    redirect_to :back, notice: "Successfully Logged Out"
   end
 
   def assign_session_id(user_type, id)
