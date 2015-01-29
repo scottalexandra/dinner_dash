@@ -24,4 +24,8 @@ class Order < ActiveRecord::Base
   def formatted_created_at
     created_at.strftime("%m/%d/%Y at: %I:%M %p")
   end
+
+  def find_user_info(user_id)
+    user = User.find(user_id)
+  end
 end

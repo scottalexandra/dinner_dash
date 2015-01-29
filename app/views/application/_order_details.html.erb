@@ -1,4 +1,13 @@
 <% @order.line_items.each do |line_item| %>
+<div id="purchaser-details">
+  <% if current_user.admin? %>
+    <h3>Purchaser Details</h3>
+    <% user = @order.find_user_info(@order.user_id) %>
+    <%= user.last_name %>, <%= user.first_name %><br>
+    <%= user.email %>
+<% end %>
+<h3>Order Details</h3>
+</div>
 <div id="item-title">
   Title: <%=link_to line_item.title, item_path(line_item.item_id) %>
 </div>
@@ -19,8 +28,11 @@
 <div id="item-total">
   Total: <%= number_to_currency @order.total(@order.line_items) %>
 </div>
+<div id="order-submit-time">
+  Order Submitted At: <%= @order.formatted_created_at %>
+</div>
 <div id="order-status">
-  Order Status: <%= @order.status %>
+  Order Status: <%= @order.status %><br>
   <% if current_user.admin? %>
     <% if @order.status == "ordered" %>
       <%= link_to "change to paid", admin_order_path(status: "paid"), method: :patch %> |
@@ -31,7 +43,4 @@
       <%= link_to "change to cancel", admin_order_path(status: "cancelled"), method: :patch %>
     <% end %>
   <% end %>
-</div>
-<div id="order-submit-time">
-  Order submitted at: <%= @order.formatted_created_at %>
 </div>
