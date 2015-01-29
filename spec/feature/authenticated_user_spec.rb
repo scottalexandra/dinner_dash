@@ -14,14 +14,14 @@ describe "an authenticated user" do
 
   before(:each) do
     item = Item.new(title: "Bacon and Eggs",
-              description: "The classic breakfast dish",
-              price: 1000)
+                    description: "The classic breakfast dish",
+                    price: 1000)
     item.categories << category1
     item.save
 
     item = Item.new(title: "BLT",
-              description: "The classic lunch dish",
-              price: 1000)
+                    description: "The classic lunch dish",
+                    price: 1000)
     item.categories << category2
     item.save
 
@@ -213,10 +213,7 @@ describe "an authenticated user" do
       within("#item-title") do
         click_link_or_button "Bacon"
       end
-      expect(current_path).to eq(categories_path)
-      within("#Breakfast") do
-        expect(page).to have_content("Bacon")
-      end
+      expect(page).to have_content("Bacon")
     end
 
     it "the current status of the order" do
@@ -233,12 +230,8 @@ describe "an authenticated user" do
 
     it "date/time order was submitted" do
       within("#order-submit-time") do
-        expect(page).to have_content("Order submitted at:")
+        expect(page).to have_content("Order Submitted At:")
       end
-    end
-
-    it "a timestamp when that action took place if completed or cancelled" do
-      expect(page).to have_css("#order-submit-time")
     end
   end
 
@@ -257,9 +250,6 @@ describe "an authenticated user" do
       click_link_or_button "Bacon and Eggs"
       expect(current_path).to eq(item_path(1))
       expect(page).to have_content("Bacon and Eggs")
-    end
-
-    xit "cannot add it to a new cart" do
     end
   end
 
@@ -309,11 +299,9 @@ describe "an authenticated user" do
     expect(page).to have_content("Page Not Found")
   end
 
-  xit "cannot modify a category" do
+  it "cannot modify a category" do
     allow_any_instance_of(ApplicationController).to receive(:current_user).
                                                     and_return(valid_user)
-    visit root_path
-    expect(page).to have_content("Categories")
     visit edit_admin_category_path(category1)
     expect(page).to have_content("Page Not Found")
   end
