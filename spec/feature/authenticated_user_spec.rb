@@ -16,6 +16,7 @@ describe "an authenticated user" do
     item = Item.new(title: "Bacon and Eggs",
               description: "The classic breakfast dish",
               price: 1000)
+              require 'pry' ; binding.pry
     item.categories << category1
     item.save
 
