@@ -26,6 +26,6 @@ class Order < ActiveRecord::Base
   end
 
   def find_user_info(user_id)
-    user = User.find(user_id)
+    User.find(user_id)
   end
 end

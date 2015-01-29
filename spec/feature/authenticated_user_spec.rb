@@ -14,14 +14,14 @@ describe "an authenticated user" do
 
   before(:each) do
     item = Item.new(title: "Bacon and Eggs",
-              description: "The classic breakfast dish",
-              price: 1000)
+                    description: "The classic breakfast dish",
+                    price: 1000)
     item.categories << category1
     item.save
 
     item = Item.new(title: "BLT",
-              description: "The classic lunch dish",
-              price: 1000)
+                    description: "The classic lunch dish",
+                    price: 1000)
     item.categories << category2
     item.save
 
@@ -42,9 +42,6 @@ describe "an authenticated user" do
         expect(page).to have_content "BLT"
       end
     end
-  end
-
-  xit "can browse items for a specific category (category show page)" do
   end
 
   it "can add an item to a cart" do
@@ -230,9 +227,6 @@ describe "an authenticated user" do
       within("#order-submit-time") do
         expect(page).to have_content("Order submitted at:")
       end
-    end
-
-    xit "a timestamp when that action took place if completed or cancelled" do
     end
   end
 

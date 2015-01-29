@@ -8,6 +8,4 @@ class Admin::OrdersController < ApplicationController
     @order.update(status: params[:status])
     redirect_to order_path(@order.id)
   end
-
-
 end
