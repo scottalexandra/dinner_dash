@@ -347,21 +347,36 @@ describe "an admin" do
   end
 
   def create_user_orders_with_items
-    order = Order.create(user_id: 1)
-    item = Item.create(title: "Bacon",
-                       description: "desc",
-                       price: 1000,
-                       status: "hidden")
-    item2 = Item.create(title: "Eggs",
-                        description: "another",
-                        price: 2000)
-    order.line_items.create(item_id: item.id, quantity: 1)
+    breakfast = Category.create(name: "Breakfast")
+    item1 = Item.new(title: "Bacon and Eggs",
+                    description: "The classic breakfast dish",
+                    price: 1000,
+                    status: "hidden")
+    item1.categories << breakfast
+    item1.save
+
+    item2 = Item.new(title: "Bacon and Eggs",
+                    description: "The classic breakfast dish",
+                    price: 1000,
+                    status: "hidden")
+    item2.categories << breakfast
+    item2.save
+
+    user = User.create(first_name: "Alice",
+                       last_name: "Smith",
+                       email: "rich@gmail.com",
+                       password: "password")
+
+    order = Order.create(user_id: user.id)
+    order.line_items.create(item_id: item1.id, quantity: 1)
     order.line_items.create(item_id: item2.id, quantity: 2)
-    order2 = Order.create(user_id: 1, status: "completed")
-    order2.line_items.create(item_id: 1, quantity: 10)
-    order2.line_items.create(item_id: 2, quantity: 11)
-    order3 = Order.create(user_id: 1, status: "completed")
-    order3.line_items.create(item_id: 1, quantity: 10)
-    order3.line_items.create(item_id: 2, quantity: 11)
+
+    order2 = Order.create(user_id: user.id, status: "completed")
+    order2.line_items.create(item_id: item1.id, quantity: 10)
+    order2.line_items.create(item_id: item2.id, quantity: 11)
+
+    order3 = Order.create(user_id: user.id, status: "completed")
+    order3.line_items.create(item_id: item1.id, quantity: 10)
+    order3.line_items.create(item_id: item2.id, quantity: 11)
   end
 end
