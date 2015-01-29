@@ -94,10 +94,11 @@ describe "An unauthenticated user" do
                 email: "bryce@gmail.com",
                 display_name: "Rich",
                 password: "secret")
-    click_link_or_button "Log In"
+    visit root_path
     fill_in "session[email]", with: "bryce@gmail.com"
     fill_in "session[password]", with: "secret"
-    click_link_or_button "Submit"
+    click_link_or_button "Log In"
+    visit root_path
     expect(current_path).to eq(root_path)
     within("#flash_notice") do
       expect(page).to have_content("Successfully Logged In")
@@ -122,10 +123,10 @@ describe "An unauthenticated user" do
                 email: "bryce@gmail.com",
                 display_name: "Rich",
                 password: "secret")
-    click_link_or_button "Log In"
+    visit root_path
     fill_in "session[email]", with: "bryce@gmail.com"
     fill_in "session[password]", with: "secret"
-    click_link_or_button "Submit"
+    click_link_or_button "Log In"
     expect(current_path).to eq(root_path)
     within("#cart-contents") do
       expect(page).to have_content("1")
@@ -231,7 +232,7 @@ describe "An unauthenticated user" do
     click_link_or_button "Menu"
     within(".categories") do
       within("div##{category}") do
-        within("div.panel") do
+        within("div.item") do
           click_link "Add to Cart"
         end
       end

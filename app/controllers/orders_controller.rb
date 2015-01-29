@@ -2,7 +2,7 @@ class OrdersController < ApplicationController
   def new
     @order = Order.new
     @cart.data.each do |item_id, quantity|
-      item = Item.find(item_id.to_i)
+      item = Item.unscoped.find(item_id.to_i)
       item.add_quantity(quantity)
       @order.items << item
     end
