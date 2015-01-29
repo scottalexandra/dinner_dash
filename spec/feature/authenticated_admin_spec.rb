@@ -312,7 +312,7 @@ describe "an admin" do
           click_link_or_button "Order 00001"
         end
         within("#order-status") do
-          click_link_or_button "paid"
+          click_link_or_button "change to paid"
         end
         within("#order-status") do
           expect(page).to have_content("Status: paid")
@@ -328,7 +328,7 @@ describe "an admin" do
           click_link_or_button "Order 00001"
         end
         within("#order-status") do
-          click_link_or_button "complete"
+          click_link_or_button "change to complete"
         end
         within("#order-status") do
           expect(page).to have_content("Status: completed")
@@ -344,7 +344,7 @@ describe "an admin" do
           click_link_or_button "Order 00001"
         end
         within("#order-status") do
-          click_link_or_button "cancel"
+          click_link_or_button "change to cancel"
         end
         within("#order-status") do
           expect(page).to have_content("Status: cancelled")
