@@ -16,6 +16,8 @@
 </div>
 <% if !@hidden_items.empty? %>
   <div class="hidden_items">
-    <%= render partial: "hidden_items", locals: { hidden_items: @hidden_items } %>
+    <div class="large-4 small-8 columns">
+      <%= render partial: "hidden_items", locals: { hidden_items: @hidden_items } %>
+    </div>
   </div>
 <% end %>
