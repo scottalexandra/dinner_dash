@@ -3,8 +3,8 @@ require "rails_helper"
 describe "an authenticated user" do
   include Capybara::DSL
 
-  let(:category1) { Category.create(name: "Breakfast") }
-  let(:category2) { Category.create(name: "Lunch") }
+  let!(:category1) { Category.create(name: "Breakfast") }
+  let!(:category2) { Category.create(name: "Lunch") }
   let!(:valid_user) do
     User.create(first_name: "Alice",
                 last_name: "Smith",
@@ -13,12 +13,18 @@ describe "an authenticated user" do
   end
 
   before(:each) do
-    category1.items.create(title: "Bacon",
-                           description: "The classic breakfast dish",
-                           price: 1000)
-    category2.items.create(title: "BLT",
-                           description: "The classic lunch dish",
-                           price: 1000)
+    item = Item.new(title: "Bacon and Eggs",
+              description: "The classic breakfast dish",
+              price: 1000)
+    item.categories << category1
+    item.save
+
+    item = Item.new(title: "BLT",
+              description: "The classic lunch dish",
+              price: 1000)
+    item.categories << category2
+    item.save
+
     visit root_path
   end
 
@@ -261,9 +267,19 @@ describe "an authenticated user" do
   end
 
   xit "cannot modify a category" do
+    allow_any_instance_of(ApplicationController).to receive(:current_user).
+                                                    and_return(valid_user)
+    visit root_path
+    expect(page).to have_content("Categroies")
+    visit edit_admin_category_path(category1)
+    expect(page).to have_content("Page Not Found")
   end
 
-  xit "cannot make themselves an admin" do
+  it "cannot make themselves an admin" do
+    allow_any_instance_of(ApplicationController).to receive(:current_user).
+                                                    and_return(valid_user)
+    visit new_admin_path
+    expect(page).to have_content("Page Not Found")
   end
 
   def click_add_to_cart_link(category)
