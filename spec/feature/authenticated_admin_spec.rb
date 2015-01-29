@@ -303,7 +303,20 @@ describe "an admin" do
     end
 
     context "a link to" do
-      xit "to 'cancel' individual orders which are currently 'ordered' or 'paid'" do
+      it "to 'cancel' individual orders which are currently 'ordered' or 'paid'" do
+        allow_any_instance_of(ApplicationController).to receive(:current_user).
+        and_return(admin)
+        create_user_orders_with_items
+        visit admin_orders_path
+        within(".orders-list") do
+          click_link_or_button "Order 00001"
+        end
+        within("#order-status") do
+          click_link_or_button "paid"
+        end
+        within("#order-status") do
+          expect(page).to have_content("Status: paid")
+        end
       end
 
       xit "'mark as paid' orders which are 'ordered'" do
@@ -322,18 +335,22 @@ describe "an admin" do
 
   def create_user_orders_with_items
     breakfast = Category.create(name: "Breakfast")
-    item1 = Item.new(title: "Bacon and Eggs",
-                    description: "The classic breakfast dish",
-                    price: 1000,
-                    status: "hidden")
-    item1.categories << breakfast
-    item1.save
+    ActiveRecord::Base.transaction do
+      item1 = Item.new(title: "Bacon and Eggs",
+                      description: "The classic breakfast dish",
+                      price: 1000)
+      item1.categories << breakfast
+      item1.save
+    end
 
-    item2 = Item.new(title: "Bacon and Eggs",
-                    description: "The classic breakfast dish",
-                    price: 1000)
-    item2.categories << breakfast
-    item2.save
+    ActiveRecord::Base.transaction do
+      item2 = Item.new(title: "Bacon and Eggs",
+                     description: "The classic breakfast dish",
+                     price: 1000)
+      require 'pry'; binding.pry
+      item2.categories << breakfast
+      item2.save
+    end
 
     user = User.create(first_name: "Alice",
                        last_name: "Smith",
