@@ -280,7 +280,8 @@ describe "an admin" do
       allow_any_instance_of(ApplicationController).to receive(:current_user).
                                                            and_return(admin)
       create_user_orders_with_items
-      visit admin_orders_path
+      visit root_path
+      click_link_or_button "View All Orders"
       expect(page).to have_content("All Orders")
       expect(page).to have_content("Completed: 2")
       expect(page).to have_content("Ordered: 1")
@@ -314,33 +315,6 @@ describe "an admin" do
       xit "'cancel' individual orders which are currently 'ordered' or 'paid'" do
       end
     end
-
-    context "access details of an individual order, including:" do
-      xit "order date and time" do
-      end
-
-      xit "purchaser full name and email address" do
-      end
-      context "For each item on the order:" do
-        xit "Name linked to the item page" do
-        end
-
-        xit "Quantity" do
-        end
-
-        xit "Price" do
-        end
-
-        xit "Line item subtotal" do
-        end
-      end
-
-      xit "Total for the order" do
-      end
-
-      xit "Status of the order" do
-      end
-    end
   end
 
   xit "cannot modify any personal data aside from their own" do
@@ -357,8 +331,7 @@ describe "an admin" do
 
     item2 = Item.new(title: "Bacon and Eggs",
                     description: "The classic breakfast dish",
-                    price: 1000,
-                    status: "hidden")
+                    price: 1000)
     item2.categories << breakfast
     item2.save
 
