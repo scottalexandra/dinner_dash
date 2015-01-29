@@ -25,7 +25,6 @@ describe "authenticated" do
 
   context "user" do
     it "can add them self to the system" do
-      expect(page).to have_content("Log In")
       click_link_or_button "Sign Up"
       fill_in "user_first_name", with: "Kit"
       fill_in "user_last_name", with: "Pearson"
@@ -50,7 +49,7 @@ describe "authenticated" do
 
     it "can not login with invalid credentials" do
       log_in(user, "incorect_password")
-      expect(current_path).to eq(login_path)
+      expect(current_path).to eq(root_path)
       within("#flash_error") do
         expect(page).to have_content("Invalid Login Credentials")
       end
@@ -81,7 +80,7 @@ describe "authenticated" do
 
     it "can not login with invalid credentials" do
       log_in(admin, "incorect_password")
-      expect(current_path).to eq(login_path)
+      expect(current_path).to eq(root_path)
       within("#flash_error") do
         expect(page).to have_content("Invalid Login Credentials")
       end
