@@ -319,13 +319,36 @@ describe "an admin" do
         end
       end
 
-      xit "'mark as paid' orders which are 'ordered'" do
+      it "'mark as completed' individual orders which are currently 'paid'" do
+        allow_any_instance_of(ApplicationController).to receive(:current_user).
+        and_return(admin)
+        create_user_orders_with_items
+        visit admin_orders_path
+        within(".orders-list") do
+          click_link_or_button "Order 00001"
+        end
+        within("#order-status") do
+          click_link_or_button "complete"
+        end
+        within("#order-status") do
+          expect(page).to have_content("Status: completed")
+        end
       end
 
-      xit "'mark as completed' individual orders which are currently 'paid'" do
-      end
-
-      xit "'cancel' individual orders which are currently 'ordered' or 'paid'" do
+      it "'cancel' individual orders which are currently 'ordered' or 'paid'" do
+        allow_any_instance_of(ApplicationController).to receive(:current_user).
+        and_return(admin)
+        create_user_orders_with_items
+        visit admin_orders_path
+        within(".orders-list") do
+          click_link_or_button "Order 00001"
+        end
+        within("#order-status") do
+          click_link_or_button "cancel"
+        end
+        within("#order-status") do
+          expect(page).to have_content("Status: cancelled")
+        end
       end
     end
   end
@@ -335,22 +358,18 @@ describe "an admin" do
 
   def create_user_orders_with_items
     breakfast = Category.create(name: "Breakfast")
-    ActiveRecord::Base.transaction do
+
       item1 = Item.new(title: "Bacon and Eggs",
                       description: "The classic breakfast dish",
                       price: 1000)
       item1.categories << breakfast
       item1.save
-    end
 
-    ActiveRecord::Base.transaction do
-      item2 = Item.new(title: "Bacon and Eggs",
-                     description: "The classic breakfast dish",
+      item2 = Item.new(title: "Lunch Item",
+                     description: "The classic Lunch dish",
                      price: 1000)
-      require 'pry'; binding.pry
       item2.categories << breakfast
       item2.save
-    end
 
     user = User.create(first_name: "Alice",
                        last_name: "Smith",

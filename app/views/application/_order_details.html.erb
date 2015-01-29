@@ -21,6 +21,9 @@
 </div>
 <div id="order-status">
   Order Status: <%= @order.status %>
+  <%= link_to "paid", admin_order_path(status: "paid"), method: :patch %> |
+  <%= link_to "complete", admin_order_path(status: "completed"), method: :patch %> |
+  <%= link_to "cancel", admin_order_path(status: "cancelled"), method: :patch %>
 </div>
 <div id="order-submit-time">
   Order submitted at: <%= @order.created_at %>
