@@ -13,17 +13,21 @@
 
   <body>
     <%= render "menu" %>
+    <div class="row">
+      <div class="large-12 columns">
 
-    <%= render "admin_dashboard" if current_user && current_user.admin? %>
+        <%= render "admin_dashboard" if current_user && current_user.admin? %>
 
-    <% flash.each do |name, msg| %>
-      <%= content_tag :div, msg, id: "flash_#{name}" %>
-    <% end %>
+        <% flash.each do |name, msg| %>
+          <%= content_tag :div, msg, id: "flash_#{name}" %>
+        <% end %>
 
-    <%= yield %>
+        <%= yield %>
 
-    <%= render "footer" %>
+        <%= javascript_include_tag "application" %>
+      </div>
+    </div>
     <%= render "social_footer" %>
-    <%= javascript_include_tag "application" %>
+    <%= render "footer" %>
   </body>
 </html>

@@ -1,7 +1,10 @@
-<% @order.items.each do |item| %>
-  <hr><div class="order_item" id= <%= item.title %> >
+<% order.items.each do |item| %>
+  <%= div_for item, class: "panel" do %>
+    <h3><%= item.title %></h3>
+    <div id="image">
+      <%= image_tag "#{item.image}" %>
+    </div>
     <div id="description">
-      <h3><%= item.title %></h3>
       <p><%= item.description %></p>
     </div>
     <div id="price">
@@ -12,5 +15,6 @@
       <h4>Quantity</h4>
       <h4><%= item.quantity %></h4>
     </div>
-  </div><br>
+    <%= link_to "Remove From Cart", carts_path(item_id: item.id), method: :delete %>
+  <% end %>
 <% end %>

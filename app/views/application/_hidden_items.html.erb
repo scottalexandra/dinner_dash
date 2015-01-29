@@ -1,7 +1,6 @@
-<hr>
 <h1>Hidden Items</h1>
 <% hidden_items.each do |item| %>
-  <div class="item" id="<%= item.title %>">
+  <%= div_for item, class: "panel" do %>
     <h3><%= item.title %></h3>
     <h4><%= number_to_currency item.currency %></h4>
     <div id="image">
@@ -9,5 +8,5 @@
     </div>
     <p><%= item.description %></p>
     <%= link_to "Reveal", admin_item_path(item) %>
-  </div>
+  <% end %>
 <% end %>

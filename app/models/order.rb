@@ -16,4 +16,8 @@ class Order < ActiveRecord::Base
       (line_item.quantity * line_item.item.price) / 100
     end.reduce(:+)
   end
+
+  def format_order_number(order_id)
+    order_id.to_s.rjust(5, "0")
+  end
 end
